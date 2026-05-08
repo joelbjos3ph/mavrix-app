@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Anthropic = require('@anthropic-ai/sdk');
 const cors = require('cors');
+const path = require('path');
+
+const APP_HOST = process.env.APP_HOST || 'app.mavrix.sg';
 
 const app = express();
 app.use(express.json());
@@ -11,6 +14,15 @@ app.use(cors({
   origin: process.env.ALLOWED_ORIGIN || 'http://localhost:3000',
   methods: ['GET', 'POST']
 }));
+
+// Subdomain routing: app.mavrix.sg → dashboard, everything else → landing page
+app.get('/', (req, res, next) => {
+  if (req.hostname === APP_HOST) {
+    return res.sendFile(path.join(__dirname, 'mavrix-app.html'));
+  }
+  next(); // falls through to express.static → index.html
+});
+
 app.use(express.static('.'));
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
