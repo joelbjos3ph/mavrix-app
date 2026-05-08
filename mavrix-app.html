@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mavrix — AI Marketing Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#08080A;--surface:#111113;--surface2:#18181C;--surface3:#1E1E24;
+  --accent:#C8F04C;--accent-dim:#a8cc30;--accent-glow:rgba(200,240,76,0.15);
+  --white:#F5F4F0;--muted:rgba(245,244,240,0.45);--mid:rgba(245,244,240,0.7);
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --red:#FF5A5A;--blue:#5A9BFF;--orange:#FFB35A;
+  --font-display:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+  --radius:12px;--radius-sm:8px;
+}
+html,body{height:100%;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:15px;line-height:1.6;overflow:hidden}
+
+/* ── LOGIN SCREEN ── */
+#login-screen{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--black);z-index:100;
+  background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(200,240,76,0.07) 0%,transparent 70%);
+}
+.login-box{
+  width:420px;background:var(--surface);border:1px solid var(--border2);
+  border-radius:20px;padding:2.5rem;
+}
+.login-logo{font-family:var(--font-display);font-size:1.6rem;font-weight:800;margin-bottom:2rem;letter-spacing:-0.02em}
+.login-logo span{color:var(--accent)}
+.login-box h2{font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:0.4rem}
+.login-box p{color:var(--muted);font-size:0.875rem;margin-bottom:1.8rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.8rem;font-weight:500;color:var(--mid);margin-bottom:0.4rem;letter-spacing:0.03em}
+.field input{
+  width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:0.75rem 1rem;color:var(--white);
+  font-family:var(--font-body);font-size:0.9rem;outline:none;transition:border-color 0.2s;
+}
+.field input:focus{border-color:rgba(200,240,76,0.5)}
+.field input::placeholder{color:var(--muted)}
+.btn-primary{
+  width:100%;background:var(--accent);color:var(--black);border:none;
+  padding:0.85rem;border-radius:var(--radius-sm);font-weight:700;font-size:0.95rem;
+  cursor:pointer;font-family:var(--font-body);transition:background 0.2s,transform 0.15s;margin-top:0.5rem;
+}
+.btn-primary:hover{background:var(--accent-dim);transform:translateY(-1px)}
+.login-note{text-align:center;font-size:0.78rem;color:var(--muted);margin-top:1rem}
+
+/* ── APP SHELL ── */
+#app{display:none;height:100vh;display:grid;grid-template-columns:240px 1fr;grid-template-rows:1fr}
+#app.visible{display:grid}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:1.5rem 0;overflow:hidden;
+}
+.sidebar-logo{
+  font-family:var(--font-display);font-size:1.2rem;font-weight:800;
+  padding:0 1.25rem 1.5rem;letter-spacing:-0.02em;border-bottom:1px solid var(--border);
+}
+.sidebar-logo span{color:var(--accent)}
+.sidebar-section{padding:1rem 1.25rem 0.5rem;font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.nav-item{
+  display:flex;align-items:center;gap:0.75rem;padding:0.65rem 1.25rem;
+  cursor:pointer;border-radius:0;transition:background 0.15s;font-size:0.875rem;color:var(--mid);
+  border-left:2px solid transparent;
+}
+.nav-item:hover{background:rgba(255,255,255,0.04);color:var(--white)}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-glow)}
+.nav-icon{width:16px;height:16px;flex-shrink:0;opacity:0.7}
+.nav-item.active .nav-icon{opacity:1}
+.sidebar-bottom{margin-top:auto;padding:1rem 1.25rem;border-top:1px solid var(--border)}
+.user-pill{display:flex;align-items:center;gap:0.75rem}
+.user-avatar{
+  width:32px;height:32px;border-radius:50%;background:var(--accent-glow);
+  border:1px solid rgba(200,240,76,0.3);display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:700;color:var(--accent);flex-shrink:0;
+}
+.user-name{font-size:0.8rem;font-weight:500;color:var(--mid)}
+.user-plan{font-size:0.7rem;color:var(--muted)}
+
+/* ── MAIN ── */
+.main{display:flex;flex-direction:column;overflow:hidden}
+.topbar{
+  height:56px;border-bottom:1px solid var(--border);display:flex;align-items:center;
+  justify-content:space-between;padding:0 2rem;flex-shrink:0;
+}
+.topbar-title{font-family:var(--font-display);font-size:1rem;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:1rem}
+.credits-pill{
+  background:var(--accent-glow);border:1px solid rgba(200,240,76,0.2);
+  border-radius:100px;padding:0.3rem 0.9rem;font-size:0.78rem;font-weight:500;color:var(--accent);
+}
+.content{flex:1;overflow-y:auto;padding:2rem}
+.content::-webkit-scrollbar{width:4px}
+.content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+/* ── VIEWS ── */
+.view{display:none}
+.view.active{display:block}
+
+/* ── GENERATE VIEW ── */
+.generate-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;height:calc(100vh - 120px)}
+.gen-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto}
+.gen-panel::-webkit-scrollbar{width:3px}
+.gen-panel::-webkit-scrollbar-thumb{background:var(--border2)}
+.panel-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700;margin-bottom:0.25rem}
+.panel-sub{font-size:0.78rem;color:var(--muted)}
+
+.form-group{display:flex;flex-direction:column;gap:0.4rem}
+.form-label{font-size:0.78rem;font-weight:500;color:var(--mid);letter-spacing:0.02em}
+.form-input,.form-select,.form-textarea{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:0.65rem 0.9rem;color:var(--white);
+  font-family:var(--font-body);font-size:0.875rem;outline:none;transition:border-color 0.2s;width:100%;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(200,240,76,0.4)}
+.form-select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.9rem center}
+.form-textarea{resize:vertical;min-height:80px;line-height:1.5}
+.form-select option{background:var(--surface2)}
+
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem}
+.platform-btn{
+  border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.6rem;
+  cursor:pointer;text-align:center;transition:all 0.2s;background:transparent;
+  font-family:var(--font-body);color:var(--mid);font-size:0.8rem;
+}
+.platform-btn:hover{border-color:var(--border2);background:rgba(255,255,255,0.04);color:var(--white)}
+.platform-btn.selected{border-color:var(--accent);background:var(--accent-glow);color:var(--accent)}
+.platform-icon{font-size:1.1rem;display:block;margin-bottom:0.2rem}
+
+.tone-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.4rem}
+.tone-btn{
+  border:1px solid var(--border);border-radius:6px;padding:0.45rem 0.6rem;
+  cursor:pointer;font-size:0.78rem;color:var(--mid);background:transparent;
+  font-family:var(--font-body);transition:all 0.15s;text-align:left;
+}
+.tone-btn:hover{border-color:var(--border2);color:var(--white)}
+.tone-btn.selected{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+
+.generate-btn{
+  background:var(--accent);color:var(--black);border:none;padding:0.85rem;
+  border-radius:var(--radius-sm);font-weight:700;font-size:0.9rem;
+  cursor:pointer;font-family:var(--font-body);transition:all 0.2s;
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+}
+.generate-btn:hover{background:var(--accent-dim);transform:translateY(-1px)}
+.generate-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+/* OUTPUT */
+.output-panel{display:flex;flex-direction:column;gap:1rem}
+.output-placeholder{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:1px dashed var(--border2);border-radius:var(--radius);padding:3rem;text-align:center;
+}
+.output-placeholder p{color:var(--muted);font-size:0.875rem;margin-top:0.75rem}
+
+.output-card{
+  background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:1.25rem;display:none;flex-direction:column;gap:1rem;
+}
+.output-card.visible{display:flex}
+.output-meta{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+.output-badge{
+  font-size:0.7rem;font-weight:600;padding:0.25rem 0.6rem;border-radius:100px;
+  letter-spacing:0.04em;
+}
+.badge-platform{background:rgba(90,155,255,0.15);color:var(--blue);border:1px solid rgba(90,155,255,0.3)}
+.badge-tone{background:rgba(255,179,90,0.15);color:var(--orange);border:1px solid rgba(255,179,90,0.3)}
+.output-text{
+  font-size:0.9rem;line-height:1.7;color:var(--white);white-space:pre-wrap;
+  background:rgba(0,0,0,0.2);border-radius:var(--radius-sm);padding:1rem;
+  border-left:2px solid var(--accent);min-height:120px;
+}
+.output-actions{display:flex;gap:0.5rem}
+.action-btn{
+  flex:1;border:1px solid var(--border2);border-radius:var(--radius-sm);
+  padding:0.6rem;font-size:0.8rem;font-weight:500;cursor:pointer;
+  font-family:var(--font-body);color:var(--mid);background:transparent;transition:all 0.2s;
+}
+.action-btn:hover{border-color:var(--border2);background:rgba(255,255,255,0.05);color:var(--white)}
+.action-btn.accent{background:var(--accent-glow);border-color:rgba(200,240,76,0.3);color:var(--accent)}
+.action-btn.accent:hover{background:rgba(200,240,76,0.2)}
+
+/* LOADING */
+.loading-bar{
+  height:2px;background:linear-gradient(90deg,var(--accent),transparent);
+  border-radius:2px;animation:loading 1.5s ease-in-out infinite;display:none;
+}
+.loading-bar.active{display:block}
+@keyframes loading{0%{width:0%;opacity:1}100%{width:100%;opacity:0}}
+
+.typing-dots{display:none;gap:4px;align-items:center;padding:1rem}
+.typing-dots.active{display:flex}
+.typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:0.4;animation:dot 1.2s infinite}
+.typing-dots span:nth-child(2){animation-delay:0.2s}
+.typing-dots span:nth-child(3){animation-delay:0.4s}
+@keyframes dot{0%,60%,100%{opacity:0.4}30%{opacity:1}}
+
+/* ── HISTORY VIEW ── */
+.history-grid{display:grid;gap:1rem}
+.history-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.25rem;transition:border-color 0.2s;
+}
+.history-card:hover{border-color:var(--border2)}
+.history-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.75rem}
+.history-card-meta{display:flex;gap:0.5rem;flex-wrap:wrap}
+.history-card-time{font-size:0.75rem;color:var(--muted)}
+.history-card-text{font-size:0.875rem;color:var(--mid);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.history-copy{
+  border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.7rem;
+  font-size:0.75rem;color:var(--muted);background:transparent;cursor:pointer;
+  font-family:var(--font-body);transition:all 0.15s;white-space:nowrap;
+}
+.history-copy:hover{border-color:var(--border2);color:var(--white)}
+
+/* ── SETTINGS VIEW ── */
+.settings-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem}
+.settings-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.save-btn{
+  background:var(--accent);color:var(--black);border:none;padding:0.7rem 1.5rem;
+  border-radius:var(--radius-sm);font-weight:700;font-size:0.875rem;cursor:pointer;
+  font-family:var(--font-body);transition:all 0.2s;margin-top:1rem;
+}
+.save-btn:hover{background:var(--accent-dim)}
+
+/* ── ONBOARDING ── */
+#onboarding{
+  position:fixed;inset:0;background:rgba(8,8,10,0.95);z-index:50;
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);
+}
+.onboarding-box{
+  width:520px;background:var(--surface);border:1px solid var(--border2);
+  border-radius:20px;padding:2.5rem;
+}
+.onboarding-step{display:none}
+.onboarding-step.active{display:block}
+.step-indicator{display:flex;gap:0.4rem;margin-bottom:1.5rem}
+.step-dot{width:24px;height:3px;border-radius:2px;background:var(--border2);transition:background 0.3s}
+.step-dot.active{background:var(--accent)}
+.onboarding-box h2{font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:0.4rem}
+.onboarding-box p{color:var(--muted);font-size:0.875rem;margin-bottom:1.5rem}
+.onboarding-nav{display:flex;gap:0.75rem;margin-top:1.5rem}
+.btn-skip{flex:1;background:transparent;border:1px solid var(--border2);color:var(--mid);padding:0.75rem;border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-body);font-size:0.875rem;transition:all 0.2s}
+.btn-skip:hover{border-color:var(--border2);color:var(--white)}
+.btn-next{flex:2;background:var(--accent);color:var(--black);border:none;padding:0.75rem;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-family:var(--font-body);font-size:0.875rem;transition:all 0.2s}
+.btn-next:hover{background:var(--accent-dim)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:0.75rem 1.25rem;font-size:0.875rem;
+  transform:translateY(100px);opacity:0;transition:all 0.3s;z-index:200;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-accent{color:var(--accent)}
+
+/* ── DASHBOARD VIEW ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.stat-num{font-family:var(--font-display);font-size:1.8rem;font-weight:800;letter-spacing:-0.03em}
+.stat-num.accent{color:var(--accent)}
+.stat-label{font-size:0.78rem;color:var(--muted);margin-top:0.25rem}
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.quick-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.25rem;cursor:pointer;transition:all 0.2s;
+}
+.quick-card:hover{border-color:rgba(200,240,76,0.2);background:var(--surface2)}
+.quick-card-icon{font-size:1.5rem;margin-bottom:0.75rem}
+.quick-card h3{font-family:var(--font-display);font-size:0.9rem;font-weight:700;margin-bottom:0.3rem}
+.quick-card p{font-size:0.78rem;color:var(--muted)}
+.recent-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700;margin-bottom:1rem}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Mavri<span>x</span></div>
+    <h2>Welcome back</h2>
+    <p>Sign in to your AI marketing dashboard</p>
+    <div class="field">
+      <label>EMAIL</label>
+      <input type="email" placeholder="you@company.com" id="login-email" value="demo@mavrix.sg">
+    </div>
+    <div class="field">
+      <label>PASSWORD</label>
+      <input type="password" placeholder="••••••••" id="login-pass" value="password">
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Sign in →</button>
+    <p class="login-note">Demo account pre-filled — just click Sign in</p>
+  </div>
+</div>
+
+<!-- ONBOARDING -->
+<div id="onboarding" style="display:none">
+  <div class="onboarding-box">
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+    </div>
+
+    <div class="onboarding-step active" id="step-1">
+      <h2>Tell us about your business</h2>
+      <p>Mavrix will use this to generate content that sounds like you.</p>
+      <div class="form-group" style="margin-bottom:1rem">
+        <label class="form-label">BUSINESS NAME</label>
+        <input class="form-input" id="ob-biz-name" placeholder="e.g. Bright Advisory Pte Ltd">
+      </div>
+      <div class="form-group">
+        <label class="form-label">INDUSTRY</label>
+        <select class="form-select" id="ob-industry">
+          <option value="">Select your industry</option>
+          <option>Financial Advisory</option>
+          <option>Insurance</option>
+          <option>Real Estate</option>
+          <option>F&B / Restaurant</option>
+          <option>Retail</option>
+          <option>Healthcare / Wellness</option>
+          <option>Education</option>
+          <option>Professional Services</option>
+          <option>E-commerce</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="onboarding-step" id="step-2">
+      <h2>Who are your customers?</h2>
+      <p>The more specific, the better your content will be.</p>
+      <div class="form-group" style="margin-bottom:1rem">
+        <label class="form-label">TARGET AUDIENCE</label>
+        <input class="form-input" id="ob-audience" placeholder="e.g. Working professionals aged 30–45 in Singapore">
+      </div>
+      <div class="form-group">
+        <label class="form-label">WHAT PROBLEM DO YOU SOLVE?</label>
+        <textarea class="form-textarea" id="ob-problem" placeholder="e.g. We help busy professionals plan for retirement without the jargon"></textarea>
+      </div>
+    </div>
+
+    <div class="onboarding-step" id="step-3">
+      <h2>Pick your brand voice</h2>
+      <p>How do you want to sound to your audience?</p>
+      <div class="tone-grid" id="ob-tone-grid">
+        <button class="tone-btn" onclick="selectObTone(this,'Professional')">🤝 Professional</button>
+        <button class="tone-btn" onclick="selectObTone(this,'Friendly')">😊 Friendly</button>
+        <button class="tone-btn" onclick="selectObTone(this,'Bold & Direct')">⚡ Bold & Direct</button>
+        <button class="tone-btn" onclick="selectObTone(this,'Educational')">📚 Educational</button>
+        <button class="tone-btn" onclick="selectObTone(this,'Inspirational')">🌟 Inspirational</button>
+        <button class="tone-btn" onclick="selectObTone(this,'Conversational')">💬 Conversational</button>
+      </div>
+    </div>
+
+    <div class="onboarding-nav">
+      <button class="btn-skip" onclick="skipOnboarding()">Skip for now</button>
+      <button class="btn-next" id="ob-next-btn" onclick="obNext()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Mavri<span>x</span></div>
+    <div class="sidebar-section">Main</div>
+    <div class="nav-item active" onclick="showView('dashboard',this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-item" onclick="showView('generate',this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v14M1 8h14"/></svg>
+      Generate Content
+    </div>
+    <div class="nav-item" onclick="showView('history',this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l3 2"/></svg>
+      History
+    </div>
+    <div class="sidebar-section">Account</div>
+    <div class="nav-item" onclick="showView('settings',this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg>
+      Settings
+    </div>
+    <div class="sidebar-bottom">
+      <div class="user-pill">
+        <div class="user-avatar" id="user-avatar-initials">JO</div>
+        <div>
+          <div class="user-name" id="sidebar-user-name">Joel</div>
+          <div class="user-plan">Pro Plan</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-right">
+        <div class="credits-pill">⚡ 47 credits left</div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- DASHBOARD VIEW -->
+      <div class="view active" id="view-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num accent" id="stat-posts">0</div>
+            <div class="stat-label">Posts generated</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Platforms connected</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">47</div>
+            <div class="stat-label">Credits remaining</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num accent">Pro</div>
+            <div class="stat-label">Current plan</div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-card" onclick="showView('generate',document.querySelectorAll('.nav-item')[1])">
+            <div class="quick-card-icon">✍️</div>
+            <h3>Generate a post</h3>
+            <p>Create AI content for any platform in seconds</p>
+          </div>
+          <div class="quick-card" onclick="showView('history',document.querySelectorAll('.nav-item')[2])">
+            <div class="quick-card-icon">📋</div>
+            <h3>View history</h3>
+            <p>Browse and reuse your past generated content</p>
+          </div>
+          <div class="quick-card" onclick="showView('settings',document.querySelectorAll('.nav-item')[3])">
+            <div class="quick-card-icon">⚙️</div>
+            <h3>Update profile</h3>
+            <p>Refine your brand voice and business details</p>
+          </div>
+        </div>
+        <div class="recent-title">Recent content</div>
+        <div class="history-grid" id="dashboard-recent">
+          <div style="color:var(--muted);font-size:0.875rem;padding:1rem 0">No content generated yet. Click "Generate a post" to get started.</div>
+        </div>
+      </div>
+
+      <!-- GENERATE VIEW -->
+      <div class="view" id="view-generate">
+        <div class="generate-grid">
+          <!-- LEFT: CONTROLS -->
+          <div class="gen-panel">
+            <div>
+              <div class="panel-title">Generate content</div>
+              <div class="panel-sub">Tell Mavrix what you need and it'll write it for you</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">PLATFORM</label>
+              <div class="platform-grid">
+                <button class="platform-btn selected" onclick="selectPlatform(this,'Facebook')">
+                  <span class="platform-icon">📘</span>Facebook
+                </button>
+                <button class="platform-btn" onclick="selectPlatform(this,'Instagram')">
+                  <span class="platform-icon">📸</span>Instagram
+                </button>
+                <button class="platform-btn" onclick="selectPlatform(this,'LinkedIn')">
+                  <span class="platform-icon">💼</span>LinkedIn
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">CONTENT TYPE</label>
+              <select class="form-select" id="content-type">
+                <option>Promotional post</option>
+                <option>Educational tip</option>
+                <option>Client success story</option>
+                <option>Behind the scenes</option>
+                <option>Question / engagement post</option>
+                <option>Product/service highlight</option>
+                <option>Seasonal / trending content</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">TOPIC OR BRIEF (optional)</label>
+              <textarea class="form-textarea" id="content-brief" placeholder="e.g. Promote our free financial planning consultation this week. Focus on helping young couples plan for their first home."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">TONE</label>
+              <div class="tone-grid">
+                <button class="tone-btn selected" onclick="selectTone(this,'Professional')">Professional</button>
+                <button class="tone-btn" onclick="selectTone(this,'Friendly')">Friendly</button>
+                <button class="tone-btn" onclick="selectTone(this,'Bold')">Bold & Direct</button>
+                <button class="tone-btn" onclick="selectTone(this,'Educational')">Educational</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">INCLUDE HASHTAGS?</label>
+              <select class="form-select" id="include-hashtags">
+                <option value="yes">Yes — include relevant hashtags</option>
+                <option value="no">No — clean post only</option>
+              </select>
+            </div>
+
+            <button class="generate-btn" id="gen-btn" onclick="generateContent()">
+              ⚡ Generate content
+            </button>
+          </div>
+
+          <!-- RIGHT: OUTPUT -->
+          <div class="gen-panel output-panel">
+            <div>
+              <div class="panel-title">Your content</div>
+              <div class="panel-sub">AI-generated, ready to copy and post</div>
+            </div>
+
+            <div class="loading-bar" id="loading-bar"></div>
+
+            <div class="output-placeholder" id="output-placeholder">
+              <div style="font-size:2rem">✨</div>
+              <p>Fill in the form and click<br><strong style="color:var(--white)">Generate content</strong> to get started</p>
+            </div>
+
+            <div class="typing-dots" id="typing-dots">
+              <span></span><span></span><span></span>
+              <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Mavrix is writing...</span>
+            </div>
+
+            <div class="output-card" id="output-card">
+              <div class="output-meta" id="output-meta"></div>
+              <div class="output-text" id="output-text"></div>
+              <div class="output-actions">
+                <button class="action-btn" onclick="copyContent()">📋 Copy</button>
+                <button class="action-btn" onclick="generateContent()">🔄 Regenerate</button>
+                <button class="action-btn accent" onclick="saveToHistory()">💾 Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY VIEW -->
+      <div class="view" id="view-history">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+          <div>
+            <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700">Content history</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">All your saved posts in one place</div>
+          </div>
+        </div>
+        <div class="history-grid" id="history-list">
+          <div style="color:var(--muted);font-size:0.875rem;padding:1rem 0">No saved content yet. Generate and save your first post!</div>
+        </div>
+      </div>
+
+      <!-- SETTINGS VIEW -->
+      <div class="view" id="view-settings">
+        <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:1.5rem">Business settings</div>
+        <div class="settings-section">
+          <div class="settings-title">Business profile</div>
+          <div class="settings-grid">
+            <div class="form-group">
+              <label class="form-label">BUSINESS NAME</label>
+              <input class="form-input" id="set-biz-name" placeholder="Your business name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">INDUSTRY</label>
+              <select class="form-select" id="set-industry">
+                <option>Financial Advisory</option>
+                <option>Insurance</option>
+                <option>Real Estate</option>
+                <option>F&B / Restaurant</option>
+                <option>Retail</option>
+                <option>Healthcare / Wellness</option>
+                <option>Education</option>
+                <option>Professional Services</option>
+                <option>E-commerce</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">TARGET AUDIENCE</label>
+              <input class="form-input" id="set-audience" placeholder="Who are your customers?">
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">WHAT PROBLEM DO YOU SOLVE?</label>
+              <textarea class="form-textarea" id="set-problem" placeholder="Describe your value proposition"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-title">Brand voice</div>
+          <div class="tone-grid" id="settings-tone-grid">
+            <button class="tone-btn" onclick="selectSettingsTone(this,'Professional')">🤝 Professional</button>
+            <button class="tone-btn" onclick="selectSettingsTone(this,'Friendly')">😊 Friendly</button>
+            <button class="tone-btn" onclick="selectSettingsTone(this,'Bold & Direct')">⚡ Bold & Direct</button>
+            <button class="tone-btn" onclick="selectSettingsTone(this,'Educational')">📚 Educational</button>
+            <button class="tone-btn" onclick="selectSettingsTone(this,'Inspirational')">🌟 Inspirational</button>
+            <button class="tone-btn" onclick="selectSettingsTone(this,'Conversational')">💬 Conversational</button>
+          </div>
+          <button class="save-btn" onclick="saveSettings()">Save settings</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-accent">✓</span>
+  <span id="toast-msg">Copied to clipboard!</span>
+</div>
+
+<script>
+// ── STATE ──
+let state = {
+  platform: 'Facebook',
+  tone: 'Professional',
+  history: [],
+  bizName: '',
+  industry: '',
+  audience: '',
+  problem: '',
+  brandTone: '',
+  currentOutput: '',
+  currentPlatform: '',
+  currentTone: '',
+  postsGenerated: 0
+};
+
+let obStep = 1;
+let obTone = '';
+
+// ── LOGIN ──
+function doLogin() {
+  const email = document.getElementById('login-email').value;
+  if (!email) return;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('onboarding').style.display = 'flex';
+}
+
+// ── ONBOARDING ──
+function obNext() {
+  if (obStep === 1) {
+    state.bizName = document.getElementById('ob-biz-name').value || 'Your Business';
+    state.industry = document.getElementById('ob-industry').value || 'Business';
+    obStep = 2;
+  } else if (obStep === 2) {
+    state.audience = document.getElementById('ob-audience').value;
+    state.problem = document.getElementById('ob-problem').value;
+    obStep = 3;
+    document.getElementById('ob-next-btn').textContent = 'Get started →';
+  } else {
+    state.brandTone = obTone || 'Professional';
+    completeOnboarding();
+    return;
+  }
+  document.querySelectorAll('.onboarding-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + obStep).classList.add('active');
+  document.querySelectorAll('.step-dot').forEach((d,i) => {
+    d.classList.toggle('active', i < obStep);
+  });
+}
+
+function selectObTone(btn, tone) {
+  document.querySelectorAll('#ob-tone-grid .tone-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  obTone = tone;
+}
+
+function skipOnboarding() { completeOnboarding(); }
+
+function completeOnboarding() {
+  document.getElementById('onboarding').style.display = 'none';
+  if (state.bizName) {
+    document.getElementById('sidebar-user-name').textContent = state.bizName.split(' ')[0];
+    const initials = state.bizName.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    document.getElementById('user-avatar-initials').textContent = initials || 'MV';
+    document.getElementById('set-biz-name').value = state.bizName;
+    document.getElementById('set-industry').value = state.industry;
+    document.getElementById('set-audience').value = state.audience;
+    document.getElementById('set-problem').value = state.problem;
+  }
+}
+
+// ── NAVIGATION ──
+function showView(name, navEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  const titles = {dashboard:'Dashboard',generate:'Generate Content',history:'History',settings:'Settings'};
+  document.getElementById('topbar-title').textContent = titles[name] || name;
+}
+
+// ── PLATFORM / TONE SELECT ──
+function selectPlatform(btn, platform) {
+  document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.platform = platform;
+}
+
+function selectTone(btn, tone) {
+  document.querySelectorAll('#view-generate .tone-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.tone = tone;
+}
+
+function selectSettingsTone(btn, tone) {
+  document.querySelectorAll('#settings-tone-grid .tone-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.brandTone = tone;
+}
+
+// ── GENERATE ──
+async function generateContent() {
+  const btn = document.getElementById('gen-btn');
+  const loadingBar = document.getElementById('loading-bar');
+  const typingDots = document.getElementById('typing-dots');
+  const placeholder = document.getElementById('output-placeholder');
+  const outputCard = document.getElementById('output-card');
+  const outputText = document.getElementById('output-text');
+  const outputMeta = document.getElementById('output-meta');
+
+  const contentType = document.getElementById('content-type').value;
+  const brief = document.getElementById('content-brief').value;
+  const hashtags = document.getElementById('include-hashtags').value === 'yes';
+
+  btn.disabled = true;
+  btn.textContent = '⚡ Generating...';
+  loadingBar.classList.add('active');
+  placeholder.style.display = 'none';
+  outputCard.classList.remove('visible');
+  typingDots.classList.add('active');
+
+  const bizContext = `
+Business: ${state.bizName || 'a Singapore SME'}
+Industry: ${state.industry || 'business'}
+Target audience: ${state.audience || 'Singapore professionals'}
+Value proposition: ${state.problem || 'helping customers solve their problems'}
+Brand tone: ${state.tone}
+  `.trim();
+
+  const prompt = `You are a professional social media copywriter for Singapore businesses.
+
+Business context:
+${bizContext}
+
+Task: Write a ${contentType} for ${state.platform}.
+${brief ? `Brief from client: ${brief}` : ''}
+Tone: ${state.tone}
+${hashtags ? 'Include 3-5 relevant Singapore-appropriate hashtags at the end.' : 'Do NOT include hashtags.'}
+
+Requirements:
+- Write in a ${state.tone.toLowerCase()} tone
+- Keep it appropriate for ${state.platform} (${state.platform === 'LinkedIn' ? 'professional, slightly longer' : state.platform === 'Instagram' ? 'visual, engaging, casual' : 'conversational, community-focused'})
+- Make it feel authentic, not AI-generated
+- Include a clear call to action
+- Keep it concise and punchy
+- Write for a Singapore audience
+
+Output ONLY the post content, nothing else. No labels, no explanation.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || 'Unable to generate content. Please try again.';
+
+    state.currentOutput = text;
+    state.currentPlatform = state.platform;
+    state.currentTone = state.tone;
+
+    typingDots.classList.remove('active');
+    loadingBar.classList.remove('active');
+
+    outputMeta.innerHTML = `
+      <span class="output-badge badge-platform">${state.platform}</span>
+      <span class="output-badge badge-tone">${state.tone}</span>
+      <span class="output-badge" style="background:rgba(200,240,76,0.1);color:var(--accent);border:1px solid rgba(200,240,76,0.2)">${contentType}</span>
+    `;
+    outputText.textContent = text;
+    outputCard.classList.add('visible');
+
+    state.postsGenerated++;
+    document.getElementById('stat-posts').textContent = state.postsGenerated;
+
+  } catch (err) {
+    typingDots.classList.remove('active');
+    loadingBar.classList.remove('active');
+    outputText.textContent = 'Something went wrong. Please try again.';
+    outputCard.classList.add('visible');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '⚡ Generate content';
+}
+
+// ── COPY ──
+function copyContent() {
+  if (!state.currentOutput) return;
+  navigator.clipboard.writeText(state.currentOutput).then(() => showToast('Copied to clipboard!'));
+}
+
+// ── SAVE ──
+function saveToHistory() {
+  if (!state.currentOutput) return;
+  const item = {
+    text: state.currentOutput,
+    platform: state.currentPlatform,
+    tone: state.currentTone,
+    time: new Date().toLocaleString('en-SG', {dateStyle:'short', timeStyle:'short'}),
+    id: Date.now()
+  };
+  state.history.unshift(item);
+  renderHistory();
+  renderDashboardRecent();
+  showToast('Saved to history!');
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  if (state.history.length === 0) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:0.875rem;padding:1rem 0">No saved content yet. Generate and save your first post!</div>';
+    return;
+  }
+  list.innerHTML = state.history.map(item => `
+    <div class="history-card">
+      <div class="history-card-top">
+        <div class="history-card-meta">
+          <span class="output-badge badge-platform">${item.platform}</span>
+          <span class="output-badge badge-tone">${item.tone}</span>
+          <span class="history-card-time">${item.time}</span>
+        </div>
+        <button class="history-copy" onclick="copyHistoryItem(${item.id})">Copy</button>
+      </div>
+      <div class="history-card-text">${item.text.replace(/</g,'&lt;')}</div>
+    </div>
+  `).join('');
+}
+
+function renderDashboardRecent() {
+  const el = document.getElementById('dashboard-recent');
+  if (state.history.length === 0) {
+    el.innerHTML = '<div style="color:var(--muted);font-size:0.875rem;padding:1rem 0">No content generated yet. Click "Generate a post" to get started.</div>';
+    return;
+  }
+  const recent = state.history.slice(0,2);
+  el.innerHTML = recent.map(item => `
+    <div class="history-card">
+      <div class="history-card-top">
+        <div class="history-card-meta">
+          <span class="output-badge badge-platform">${item.platform}</span>
+          <span class="output-badge badge-tone">${item.tone}</span>
+          <span class="history-card-time">${item.time}</span>
+        </div>
+        <button class="history-copy" onclick="copyHistoryItem(${item.id})">Copy</button>
+      </div>
+      <div class="history-card-text">${item.text.replace(/</g,'&lt;')}</div>
+    </div>
+  `).join('');
+}
+
+function copyHistoryItem(id) {
+  const item = state.history.find(h => h.id === id);
+  if (!item) return;
+  navigator.clipboard.writeText(item.text).then(() => showToast('Copied to clipboard!'));
+}
+
+// ── SETTINGS ──
+function saveSettings() {
+  state.bizName = document.getElementById('set-biz-name').value || state.bizName;
+  state.industry = document.getElementById('set-industry').value;
+  state.audience = document.getElementById('set-audience').value;
+  state.problem = document.getElementById('set-problem').value;
+  if (state.bizName) {
+    document.getElementById('sidebar-user-name').textContent = state.bizName.split(' ')[0];
+    const initials = state.bizName.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    document.getElementById('user-avatar-initials').textContent = initials || 'MV';
+  }
+  showToast('Settings saved!');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

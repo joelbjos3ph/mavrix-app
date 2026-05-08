@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mavrix — AI Agents That Grow Your Business While You Sleep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #08080A;
+    --white: #F5F4F0;
+    --accent: #C8F04C;
+    --accent-dim: #a8cc30;
+    --surface: #111113;
+    --surface2: #18181C;
+    --border: rgba(255,255,255,0.07);
+    --text-muted: rgba(245,244,240,0.45);
+    --text-mid: rgba(245,244,240,0.7);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(8,8,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-mid);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+
+  .nav-cta:hover { background: var(--accent-dim) !important; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200,240,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(200,240,76,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(200,240,76,0.1);
+    border: 1px solid rgba(200,240,76,0.25);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+    max-width: 900px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-mid);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-primary:hover { background: var(--accent-dim); transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--text-mid);
+    padding: 0.9rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.03em;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* LOGOS */
+  .logos {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .logos p {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .logos-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-item {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(245,244,240,0.2);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION */
+  section { padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--text-mid);
+    font-size: 1.05rem;
+    max-width: 520px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* PROBLEM */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .problem-card h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .problem-card h3 .icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .problem-card p {
+    color: var(--text-mid);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .step:hover { border-color: rgba(200,240,76,0.2); }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .step:hover::before { opacity: 1; }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(200,240,76,0.12);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+  }
+
+  .step h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .step p {
+    color: var(--text-mid);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .feature:hover {
+    border-color: rgba(200,240,76,0.15);
+    background: var(--surface2);
+  }
+
+  .feature-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(200,240,76,0.1);
+    border: 1px solid rgba(200,240,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 1rem;
+  }
+
+  .feature h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature p {
+    color: var(--text-mid);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: var(--surface2);
+  }
+
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--black);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .pricing-tier {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .pricing-price {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.25rem;
+  }
+
+  .pricing-price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0;
+  }
+
+  .pricing-desc {
+    color: var(--text-mid);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-features li {
+    font-size: 0.875rem;
+    color: var(--text-mid);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-weight: 300;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .pricing-btn {
+    display: block;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .pricing-btn-outline {
+    border: 1px solid var(--border);
+    color: var(--white);
+  }
+
+  .pricing-btn-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+
+  .pricing-btn-filled {
+    background: var(--accent);
+    color: var(--black);
+  }
+
+  .pricing-btn-filled:hover { background: var(--accent-dim); transform: translateY(-1px); }
+
+  /* WAITLIST */
+  .waitlist-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 4rem 6rem;
+  }
+
+  .waitlist-box {
+    background: var(--surface);
+    border: 1px solid rgba(200,240,76,0.15);
+    border-radius: 24px;
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .waitlist-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .waitlist-box h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .waitlist-box p {
+    color: var(--text-mid);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .waitlist-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .waitlist-input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .waitlist-input::placeholder { color: var(--text-muted); }
+  .waitlist-input:focus { border-color: rgba(200,240,76,0.4); }
+
+  .waitlist-submit {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+
+  .waitlist-submit:hover { background: var(--accent-dim); transform: translateY(-1px); }
+
+  .waitlist-note {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* SUCCESS MESSAGE */
+  .success-msg {
+    display: none;
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* MARKET TAGS */
+  .market-tags {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .market-tag {
+    background: rgba(200,240,76,0.08);
+    border: 1px solid rgba(200,240,76,0.2);
+    color: var(--accent);
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Mavri<span>x</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#waitlist" class="nav-cta">Join waitlist</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">Now accepting early access</div>
+
+  <h1>AI agents that grow your<br>business <em>while you sleep</em></h1>
+
+  <p class="hero-sub">Mavrix replaces your marketing agency with intelligent AI agents that generate leads, create content, and nurture customers — at a fraction of the cost.</p>
+
+  <div class="hero-actions">
+    <a href="#waitlist" class="btn-primary">Get early access →</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num"><span>80</span>%</div>
+      <div class="stat-label">Cost reduction vs agencies</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24<span>/7</span></div>
+      <div class="stat-label">Always-on marketing</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span>3×</span></div>
+      <div class="stat-label">Faster campaign delivery</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOS -->
+<div class="logos">
+  <p>Built for businesses across Singapore</p>
+  <div class="logos-row">
+    <div class="logo-item">Financial Advisory</div>
+    <div class="logo-item">·</div>
+    <div class="logo-item">Insurance</div>
+    <div class="logo-item">·</div>
+    <div class="logo-item">Real Estate</div>
+    <div class="logo-item">·</div>
+    <div class="logo-item">F&amp;B</div>
+    <div class="logo-item">·</div>
+    <div class="logo-item">SMEs</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="fade-in">
+  <div class="section-label">The problem</div>
+  <h2 class="section-title">Marketing agencies are<br>expensive, slow, and generic</h2>
+  <p class="section-sub">Most SMEs are stuck paying $3,000–$15,000/month for results they could get faster, cheaper, and smarter.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <h3><span class="icon">💸</span> Burning budget</h3>
+      <p>Marketing retainers eat into your margins every month — regardless of results. You're paying for hours, not outcomes.</p>
+    </div>
+    <div class="problem-card">
+      <h3><span class="icon">🐢</span> Slow turnaround</h3>
+      <p>Waiting days or weeks for a social post or campaign brief. While your competitors are already live, you're waiting for approvals.</p>
+    </div>
+    <div class="problem-card">
+      <h3><span class="icon">📋</span> Cookie-cutter content</h3>
+      <p>Agencies juggle dozens of clients. Your brand gets templated, generic content that doesn't convert or resonate.</p>
+    </div>
+    <div class="problem-card">
+      <h3><span class="icon">📊</span> No real accountability</h3>
+      <p>You get monthly reports with vanity metrics. No clear line between what you spent and the leads or revenue generated.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="fade-in">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Three steps to AI-powered marketing</h2>
+  <p class="section-sub">Mavrix deploys a suite of AI agents that run your marketing end-to-end — no agency, no freelancer, no delays.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Connect your business</h3>
+      <p>Tell Mavrix about your business, target audience, and goals. Our agents learn your brand voice, compliance requirements, and customer personas.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Agents go to work</h3>
+      <p>Mavrix deploys AI agents that generate content, run campaigns, qualify leads, and nurture prospects — continuously and autonomously.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Review, approve, grow</h3>
+      <p>You stay in control. Review outputs, approve campaigns, and watch your pipeline grow — without the agency overhead.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section id="features" class="fade-in">
+  <div class="section-label">What Mavrix does</div>
+  <h2 class="section-title">Everything your marketing<br>team should be doing</h2>
+
+  <div class="market-tags">
+    <span class="market-tag">Financial Advisory firms</span>
+    <span class="market-tag">Insurance agencies</span>
+    <span class="market-tag">SMEs</span>
+    <span class="market-tag">Real Estate</span>
+    <span class="market-tag">Professional services</span>
+  </div>
+
+  <div class="features" style="margin-top: 2rem;">
+    <div class="feature">
+      <div class="feature-icon">✍️</div>
+      <h3>AI Content Generation</h3>
+      <p>Weekly social posts, email campaigns, ad copy, and blog articles — generated in your brand voice, ready to publish in minutes.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h3>Lead Qualification Bot</h3>
+      <p>AI chatbots that engage visitors, qualify prospects, and route warm leads directly to you — 24/7, no human required.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📧</div>
+      <h3>Automated Nurture Sequences</h3>
+      <p>Multi-step email and messaging flows that keep prospects warm and guide them toward conversion automatically.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📈</div>
+      <h3>Campaign Performance AI</h3>
+      <p>Real-time analysis of what's working. Mavrix adjusts messaging, timing, and targeting based on actual results — not guesswork.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔍</div>
+      <h3>Audience & Market Research</h3>
+      <p>Instant persona building, competitor analysis, and market insights — without hiring a strategist or waiting weeks for a deck.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h3>Done-For-You Option</h3>
+      <p>Not ready to self-serve? Our team runs your marketing using Mavrix as the engine. Agency results at a fraction of the cost.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="pricing" class="fade-in">
+  <div class="section-label">Pricing</div>
+  <h2 class="section-title">Simple, honest pricing</h2>
+  <p class="section-sub">No retainer lock-ins. No hidden fees. Cancel anytime.</p>
+
+  <div class="pricing-grid">
+    <!-- STARTER -->
+    <div class="pricing-card">
+      <div class="pricing-tier">Starter</div>
+      <div class="pricing-price">$299<span>/mo</span></div>
+      <p class="pricing-desc">For solo founders and small businesses getting started with AI marketing.</p>
+      <ul class="pricing-features">
+        <li>AI content generation (social + email)</li>
+        <li>Lead capture chatbot</li>
+        <li>Monthly campaign calendar</li>
+        <li>Basic performance dashboard</li>
+        <li>Email support</li>
+      </ul>
+      <a href="#waitlist" class="pricing-btn pricing-btn-outline">Get started</a>
+    </div>
+
+    <!-- PRO -->
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Most popular</div>
+      <div class="pricing-tier">Pro</div>
+      <div class="pricing-price">$799<span>/mo</span></div>
+      <p class="pricing-desc">For growing businesses that need full AI marketing automation across all channels.</p>
+      <ul class="pricing-features">
+        <li>Everything in Starter</li>
+        <li>Multi-channel campaigns (FB, IG, LinkedIn)</li>
+        <li>AI lead nurture sequences</li>
+        <li>Competitor monitoring</li>
+        <li>Weekly performance reports</li>
+        <li>Priority support + onboarding call</li>
+      </ul>
+      <a href="#waitlist" class="pricing-btn pricing-btn-filled">Get started</a>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="pricing-card">
+      <div class="pricing-tier">Enterprise / DFY</div>
+      <div class="pricing-price">Custom</div>
+      <p class="pricing-desc">We run your marketing for you using Mavrix as the engine. Full done-for-you service.</p>
+      <ul class="pricing-features">
+        <li>Everything in Pro</li>
+        <li>Dedicated account manager</li>
+        <li>Custom AI model training</li>
+        <li>Compliance-ready content (MAS/FA)</li>
+        <li>CRM integration</li>
+        <li>White-glove onboarding</li>
+      </ul>
+      <a href="#waitlist" class="pricing-btn pricing-btn-outline">Contact us</a>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<div class="waitlist-section" id="waitlist">
+  <div class="waitlist-box fade-in">
+    <h2>Be first when we launch</h2>
+    <p>Join the waitlist and get 30 days free + priority onboarding when Mavrix goes live.</p>
+    <div class="waitlist-form">
+      <input type="email" class="waitlist-input" placeholder="Enter your work email" id="emailInput">
+      <button class="waitlist-submit" onclick="handleSubmit()">Join waitlist</button>
+    </div>
+    <div class="success-msg" id="successMsg">✓ You're on the list! We'll be in touch soon.</div>
+    <p class="waitlist-note">No spam. No credit card required. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Mavri<span>x</span></a>
+  <p>© 2025 Mavrix. Singapore.</p>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a></li>
+  </ul>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  function handleSubmit() {
+    const email = document.getElementById('emailInput').value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      document.getElementById('emailInput').style.borderColor = 'rgba(255,80,80,0.5)';
+      setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
+      return;
+    }
+    document.querySelector('.waitlist-form').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
