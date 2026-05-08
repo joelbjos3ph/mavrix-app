@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "app.mavrix.sg" }],
       "destination": "/mavrix-app.html"
     }
