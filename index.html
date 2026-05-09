@@ -1252,15 +1252,21 @@
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
+    const payload = { from_name: name, from_email: email, business_name: business };
+    console.log('Formspree payload:', payload);
+
     fetch('https://formspree.io/f/xojrkoqw', {
       method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from_name: name, from_email: email, business_name: business }),
-    }).then(r => {
-      if (!r.ok) throw new Error();
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(async r => {
+      const data = await r.json();
+      console.log('Formspree response:', r.status, data);
+      if (!r.ok) throw data;
       document.getElementById('modal-form-view').style.display = 'none';
       document.getElementById('modal-success-view').style.display = 'block';
-    }).catch(() => {
+    }).catch(err => {
+      console.error('Formspree error:', err);
       btn.disabled = false;
       btn.textContent = 'Send message';
       alert('Something went wrong — please email us at hello@mavrix.sg');
