@@ -154,9 +154,11 @@
     font-family: var(--font-display);
     font-size: clamp(3rem, 7vw, 6.5rem);
     font-weight: 800;
-    line-height: 1.0;
+    line-height: 1.2;
     letter-spacing: -0.03em;
     margin-bottom: 1.5rem;
+    padding-bottom: 0.15em;
+    overflow: visible;
     animation: fadeUp 0.6s 0.1s ease both;
     max-width: 900px;
   }
@@ -288,8 +290,9 @@
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.1;
+    line-height: 1.2;
     margin-bottom: 1rem;
+    overflow: visible;
   }
 
   .section-sub {
@@ -321,10 +324,12 @@
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 600;
+    line-height: 1.2;
     margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    overflow: visible;
   }
 
   .problem-card h3 .icon {
@@ -390,7 +395,9 @@
     font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 0.75rem;
+    overflow: visible;
   }
 
   .step p {
@@ -437,7 +444,9 @@
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 0.5rem;
+    overflow: visible;
   }
 
   .feature p {
@@ -598,8 +607,10 @@
     font-family: var(--font-display);
     font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     font-weight: 800;
+    line-height: 1.2;
     letter-spacing: -0.03em;
     margin-bottom: 1rem;
+    overflow: visible;
   }
 
   .waitlist-box p {
@@ -815,8 +826,8 @@
 
     /* HERO */
     .hero { padding: 6rem 1.25rem 3.5rem; }
-    .hero h1 { font-size: clamp(2.1rem, 9vw, 3rem); line-height: 1.05; }
-    .hero h1 br { display: none; }
+    .br { display: none; }
+    .hero h1 { font-size: clamp(2.1rem, 9vw, 3rem); }
     .hero-sub { font-size: 0.95rem; max-width: 100%; }
     .hero-actions { flex-direction: column; width: 100%; }
     .hero-actions .btn-primary,
@@ -833,7 +844,6 @@
     /* SECTIONS */
     section { padding: 3.5rem 1.25rem; }
     .section-title { font-size: clamp(1.7rem, 6vw, 2.5rem); }
-    .section-title br { display: none; }
     .section-sub { font-size: 0.95rem; max-width: 100%; }
 
     /* PROBLEM */
@@ -910,7 +920,7 @@
 
   <div class="hero-badge">Now accepting early access</div>
 
-  <h1>AI agents that grow your<br>business <em>while you sleep</em></h1>
+  <h1>AI agents that grow your <span class="br"><br></span>business <em>while you sleep</em></h1>
 
   <p class="hero-sub">Mavrix replaces your marketing agency with intelligent AI agents that generate leads, create content, and nurture customers — at a fraction of the cost.</p>
 
@@ -954,7 +964,7 @@
 <!-- PROBLEM -->
 <section class="fade-in">
   <div class="section-label">The problem</div>
-  <h2 class="section-title">Marketing agencies are<br>expensive, slow, and generic</h2>
+  <h2 class="section-title">Marketing agencies are <span class="br"><br></span>expensive, slow, and generic</h2>
   <p class="section-sub">Most SMEs are stuck paying $3,000–$15,000/month for results they could get faster, cheaper, and smarter.</p>
 
   <div class="problem-grid">
@@ -1009,7 +1019,7 @@
 <!-- FEATURES -->
 <section id="features" class="fade-in">
   <div class="section-label">What Mavrix does</div>
-  <h2 class="section-title">Everything your marketing<br>team should be doing</h2>
+  <h2 class="section-title">Everything your marketing <span class="br"><br></span>team should be doing</h2>
 
   <div class="market-tags">
     <span class="market-tag">Financial Advisory firms</span>
