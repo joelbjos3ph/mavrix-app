@@ -285,6 +285,32 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 
 /* ── LOGIN ERROR ── */
 #login-error{color:var(--red);font-size:0.8rem;text-align:center;margin-top:0.75rem;min-height:1.2em}
+#signup-error{color:var(--red);font-size:0.8rem;text-align:center;margin-top:0.75rem;min-height:1.2em}
+
+/* ── SIGNUP ── */
+.field select{
+  width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:0.75rem 1rem;color:var(--white);
+  font-family:var(--font-body);font-size:0.9rem;outline:none;transition:border-color 0.2s;
+  appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;
+}
+.field select:focus{border-color:rgba(200,240,76,0.5)}
+.field select option{background:var(--surface2)}
+.auth-switch{text-align:center;font-size:0.82rem;color:var(--muted);margin-top:0.85rem}
+.auth-switch a{color:var(--accent);text-decoration:none;font-weight:500}
+.auth-switch a:hover{text-decoration:underline}
+#signup-screen{
+  position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;
+  background:var(--black);z-index:100;overflow-y:auto;padding:1.5rem 1rem;
+  background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(200,240,76,0.07) 0%,transparent 70%);
+}
+#signup-screen.visible{display:flex}
+.signup-box{
+  width:420px;background:var(--surface);border:1px solid var(--border2);
+  border-radius:20px;padding:2.5rem;margin:auto;
+}
 
 /* ── HAMBURGER ── */
 .hamburger{display:none;background:none;border:none;color:var(--white);font-size:1.25rem;cursor:pointer;padding:0.3rem 0.5rem;line-height:1;border-radius:6px;transition:background 0.15s;flex-shrink:0}
@@ -347,10 +373,10 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   .history-card-text{word-break:break-word}
   .credits-pill{font-size:0.72rem;padding:0.25rem 0.6rem}
 
-  /* Login / onboarding */
-  .login-box{width:92%;max-width:380px;padding:1.75rem}
+  /* Login / signup / onboarding */
+  .login-box,.signup-box{width:92%;max-width:380px;padding:1.75rem}
   .onboarding-box{width:92%;max-width:480px;padding:1.75rem}
-  #login-screen{padding:1rem}
+  #login-screen,#signup-screen{padding:1rem}
 
   /* Show mobile bottom nav */
   .mobile-bottom-nav{display:flex}
@@ -387,6 +413,47 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
     <p id="login-error"></p>
     <button class="btn-primary" onclick="doLogin()">Sign in →</button>
     <p class="login-note">Demo: demo@mavrix.sg / demo1234</p>
+    <p class="auth-switch">New to Mavrix? <a href="#" onclick="showSignup();return false;">Create account</a></p>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div id="signup-screen">
+  <div class="signup-box">
+    <div class="login-logo">Mavri<span>x</span></div>
+    <h2>Create your account</h2>
+    <p>Start growing your business with AI marketing</p>
+    <div class="field">
+      <label>FULL NAME</label>
+      <input type="text" placeholder="Jane Tan" id="signup-name" autocomplete="name">
+    </div>
+    <div class="field">
+      <label>EMAIL</label>
+      <input type="email" placeholder="you@company.com" id="signup-email" autocomplete="email">
+    </div>
+    <div class="field">
+      <label>PASSWORD</label>
+      <input type="password" placeholder="Min. 8 characters" id="signup-pass" autocomplete="new-password">
+    </div>
+    <div class="field">
+      <label>CONFIRM PASSWORD</label>
+      <input type="password" placeholder="Repeat password" id="signup-pass2" autocomplete="new-password">
+    </div>
+    <div class="field">
+      <label>BUSINESS NAME</label>
+      <input type="text" placeholder="Acme Pte Ltd" id="signup-biz" autocomplete="organization">
+    </div>
+    <div class="field">
+      <label>PLAN</label>
+      <select id="signup-plan" onkeydown="if(event.key==='Enter')doSignup()">
+        <option value="Starter">Starter — $299/mo</option>
+        <option value="Pro" selected>Pro — $799/mo</option>
+        <option value="Enterprise">Enterprise / DFY — Custom</option>
+      </select>
+    </div>
+    <p id="signup-error"></p>
+    <button class="btn-primary" onclick="doSignup()">Create account →</button>
+    <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin();return false;">Sign in</a></p>
   </div>
 </div>
 
@@ -738,6 +805,15 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 </div>
 
 <script>
+// ── GOOGLE APPS SCRIPT ──
+// Replace with your deployed GAS URL after setup
+const GOOGLE_SCRIPT_URL = 'GOOGLE_SCRIPT_URL';
+
+async function hashPassword(password) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
 // ── AUTH ──
 let authToken = sessionStorage.getItem('mavrix_token');
 
@@ -760,35 +836,116 @@ let state = {
 let obStep = 1;
 let obTone = '';
 
+// ── AUTH SCREEN TOGGLE ──
+function showSignup() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('signup-screen').classList.add('visible');
+  document.getElementById('signup-error').textContent = '';
+}
+
+function showLogin() {
+  document.getElementById('signup-screen').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  errEl.style.color = 'var(--red)';
+}
+
+// ── SIGNUP ──
+async function doSignup() {
+  const name  = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const pass  = document.getElementById('signup-pass').value;
+  const pass2 = document.getElementById('signup-pass2').value;
+  const biz   = document.getElementById('signup-biz').value.trim();
+  const plan  = document.getElementById('signup-plan').value;
+  const errEl = document.getElementById('signup-error');
+  const btn   = document.querySelector('#signup-screen .btn-primary');
+
+  errEl.textContent = '';
+  if (!name || !email || !pass || !biz) { errEl.textContent = 'All fields are required.'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Enter a valid email address.'; return; }
+  if (pass.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
+  if (pass !== pass2) { errEl.textContent = 'Passwords do not match.'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Creating account...';
+
+  try {
+    const passwordHash = await hashPassword(pass);
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'signup',
+        name, email, passwordHash,
+        bizName: biz, plan,
+        date: new Date().toLocaleDateString('en-SG'),
+        status: 'active'
+      })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Signup failed. Please try again.');
+    showLogin();
+    document.getElementById('login-email').value = email;
+    const loginErrEl = document.getElementById('login-error');
+    loginErrEl.style.color = 'var(--accent)';
+    loginErrEl.textContent = '✓ Account created! Sign in to continue.';
+  } catch (err) {
+    errEl.textContent = err.message || 'Something went wrong. Please try again.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Create account →';
+}
+
 // ── LOGIN ──
 async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
+  const email    = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-pass').value;
-  const btn = document.querySelector('#login-screen .btn-primary');
+  const errEl    = document.getElementById('login-error');
+  const btn      = document.querySelector('#login-screen .btn-primary');
   if (!email || !password) return;
 
   btn.disabled = true;
   btn.textContent = 'Signing in...';
-  document.getElementById('login-error').textContent = '';
+  errEl.textContent = '';
+  errEl.style.color = 'var(--red)';
 
-  try {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      document.getElementById('login-error').textContent = data.error || 'Sign in failed.';
+  if (GOOGLE_SCRIPT_URL === 'GOOGLE_SCRIPT_URL') {
+    // GAS not yet configured — fall back to local Express server (demo mode)
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Sign in failed.');
+      authToken = data.token;
+      sessionStorage.setItem('mavrix_token', authToken);
+      launchApp(data);
+    } catch (err) {
+      errEl.textContent = err.message || 'Cannot reach server. Make sure it is running.';
       btn.disabled = false;
       btn.textContent = 'Sign in →';
-      return;
     }
-    authToken = data.token;
-    sessionStorage.setItem('mavrix_token', authToken);
-    launchApp(data);
-  } catch {
-    document.getElementById('login-error').textContent = 'Cannot reach server. Make sure it is running.';
+    return;
+  }
+
+  // GAS login
+  try {
+    const passwordHash = await hashPassword(password);
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'login', email, passwordHash })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Sign in failed.');
+    const userData = { name: data.name, email, plan: data.plan, bizName: data.bizName || '' };
+    sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
+    launchApp(userData);
+  } catch (err) {
+    errEl.textContent = err.message || 'Sign in failed. Please try again.';
     btn.disabled = false;
     btn.textContent = 'Sign in →';
   }
@@ -796,12 +953,14 @@ async function doLogin() {
 
 function launchApp(userData) {
   document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('signup-screen').classList.remove('visible');
   document.getElementById('app').classList.add('visible');
   const name = userData?.name || 'User';
   document.getElementById('sidebar-user-name').textContent = name.split(' ')[0];
   const initials = name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
   document.getElementById('user-avatar-initials').textContent = initials || 'MV';
   document.querySelector('.user-plan').textContent = (userData?.plan || 'Pro') + ' Plan';
+  if (userData?.bizName) state.bizName = userData.bizName;
   document.getElementById('onboarding').style.display = 'flex';
 }
 
@@ -809,10 +968,14 @@ function launchApp(userData) {
 function doLogout() {
   authToken = null;
   sessionStorage.removeItem('mavrix_token');
+  sessionStorage.removeItem('mavrix_user');
   document.getElementById('app').classList.remove('visible');
+  document.getElementById('signup-screen').classList.remove('visible');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-pass').value = '';
-  document.getElementById('login-error').textContent = '';
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  errEl.style.color = 'var(--red)';
   const btn = document.querySelector('#login-screen .btn-primary');
   btn.disabled = false;
   btn.textContent = 'Sign in →';
@@ -910,6 +1073,10 @@ function selectSettingsTone(btn, tone) {
 
 // ── GENERATE ──
 async function generateContent() {
+  if (!authToken) {
+    showToast('Content generation requires the Mavrix server. Contact support.');
+    return;
+  }
   const btn = document.getElementById('gen-btn');
   const loadingBar = document.getElementById('loading-bar');
   const typingDots = document.getElementById('typing-dots');
