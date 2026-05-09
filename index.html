@@ -1105,7 +1105,7 @@
         <li>Basic performance dashboard</li>
         <li>Email support</li>
       </ul>
-      <a href="#" class="pricing-btn pricing-btn-outline" onclick="openModal();return false;">Get started</a>
+      <a href="#" class="pricing-btn pricing-btn-outline" onclick="openModal('Starter');return false;">Get started</a>
     </div>
 
     <!-- PRO -->
@@ -1122,7 +1122,7 @@
         <li>Weekly performance reports</li>
         <li>Priority support + onboarding call</li>
       </ul>
-      <a href="#" class="pricing-btn pricing-btn-filled" onclick="openModal();return false;">Get started</a>
+      <a href="#" class="pricing-btn pricing-btn-filled" onclick="openModal('Pro');return false;">Get started</a>
     </div>
 
     <!-- ENTERPRISE -->
@@ -1138,7 +1138,7 @@
         <li>CRM integration</li>
         <li>White-glove onboarding</li>
       </ul>
-      <a href="#" class="pricing-btn pricing-btn-outline" onclick="openModal();return false;">Contact us</a>
+      <a href="#" class="pricing-btn pricing-btn-outline" onclick="openModal('Enterprise');return false;">Contact us</a>
     </div>
   </div>
 </section>
@@ -1151,6 +1151,8 @@
     <div id="modal-form-view">
       <h2 id="modal-title">Let's get you started</h2>
       <p>Tell us a bit about your business and we'll reach out within 24 hours.</p>
+
+      <input type="hidden" id="modal-plan" value="">
 
       <div class="modal-field">
         <label for="modal-name">Your name</label>
@@ -1210,7 +1212,15 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  function openModal() {
+  function openModal(plan) {
+    document.getElementById('modal-plan').value = plan || '';
+    document.getElementById('modal-title').textContent = plan ? 'Get started with ' + plan : 'Let\'s get you started';
+    // Reset to form view in case a previous submission showed success
+    document.getElementById('modal-form-view').style.display = '';
+    document.getElementById('modal-success-view').style.display = 'none';
+    const btn = document.getElementById('modal-submit-btn');
+    btn.disabled = false;
+    btn.textContent = 'Send message';
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
     setTimeout(() => document.getElementById('modal-name').focus(), 60);
@@ -1252,15 +1262,19 @@
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
+    const plan = document.getElementById('modal-plan').value;
+    const payload = {
+      access_key: 'd1ba9b64-0a42-4be8-9181-b6620ce497b2',
+      name:     name,
+      email:    email,
+      business: business,
+    };
+    if (plan) payload.plan = plan;
+
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        access_key: 'd1ba9b64-0a42-4be8-9181-b6620ce497b2',
-        name:     name,
-        email:    email,
-        business: business,
-      }),
+      body: JSON.stringify(payload),
     }).then(async r => {
       const data = await r.json();
       if (!r.ok || !data.success) throw data;
