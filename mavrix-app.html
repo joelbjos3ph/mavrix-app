@@ -807,7 +807,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 <script>
 // ── GOOGLE APPS SCRIPT ──
 // Replace with your deployed GAS URL after setup
-const GOOGLE_SCRIPT_URL = 'GOOGLE_SCRIPT_URL';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxm4ubwgcgLuoZloJG4MV_faB8nxCm9XnTKB9W7oo4Fd-f6KG5VyKomTueGSduEo6e30w/exec';
 
 async function hashPassword(password) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password));
