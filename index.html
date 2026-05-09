@@ -6,6 +6,7 @@
 <title>Mavrix — AI Agents That Grow Your Business While You Sleep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -578,58 +579,86 @@
 
   .pricing-btn-filled:hover { background: var(--accent-dim); transform: translateY(-1px); }
 
-  /* WAITLIST */
-  .waitlist-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 4rem 6rem;
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
   }
+  .modal-overlay.open { display: flex; }
 
-  .waitlist-box {
+  .modal-card {
     background: var(--surface);
     border: 1px solid rgba(200,240,76,0.15);
-    border-radius: 24px;
-    padding: 4rem;
-    text-align: center;
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
     position: relative;
-    overflow: hidden;
   }
 
-  .waitlist-box::before {
+  .modal-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
+    border-radius: 20px 20px 0 0;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
   }
 
-  .waitlist-box h2 {
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--white); }
+
+  .modal-card h2 {
     font-family: var(--font-display);
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-size: clamp(1.5rem, 4vw, 2rem);
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -0.03em;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     overflow: visible;
   }
 
-  .waitlist-box p {
+  .modal-card > p {
     color: var(--text-mid);
-    margin-bottom: 2rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 300;
+    margin-bottom: 1.75rem;
   }
 
-  .waitlist-form {
-    display: flex;
-    gap: 0.75rem;
-    max-width: 480px;
-    margin: 0 auto;
+  .modal-field {
+    margin-bottom: 1rem;
   }
 
-  .waitlist-input {
-    flex: 1;
-    background: rgba(255,255,255,0.06);
+  .modal-field label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .modal-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 0.85rem 1rem;
@@ -638,41 +667,42 @@
     font-size: 0.9rem;
     outline: none;
     transition: border-color 0.2s;
+    box-sizing: border-box;
   }
+  .modal-input::placeholder { color: var(--text-muted); }
+  .modal-input:focus { border-color: rgba(200,240,76,0.4); }
 
-  .waitlist-input::placeholder { color: var(--text-muted); }
-  .waitlist-input:focus { border-color: rgba(200,240,76,0.4); }
-
-  .waitlist-submit {
+  .modal-submit {
+    width: 100%;
     background: var(--accent);
     color: var(--black);
     border: none;
-    padding: 0.85rem 1.75rem;
+    padding: 0.95rem;
     border-radius: 8px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
     font-family: var(--font-body);
+    margin-top: 0.5rem;
     transition: background 0.2s, transform 0.15s;
-    white-space: nowrap;
   }
+  .modal-submit:hover { background: var(--accent-dim); transform: translateY(-1px); }
+  .modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-  .waitlist-submit:hover { background: var(--accent-dim); transform: translateY(-1px); }
-
-  .waitlist-note {
-    margin-top: 1rem;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  /* SUCCESS MESSAGE */
-  .success-msg {
+  .modal-success {
     display: none;
-    color: var(--accent);
-    font-weight: 500;
-    font-size: 0.95rem;
-    margin-top: 1rem;
+    text-align: center;
+    padding: 1rem 0;
   }
+  .modal-success .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .modal-success h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    overflow: visible;
+  }
+  .modal-success p { color: var(--text-mid); font-size: 0.9rem; }
 
   /* FOOTER */
   footer {
@@ -761,7 +791,6 @@
   /* ── DESKTOP FIXES ── */
   .logos-row { max-width: 960px; margin-left: auto; margin-right: auto; }
   .pricing-grid { padding-top: 0.75rem; }
-  .waitlist-note { margin-bottom: 0 !important; }
   footer { max-width: 1200px; margin-left: auto; margin-right: auto; }
 
   /* ── NAV HAMBURGER ── */
@@ -863,13 +892,6 @@
     .pricing-grid { grid-template-columns: 1fr; }
     .pricing-card.featured { margin-top: 0.75rem; }
 
-    /* WAITLIST */
-    .waitlist-section { padding: 0 1.25rem 3.5rem; }
-    .waitlist-box { padding: 2rem 1.25rem; border-radius: 16px; }
-    .waitlist-form { flex-direction: column; }
-    .waitlist-input,
-    .waitlist-submit { width: 100%; }
-
     /* FOOTER */
     footer {
       flex-direction: column;
@@ -900,7 +922,7 @@
     <li><a href="#how">How it works</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#waitlist" class="nav-cta">Join waitlist</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal();return false;">Get started</a></li>
   </ul>
   <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-label="Open menu">&#9776;</button>
 </nav>
@@ -910,7 +932,7 @@
     <li><a href="#features" onclick="closeNav()">Features</a></li>
     <li><a href="#pricing" onclick="closeNav()">Pricing</a></li>
   </ul>
-  <a href="#waitlist" class="nav-mobile-cta" onclick="closeNav()">Join waitlist</a>
+  <a href="#" class="nav-mobile-cta" onclick="closeNav();openModal();return false;">Get started</a>
 </div>
 
 <!-- HERO -->
@@ -918,14 +940,14 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
 
-  <div class="hero-badge">Now accepting early access</div>
+  <div class="hero-badge">Now onboarding clients in Singapore</div>
 
   <h1>AI agents that grow your <span class="br"><br></span>business <em>while you sleep</em></h1>
 
   <p class="hero-sub">Mavrix replaces your marketing agency with intelligent AI agents that generate leads, create content, and nurture customers — at a fraction of the cost.</p>
 
   <div class="hero-actions">
-    <a href="#waitlist" class="btn-primary">Get early access →</a>
+    <a href="#" class="btn-primary" onclick="openModal();return false;">Get started →</a>
     <a href="#how" class="btn-ghost">See how it works</a>
   </div>
 
@@ -1084,7 +1106,7 @@
         <li>Basic performance dashboard</li>
         <li>Email support</li>
       </ul>
-      <a href="#waitlist" class="pricing-btn pricing-btn-outline">Get started</a>
+      <a href="#" class="pricing-btn pricing-btn-outline" onclick="openModal();return false;">Get started</a>
     </div>
 
     <!-- PRO -->
@@ -1101,7 +1123,7 @@
         <li>Weekly performance reports</li>
         <li>Priority support + onboarding call</li>
       </ul>
-      <a href="#waitlist" class="pricing-btn pricing-btn-filled">Get started</a>
+      <a href="#" class="pricing-btn pricing-btn-filled" onclick="openModal();return false;">Get started</a>
     </div>
 
     <!-- ENTERPRISE -->
@@ -1117,22 +1139,41 @@
         <li>CRM integration</li>
         <li>White-glove onboarding</li>
       </ul>
-      <a href="#waitlist" class="pricing-btn pricing-btn-outline">Contact us</a>
+      <a href="#" class="pricing-btn pricing-btn-outline" onclick="openModal();return false;">Contact us</a>
     </div>
   </div>
 </section>
 
-<!-- WAITLIST -->
-<div class="waitlist-section" id="waitlist">
-  <div class="waitlist-box fade-in">
-    <h2>Be first when we launch</h2>
-    <p>Join the waitlist and get 30 days free + priority onboarding when Mavrix goes live.</p>
-    <div class="waitlist-form">
-      <input type="email" class="waitlist-input" placeholder="Enter your work email" id="emailInput">
-      <button class="waitlist-submit" onclick="handleSubmit()">Join waitlist</button>
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOverlay(event)">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">&#10005;</button>
+
+    <div id="modal-form-view">
+      <h2 id="modal-title">Let's get you started</h2>
+      <p>Tell us a bit about your business and we'll reach out within 24 hours.</p>
+
+      <div class="modal-field">
+        <label for="modal-name">Your name</label>
+        <input type="text" id="modal-name" class="modal-input" placeholder="Jane Tan" autocomplete="name">
+      </div>
+      <div class="modal-field">
+        <label for="modal-email">Work email</label>
+        <input type="email" id="modal-email" class="modal-input" placeholder="jane@company.sg" autocomplete="email">
+      </div>
+      <div class="modal-field">
+        <label for="modal-business">Business name</label>
+        <input type="text" id="modal-business" class="modal-input" placeholder="Acme Pte Ltd" autocomplete="organization">
+      </div>
+
+      <button class="modal-submit" id="modal-submit-btn" onclick="submitForm()">Send message</button>
     </div>
-    <div class="success-msg" id="successMsg">✓ You're on the list! We'll be in touch soon.</div>
-    <p class="waitlist-note">No spam. No credit card required. Unsubscribe anytime.</p>
+
+    <div class="modal-success" id="modal-success-view">
+      <div class="success-icon">✓</div>
+      <h3>Message sent!</h3>
+      <p>Thanks — we'll be in touch within 24 hours.</p>
+    </div>
   </div>
 </div>
 
@@ -1170,16 +1211,67 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  function handleSubmit() {
-    const email = document.getElementById('emailInput').value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      document.getElementById('emailInput').style.borderColor = 'rgba(255,80,80,0.5)';
-      setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
-      return;
-    }
-    document.querySelector('.waitlist-form').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
+  // EmailJS config — replace with your actual IDs from emailjs.com
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  function openModal() {
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('modal-name').focus(), 60);
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOverlay(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function submitForm() {
+    const name     = document.getElementById('modal-name').value.trim();
+    const email    = document.getElementById('modal-email').value.trim();
+    const business = document.getElementById('modal-business').value.trim();
+    const emailRe  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const fields = [
+      { el: document.getElementById('modal-name'),     ok: name.length > 0 },
+      { el: document.getElementById('modal-email'),    ok: emailRe.test(email) },
+      { el: document.getElementById('modal-business'), ok: business.length > 0 },
+    ];
+
+    let valid = true;
+    fields.forEach(f => {
+      f.el.style.borderColor = f.ok ? '' : 'rgba(255,80,80,0.5)';
+      if (!f.ok) { valid = false; setTimeout(() => f.el.style.borderColor = '', 2000); }
+    });
+    if (!valid) return;
+
+    const btn = document.getElementById('modal-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name:     name,
+      from_email:    email,
+      business_name: business,
+    }).then(() => {
+      document.getElementById('modal-form-view').style.display = 'none';
+      document.getElementById('modal-success-view').style.display = 'block';
+    }).catch(() => {
+      btn.disabled = false;
+      btn.textContent = 'Send message';
+      alert('Something went wrong — please email us at hello@mavrix.sg');
+    });
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(a => {
