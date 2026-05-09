@@ -6,7 +6,6 @@
 <title>Mavrix — AI Agents That Grow Your Business While You Sleep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1172,7 +1171,7 @@
     <div class="modal-success" id="modal-success-view">
       <div class="success-icon">✓</div>
       <h3>Message sent!</h3>
-      <p>Thanks — we'll be in touch within 24 hours.</p>
+      <p>We'll be in touch soon!</p>
     </div>
   </div>
 </div>
@@ -1210,13 +1209,6 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // EmailJS config — replace with your actual IDs from emailjs.com
-  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-  emailjs.init(EMAILJS_PUBLIC_KEY);
 
   function openModal() {
     document.getElementById('modal-overlay').classList.add('open');
@@ -1260,11 +1252,12 @@
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      from_name:     name,
-      from_email:    email,
-      business_name: business,
-    }).then(() => {
+    fetch('https://formspree.io/f/xojrkoqw', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from_name: name, from_email: email, business_name: business }),
+    }).then(r => {
+      if (!r.ok) throw new Error();
       document.getElementById('modal-form-view').style.display = 'none';
       document.getElementById('modal-success-view').style.display = 'block';
     }).catch(() => {
