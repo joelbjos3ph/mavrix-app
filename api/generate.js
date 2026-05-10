@@ -19,7 +19,18 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured on server.' });
   }
 
-  console.log('[generate] Calling Anthropic, prompt length:', prompt.length);
+  const requestBody = {
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1024,
+    messages: [{ role: 'user', content: prompt }]
+  };
+
+  console.log('[generate] Request to Anthropic:', {
+    url: 'https://api.anthropic.com/v1/messages',
+    model: requestBody.model,
+    promptLength: prompt.length,
+    apiKeyPrefix: apiKey.substring(0, 10) + '...'
+  });
 
   let anthropicRes;
   try {
@@ -30,11 +41,7 @@ export default async function handler(req, res) {
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1024,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify(requestBody)
     });
   } catch (err) {
     console.error('[generate] Network error reaching Anthropic:', err.message);
@@ -43,11 +50,15 @@ export default async function handler(req, res) {
 
   const data = await anthropicRes.json();
 
+  console.log('[generate] Anthropic response:', {
+    status: anthropicRes.status,
+    ok: anthropicRes.ok,
+    body: JSON.stringify(data)
+  });
+
   if (!anthropicRes.ok) {
-    console.error('[generate] Anthropic API error', anthropicRes.status, JSON.stringify(data));
     return res.status(502).json({ error: data.error?.message || 'Anthropic API error.' });
   }
 
-  console.log('[generate] Success, response length:', data.content?.[0]?.text?.length);
   return res.status(200).json({ text: data.content[0]?.text ?? '' });
 }
