@@ -1,12 +1,11 @@
 {
   "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
     {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "app.mavrix.sg" }],
       "dest": "/mavrix-app.html"
     },
-    {
-      "handle": "filesystem"
-    }
+    { "handle": "filesystem" }
   ]
 }
