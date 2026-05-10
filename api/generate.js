@@ -7,10 +7,23 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const body = req.body ?? {};
-  const prompt = typeof body === 'string' ? JSON.parse(body).prompt : body.prompt;
+  const parsed = typeof body === 'string' ? JSON.parse(body) : body;
 
-  if (!prompt || typeof prompt !== 'string' || prompt.length > 8000) {
-    return res.status(400).json({ error: 'prompt is required (max 8000 chars).' });
+  // Support both { prompt } and { messages, system }
+  let messages;
+  let system;
+
+  if (parsed.messages && Array.isArray(parsed.messages)) {
+    messages = parsed.messages;
+    system = parsed.system || undefined;
+  } else if (parsed.prompt && typeof parsed.prompt === 'string') {
+    messages = [{ role: 'user', content: parsed.prompt }];
+  } else {
+    return res.status(400).json({ error: 'Request must include either prompt string or messages array.' });
+  }
+
+  if (!messages.length) {
+    return res.status(400).json({ error: 'messages array cannot be empty.' });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -21,14 +34,15 @@ export default async function handler(req, res) {
 
   const requestBody = {
     model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: prompt }]
+    max_tokens: 2048,
+    messages,
+    ...(system ? { system } : {})
   };
 
   console.log('[generate] Request to Anthropic:', {
-    url: 'https://api.anthropic.com/v1/messages',
     model: requestBody.model,
-    promptLength: prompt.length,
+    messageCount: messages.length,
+    hasSystem: !!system,
     apiKeyPrefix: apiKey.substring(0, 10) + '...'
   });
 
@@ -50,13 +64,8 @@ export default async function handler(req, res) {
 
   const data = await anthropicRes.json();
 
-  console.log('[generate] Anthropic response:', {
-    status: anthropicRes.status,
-    ok: anthropicRes.ok,
-    body: JSON.stringify(data)
-  });
-
   if (!anthropicRes.ok) {
+    console.error('[generate] Anthropic API error', anthropicRes.status, JSON.stringify(data));
     return res.status(502).json({ error: data.error?.message || 'Anthropic API error.' });
   }
 

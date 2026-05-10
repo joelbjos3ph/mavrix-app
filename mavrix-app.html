@@ -1864,16 +1864,20 @@ async function sendConsultantMessage(prefill) {
   renderConsultantMessages();
   showConsultTyping();
 
-  const history = consultantMessages.slice(-10).map(m => ({
+  const messages = consultantMessages.slice(-20).map(m => ({
     role: m.role === 'ai' ? 'assistant' : 'user',
     content: m.text
   }));
 
-  const systemBlock = consultSystemPrompt();
-  const fullPrompt = `${systemBlock}\n\n---\nConversation so far:\n${history.slice(0,-1).map(m => m.role.toUpperCase()+': '+m.content).join('\n\n')}\n\nUSER: ${text}\n\nASSISTANT:`;
-
   try {
-    const reply = await callApi(fullPrompt);
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, system: consultSystemPrompt() })
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Generation failed.'); }
+    const data = await res.json();
+    const reply = data.text || '';
     hideConsultTyping();
     consultantMessages.push({ role: 'ai', text: reply });
     renderConsultantMessages();
