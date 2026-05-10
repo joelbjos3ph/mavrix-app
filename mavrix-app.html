@@ -714,6 +714,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">Mavri<span>x</span></div>
+    <div class="sidebar-section">AI Tools</div>
     <div class="nav-item agent-nav" onclick="showView('agent')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
       AI Social Agent
@@ -723,21 +724,33 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/></svg>
       AI Consultant
     </div>
-    <div class="sidebar-section">Main</div>
-    <div class="nav-item active" onclick="showView('dashboard',this)">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
-      Dashboard
-    </div>
-    <div class="nav-item" onclick="showView('generate',this)">
+    <div class="nav-item" onclick="showView('generate')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v14M1 8h14"/></svg>
       Generate Content
     </div>
-    <div class="nav-item" onclick="showView('history',this)">
+    <div class="nav-item" onclick="showView('email')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="10" rx="1"/><path d="M1 4l7 5 7-5"/></svg>
+      Email Campaigns
+    </div>
+    <div class="nav-item" onclick="showView('ads')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="14" height="10" rx="1"/><path d="M4 14h8M8 11v3"/></svg>
+      Ad Copy Generator
+    </div>
+    <div class="nav-item" onclick="showView('chatbot')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="12" cy="10" r="3" fill="var(--surface)" stroke="currentColor"/><path d="M11 10h2M12 9v2"/></svg>
+      Lead Chatbot
+    </div>
+    <div class="sidebar-section">Main</div>
+    <div class="nav-item active" onclick="showView('dashboard')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-item" onclick="showView('history')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l3 2"/></svg>
       History
     </div>
     <div class="sidebar-section">Account</div>
-    <div class="nav-item" onclick="showView('settings',this)">
+    <div class="nav-item" onclick="showView('settings')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg>
       Settings
     </div>
@@ -917,6 +930,179 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
         </div>
       </div>
 
+      <!-- EMAIL CAMPAIGNS VIEW -->
+      <div class="view" id="view-email">
+        <div class="generate-grid">
+          <div class="gen-panel">
+            <div>
+              <div class="panel-title">Email Campaigns</div>
+              <div class="panel-sub">AI-written emails tailored to your business and audience</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">EMAIL TYPE</label>
+              <select class="form-select" id="email-type">
+                <option>Welcome email</option>
+                <option>Promotional offer</option>
+                <option>Newsletter</option>
+                <option>Follow-up</option>
+                <option>Re-engagement</option>
+                <option>Event announcement</option>
+                <option>Product launch</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">TARGET AUDIENCE</label>
+              <input class="form-input" id="email-audience" placeholder="e.g. New subscribers, past customers, leads from last month">
+            </div>
+            <div class="form-group">
+              <label class="form-label">KEY MESSAGE / BRIEF</label>
+              <textarea class="form-textarea" id="email-brief" placeholder="e.g. Announce our 20% off CNY sale, ending 2 Feb. Push readers to visit the website."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CALL TO ACTION</label>
+              <input class="form-input" id="email-cta" placeholder="e.g. Shop now, Book a free call, Claim your discount">
+            </div>
+            <div class="form-group">
+              <label class="form-label">TONE</label>
+              <div class="tone-grid">
+                <button class="tone-btn selected" onclick="selectEmailTone(this,'Professional')">Professional</button>
+                <button class="tone-btn" onclick="selectEmailTone(this,'Friendly')">Friendly</button>
+                <button class="tone-btn" onclick="selectEmailTone(this,'Urgent')">Urgent</button>
+                <button class="tone-btn" onclick="selectEmailTone(this,'Warm')">Warm</button>
+              </div>
+            </div>
+            <button class="generate-btn" id="email-gen-btn" onclick="generateEmail()">⚡ Write email</button>
+          </div>
+          <div class="gen-panel output-panel">
+            <div>
+              <div class="panel-title">Your email</div>
+              <div class="panel-sub">Ready to copy into your email platform</div>
+            </div>
+            <div class="loading-bar" id="email-loading-bar"></div>
+            <div class="output-placeholder" id="email-placeholder">
+              <div style="font-size:2rem">📧</div>
+              <p>Fill in the details and click<br><strong style="color:var(--white)">Write email</strong> to get started</p>
+            </div>
+            <div class="typing-dots" id="email-typing-dots">
+              <span></span><span></span><span></span>
+              <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Writing your email...</span>
+            </div>
+            <div class="output-card" id="email-output-card">
+              <div class="output-text" id="email-output-text"></div>
+              <div class="output-actions">
+                <button class="action-btn" onclick="copyEmail()">📋 Copy</button>
+                <button class="action-btn" onclick="generateEmail()">🔄 Rewrite</button>
+                <button class="action-btn accent" onclick="saveEmailToHistory()">💾 Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AD COPY VIEW -->
+      <div class="view" id="view-ads">
+        <div class="generate-grid">
+          <div class="gen-panel">
+            <div>
+              <div class="panel-title">Ad Copy Generator</div>
+              <div class="panel-sub">High-converting ad copy for any platform</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">PLATFORM</label>
+              <div class="platform-grid">
+                <button class="platform-btn selected" onclick="selectAdPlatform(this,'Facebook')"><span class="platform-icon">📘</span>Facebook</button>
+                <button class="platform-btn" onclick="selectAdPlatform(this,'Instagram')"><span class="platform-icon">📸</span>Instagram</button>
+                <button class="platform-btn" onclick="selectAdPlatform(this,'Google')"><span class="platform-icon">🔍</span>Google</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">AD FORMAT</label>
+              <select class="form-select" id="ad-format">
+                <option>Full ad (headline + body + CTA)</option>
+                <option>3 headline variations</option>
+                <option>5 short hooks</option>
+                <option>Carousel captions (3 slides)</option>
+                <option>Video script (15 seconds)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">WHAT YOU'RE PROMOTING</label>
+              <textarea class="form-textarea" id="ad-brief" placeholder="e.g. Our monthly bookkeeping package for Singapore SMEs. Starting at $299/month. First month free."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">TARGET AUDIENCE</label>
+              <input class="form-input" id="ad-audience" placeholder="e.g. Singapore business owners, 30-55, turning over $500k+">
+            </div>
+            <div class="form-group">
+              <label class="form-label">TONE</label>
+              <div class="tone-grid">
+                <button class="tone-btn selected" onclick="selectAdTone(this,'Direct & punchy')">Direct & Punchy</button>
+                <button class="tone-btn" onclick="selectAdTone(this,'Professional')">Professional</button>
+                <button class="tone-btn" onclick="selectAdTone(this,'Conversational')">Conversational</button>
+                <button class="tone-btn" onclick="selectAdTone(this,'Bold')">Bold & Bold</button>
+              </div>
+            </div>
+            <button class="generate-btn" id="ads-gen-btn" onclick="generateAds()">⚡ Generate ad copy</button>
+          </div>
+          <div class="gen-panel output-panel">
+            <div>
+              <div class="panel-title">Your ad copy</div>
+              <div class="panel-sub">Tested formats, ready to launch</div>
+            </div>
+            <div class="loading-bar" id="ads-loading-bar"></div>
+            <div class="output-placeholder" id="ads-placeholder">
+              <div style="font-size:2rem">📢</div>
+              <p>Fill in the details and click<br><strong style="color:var(--white)">Generate ad copy</strong> to get started</p>
+            </div>
+            <div class="typing-dots" id="ads-typing-dots">
+              <span></span><span></span><span></span>
+              <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Writing your ads...</span>
+            </div>
+            <div class="output-card" id="ads-output-card">
+              <div class="output-text" id="ads-output-text"></div>
+              <div class="output-actions">
+                <button class="action-btn" onclick="copyAds()">📋 Copy</button>
+                <button class="action-btn" onclick="generateAds()">🔄 Regenerate</button>
+                <button class="action-btn accent" onclick="saveAdsToHistory()">💾 Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEAD CHATBOT VIEW -->
+      <div class="view" id="view-chatbot">
+        <div class="consult-wrap">
+          <div class="consult-hero" style="background:linear-gradient(135deg,rgba(90,155,255,0.1),rgba(90,155,255,0.02));border-color:rgba(90,155,255,0.2)">
+            <div class="consult-hero-label" style="color:var(--blue)">🤖 Lead Chatbot</div>
+            <div class="consult-hero-title">Preview Your AI Lead Bot</div>
+            <div class="consult-hero-sub">See how your AI chatbot handles customer enquiries. Type as if you're a customer visiting your website.</div>
+          </div>
+          <div class="consult-chat-area" id="chatbot-chat-area">
+            <div id="chatbot-starters" style="padding:1rem 0">
+              <div class="consult-starters-label" style="color:var(--blue)">Simulate customer questions</div>
+              <div class="consult-starters-grid">
+                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('How much does it cost?')"><span class="consult-starter-icon">💰</span>How much does it cost?</button>
+                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('What services do you offer?')"><span class="consult-starter-icon">📋</span>What services do you offer?</button>
+                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('How do I get started?')"><span class="consult-starter-icon">🚀</span>How do I get started?</button>
+                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('Are you available on weekends?')"><span class="consult-starter-icon">🗓️</span>Are you available on weekends?</button>
+                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('Can I speak to someone?')"><span class="consult-starter-icon">📞</span>Can I speak to someone?</button>
+                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('Do you work with small businesses?')"><span class="consult-starter-icon">🏪</span>Do you work with small businesses?</button>
+              </div>
+            </div>
+          </div>
+          <div class="consult-input-row">
+            <textarea class="consult-input" id="chatbot-input" placeholder="Type as a customer..." rows="1"
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatbotMessage()}"
+              oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"
+              style="border-color:rgba(90,155,255,0.3)"></textarea>
+            <button class="consult-send-btn" id="chatbot-send-btn" onclick="sendChatbotMessage()" style="background:var(--blue)">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="1" x2="1" y2="9"/><line x1="17" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="9" y2="17"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- DASHBOARD VIEW -->
       <div class="view active" id="view-dashboard">
         <div class="stats-grid">
@@ -938,20 +1124,20 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
           </div>
         </div>
         <div class="quick-actions">
-          <div class="quick-card" onclick="showView('generate',document.querySelectorAll('.nav-item')[1])">
+          <div class="quick-card" onclick="showView('generate')">
             <div class="quick-card-icon">✍️</div>
             <h3>Generate a post</h3>
             <p>Create AI content for any platform in seconds</p>
           </div>
-          <div class="quick-card" onclick="showView('history',document.querySelectorAll('.nav-item')[2])">
+          <div class="quick-card" onclick="showView('history')">
             <div class="quick-card-icon">📋</div>
             <h3>View history</h3>
             <p>Browse and reuse your past generated content</p>
           </div>
-          <div class="quick-card" onclick="showView('settings',document.querySelectorAll('.nav-item')[3])">
-            <div class="quick-card-icon">⚙️</div>
-            <h3>Update profile</h3>
-            <p>Refine your brand voice and business details</p>
+          <div class="quick-card" onclick="showView('consultant')">
+            <div class="quick-card-icon">💬</div>
+            <h3>AI Consultant</h3>
+            <p>Get strategy advice from your AI marketing expert</p>
           </div>
         </div>
         <div class="recent-title">Recent content</div>
@@ -1387,7 +1573,7 @@ function completeOnboarding() {
 }
 
 // ── NAVIGATION ──
-const VIEW_NAV_IDX = {agent:0,consultant:1,dashboard:2,generate:3,history:4,settings:5};
+const VIEW_NAV_IDX = {agent:0,consultant:1,generate:2,email:3,ads:4,chatbot:5,dashboard:6,history:7,settings:8};
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1398,10 +1584,11 @@ function showView(name) {
   if (idx !== undefined) document.querySelectorAll('.nav-item')[idx].classList.add('active');
   const mbnEl = document.getElementById('mbn-' + name);
   if (mbnEl) mbnEl.classList.add('active');
-  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',dashboard:'Dashboard',generate:'Generate Content',history:'History',settings:'Settings'};
+  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',generate:'Generate Content',email:'Email Campaigns',ads:'Ad Copy Generator',chatbot:'Lead Chatbot',dashboard:'Dashboard',history:'History',settings:'Settings'};
   document.getElementById('topbar-title').textContent = titles[name] || name;
   closeSidebar();
   if (name === 'agent' && !agentState.briefingReady) setTimeout(generateBriefing, 100);
+  if (name === 'chatbot') setTimeout(initChatbot, 100);
 }
 
 // ── AGENT STATE ──
@@ -1914,6 +2101,202 @@ function saveConsultToHistory(i) {
   state.postsGenerated++;
   document.getElementById('stat-posts').textContent = state.postsGenerated;
   showToast('Saved to history!');
+}
+
+// ── EMAIL CAMPAIGNS ──
+let emailTone = 'Professional';
+function selectEmailTone(btn, tone) {
+  document.querySelectorAll('#view-email .tone-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  emailTone = tone;
+}
+async function generateEmail() {
+  const btn = document.getElementById('email-gen-btn');
+  const bar = document.getElementById('email-loading-bar');
+  const dots = document.getElementById('email-typing-dots');
+  const placeholder = document.getElementById('email-placeholder');
+  const card = document.getElementById('email-output-card');
+  const output = document.getElementById('email-output-text');
+  const type = document.getElementById('email-type').value;
+  const audience = document.getElementById('email-audience').value;
+  const brief = document.getElementById('email-brief').value;
+  const cta = document.getElementById('email-cta').value;
+  btn.disabled = true; btn.textContent = '⚡ Writing...';
+  bar.classList.add('active'); placeholder.style.display = 'none';
+  card.classList.remove('visible'); dots.classList.add('active');
+  const prompt = `You are an expert email copywriter for Singapore businesses.
+${bizCtx()}
+Write a ${type} email.
+${audience ? 'Target audience: ' + audience : ''}
+${brief ? 'Brief: ' + brief : ''}
+${cta ? 'Call to action: ' + cta : ''}
+Tone: ${emailTone}
+Format your response as:
+SUBJECT: [subject line]
+
+[email body]
+
+Keep it concise, human, and persuasive. Write for a Singapore audience.`;
+  try {
+    const text = await callApi(prompt);
+    dots.classList.remove('active'); bar.classList.remove('active');
+    output.textContent = text; card.classList.add('visible');
+    state.emailOutput = text;
+  } catch(e) {
+    dots.classList.remove('active'); bar.classList.remove('active');
+    output.textContent = 'Something went wrong. Please try again.'; card.classList.add('visible');
+  }
+  btn.disabled = false; btn.textContent = '⚡ Write email';
+}
+function copyEmail() {
+  const text = document.getElementById('email-output-text').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
+}
+function saveEmailToHistory() {
+  const text = document.getElementById('email-output-text').textContent;
+  if (!text) return;
+  state.history.unshift({ id: Date.now(), platform: 'Email', tone: emailTone, text, date: new Date().toLocaleDateString('en-SG',{day:'numeric',month:'short',year:'numeric'}) });
+  state.postsGenerated++;
+  document.getElementById('stat-posts').textContent = state.postsGenerated;
+  showToast('Saved to history!');
+}
+
+// ── AD COPY GENERATOR ──
+let adPlatform = 'Facebook';
+let adTone = 'Direct & punchy';
+function selectAdPlatform(btn, platform) {
+  document.querySelectorAll('#view-ads .platform-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  adPlatform = platform;
+}
+function selectAdTone(btn, tone) {
+  document.querySelectorAll('#view-ads .tone-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  adTone = tone;
+}
+async function generateAds() {
+  const btn = document.getElementById('ads-gen-btn');
+  const bar = document.getElementById('ads-loading-bar');
+  const dots = document.getElementById('ads-typing-dots');
+  const placeholder = document.getElementById('ads-placeholder');
+  const card = document.getElementById('ads-output-card');
+  const output = document.getElementById('ads-output-text');
+  const format = document.getElementById('ad-format').value;
+  const brief = document.getElementById('ad-brief').value;
+  const audience = document.getElementById('ad-audience').value;
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  bar.classList.add('active'); placeholder.style.display = 'none';
+  card.classList.remove('visible'); dots.classList.add('active');
+  const prompt = `You are a performance marketing specialist writing ad copy for Singapore businesses.
+${bizCtx()}
+Platform: ${adPlatform}
+Ad format: ${format}
+${brief ? 'What you are promoting: ' + brief : ''}
+${audience ? 'Target audience: ' + audience : ''}
+Tone: ${adTone}
+Write high-converting ${adPlatform} ad copy in the ${format} format.
+Be direct, benefit-focused, and use Singapore-market language where appropriate.
+Output ONLY the ad copy, clearly labelled if multiple variations.`;
+  try {
+    const text = await callApi(prompt);
+    dots.classList.remove('active'); bar.classList.remove('active');
+    output.textContent = text; card.classList.add('visible');
+  } catch(e) {
+    dots.classList.remove('active'); bar.classList.remove('active');
+    output.textContent = 'Something went wrong. Please try again.'; card.classList.add('visible');
+  }
+  btn.disabled = false; btn.textContent = '⚡ Generate ad copy';
+}
+function copyAds() {
+  navigator.clipboard.writeText(document.getElementById('ads-output-text').textContent).then(() => showToast('Copied to clipboard!'));
+}
+function saveAdsToHistory() {
+  const text = document.getElementById('ads-output-text').textContent;
+  if (!text) return;
+  state.history.unshift({ id: Date.now(), platform: adPlatform, tone: adTone, text, date: new Date().toLocaleDateString('en-SG',{day:'numeric',month:'short',year:'numeric'}) });
+  state.postsGenerated++;
+  document.getElementById('stat-posts').textContent = state.postsGenerated;
+  showToast('Saved to history!');
+}
+
+// ── LEAD CHATBOT ──
+const chatbotMessages = [];
+let chatbotBusy = false;
+let chatbotGreeted = false;
+
+function chatbotSystemPrompt() {
+  return `You are a friendly, professional AI assistant (lead chatbot) for this business:
+${bizCtx()}
+Your job is to:
+- Answer customer enquiries about this business warmly and helpfully
+- Qualify leads by understanding their needs
+- Encourage them to take the next step (book a call, visit the website, leave their contact details)
+- Keep responses short and conversational — this is a chat widget, not an email
+- If you don't know specific details (like exact pricing or availability), say you'll connect them with the team
+- Always be helpful and never leave a question unanswered`;
+}
+
+async function initChatbot() {
+  if (chatbotGreeted) return;
+  chatbotGreeted = true;
+  const bizName = state.bizName || 'us';
+  chatbotMessages.push({ role: 'ai', text: `Hi there! 👋 Welcome to ${bizName}. I'm your AI assistant — I'm here to answer any questions and help you find what you need. What can I help you with today?` });
+  renderChatbotMessages();
+}
+
+function renderChatbotMessages() {
+  const area = document.getElementById('chatbot-chat-area');
+  const starters = document.getElementById('chatbot-starters');
+  if (chatbotMessages.length > 0) starters.style.display = 'none';
+  const existing = area.querySelectorAll('.consult-msg, .consult-typing');
+  existing.forEach(el => el.remove());
+  chatbotMessages.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = 'consult-msg ' + (msg.role === 'ai' ? 'ai' : 'user');
+    const avatarContent = msg.role === 'ai' ? '🤖' : 'You';
+    const avatarStyle = msg.role === 'ai' ? 'background:rgba(90,155,255,0.2);border-color:rgba(90,155,255,0.3);color:var(--blue);font-size:0.85rem' : '';
+    div.innerHTML = `
+      <div class="consult-avatar ${msg.role === 'ai' ? 'ai' : 'user'}" style="${avatarStyle}">${avatarContent}</div>
+      <div class="consult-bubble">${msg.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>`;
+    area.appendChild(div);
+  });
+  area.scrollTop = area.scrollHeight;
+}
+
+async function sendChatbotMessage(prefill) {
+  const input = document.getElementById('chatbot-input');
+  const text = (prefill !== undefined ? prefill : input.value).trim();
+  if (!text || chatbotBusy) return;
+  if (!chatbotGreeted) await initChatbot();
+  input.value = ''; input.style.height = 'auto';
+  chatbotBusy = true;
+  document.getElementById('chatbot-send-btn').disabled = true;
+  chatbotMessages.push({ role: 'user', text });
+  renderChatbotMessages();
+  const typingEl = document.createElement('div');
+  typingEl.className = 'consult-typing'; typingEl.id = 'chatbot-typing';
+  typingEl.innerHTML = '<span></span><span></span><span></span>';
+  document.getElementById('chatbot-chat-area').appendChild(typingEl);
+  document.getElementById('chatbot-chat-area').scrollTop = 99999;
+  const messages = chatbotMessages.slice(-12).map(m => ({ role: m.role === 'ai' ? 'assistant' : 'user', content: m.text }));
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, system: chatbotSystemPrompt() })
+    });
+    const data = await res.json();
+    const reply = data.text || 'Let me connect you with our team for more details!';
+    document.getElementById('chatbot-typing')?.remove();
+    chatbotMessages.push({ role: 'ai', text: reply });
+    renderChatbotMessages();
+  } catch(e) {
+    document.getElementById('chatbot-typing')?.remove();
+    chatbotMessages.push({ role: 'ai', text: 'Sorry, something went wrong. Please try again!' });
+    renderChatbotMessages();
+  }
+  chatbotBusy = false;
+  document.getElementById('chatbot-send-btn').disabled = false;
 }
 
 // ── PLATFORM / TONE SELECT ──
