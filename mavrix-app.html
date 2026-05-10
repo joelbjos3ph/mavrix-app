@@ -1009,6 +1009,7 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxm4ubwgcgLuo
 
 // ── ANTHROPIC API ──
 const ANTHROPIC_API_KEY = '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';
+console.log('[Mavrix] API key loaded:', ANTHROPIC_API_KEY.substring(0, 10) + '...');
 
 async function hashPassword(password) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password));
