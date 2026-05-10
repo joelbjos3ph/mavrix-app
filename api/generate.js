@@ -1,6 +1,4 @@
-const Anthropic = require('@anthropic-ai/sdk');
-
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -8,25 +6,48 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { prompt } = req.body ?? {};
+  const body = req.body ?? {};
+  const prompt = typeof body === 'string' ? JSON.parse(body).prompt : body.prompt;
+
   if (!prompt || typeof prompt !== 'string' || prompt.length > 8000) {
     return res.status(400).json({ error: 'prompt is required (max 8000 chars).' });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res.status(500).json({ error: 'API key not configured.' });
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    console.error('[generate] ANTHROPIC_API_KEY is not set');
+    return res.status(500).json({ error: 'API key not configured on server.' });
   }
 
+  console.log('[generate] Calling Anthropic, prompt length:', prompt.length);
+
+  let anthropicRes;
   try {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const message = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      messages: [{ role: 'user', content: prompt }]
+    anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
-    res.status(200).json({ text: message.content[0]?.text ?? '' });
   } catch (err) {
-    console.error('Anthropic error:', err.message);
-    res.status(502).json({ error: 'Content generation failed. Please try again.' });
+    console.error('[generate] Network error reaching Anthropic:', err.message);
+    return res.status(502).json({ error: 'Could not reach Anthropic API.' });
   }
-};
+
+  const data = await anthropicRes.json();
+
+  if (!anthropicRes.ok) {
+    console.error('[generate] Anthropic API error', anthropicRes.status, JSON.stringify(data));
+    return res.status(502).json({ error: data.error?.message || 'Anthropic API error.' });
+  }
+
+  console.log('[generate] Success, response length:', data.content?.[0]?.text?.length);
+  return res.status(200).json({ text: data.content[0]?.text ?? '' });
+}
