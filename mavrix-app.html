@@ -13,6 +13,7 @@
   --white:#F5F4F0;--muted:rgba(245,244,240,0.45);--mid:rgba(245,244,240,0.7);
   --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
   --red:#FF5A5A;--blue:#5A9BFF;--orange:#FFB35A;
+  --purple:#A78BFA;--purple-glow:rgba(167,139,250,0.15);--purple-dim:rgba(167,139,250,0.35);
   --font-display:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
   --radius:12px;--radius-sm:8px;
 }
@@ -483,6 +484,99 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   .agent-hero-title{font-size:1.15rem}
   .agent-card{padding:1.1rem}
 }
+
+/* ── AI CONSULTANT ── */
+.nav-item.consultant-nav{color:var(--purple);font-weight:600;font-size:0.875rem}
+.nav-item.consultant-nav:hover{background:rgba(167,139,250,0.08)}
+.nav-item.consultant-nav.active{background:rgba(167,139,250,0.12);border-left-color:var(--purple)}
+
+.consult-wrap{display:flex;flex-direction:column;height:calc(100vh - 120px)}
+.consult-hero{background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(167,139,250,0.02));border:1px solid rgba(167,139,250,0.2);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1rem;position:relative;overflow:hidden;flex-shrink:0}
+.consult-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent)}
+.consult-hero-label{font-size:0.7rem;font-weight:700;color:var(--purple);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.2rem}
+.consult-hero-title{font-family:var(--font-display);font-size:1.25rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.2rem}
+.consult-hero-sub{font-size:0.82rem;color:var(--mid)}
+
+.consult-chat-area{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0;padding-bottom:0.5rem;min-height:0}
+.consult-chat-area::-webkit-scrollbar{width:3px}
+.consult-chat-area::-webkit-scrollbar-thumb{background:var(--border2)}
+
+.consult-starters{padding:1.5rem 0;flex-shrink:0}
+.consult-starters-label{font-size:0.75rem;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem}
+.consult-starters-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem}
+.consult-starter-btn{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:0.9rem;cursor:pointer;text-align:left;font-family:var(--font-body);
+  font-size:0.8rem;color:var(--mid);transition:all 0.2s;line-height:1.4;
+}
+.consult-starter-btn:hover{border-color:rgba(167,139,250,0.35);color:var(--white);background:rgba(167,139,250,0.06)}
+.consult-starter-icon{font-size:1.1rem;display:block;margin-bottom:0.4rem}
+
+.consult-msg{display:flex;gap:0.75rem;padding:0.6rem 0;align-items:flex-end}
+.consult-msg.user{flex-direction:row-reverse}
+.consult-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700}
+.consult-avatar.ai{background:rgba(167,139,250,0.2);border:1px solid rgba(167,139,250,0.3);color:var(--purple)}
+.consult-avatar.user{background:var(--accent-glow);border:1px solid rgba(200,240,76,0.3);color:var(--accent)}
+.consult-bubble{
+  max-width:72%;padding:0.85rem 1.1rem;border-radius:16px;
+  font-size:0.875rem;line-height:1.65;word-break:break-word;
+}
+.consult-msg.ai .consult-bubble{
+  background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--mid);
+}
+.consult-msg.user .consult-bubble{
+  background:rgba(167,139,250,0.18);border:1px solid rgba(167,139,250,0.28);border-bottom-right-radius:4px;color:var(--white);
+}
+.consult-bubble-actions{display:flex;gap:0.4rem;margin-top:0.65rem;flex-wrap:wrap}
+.consult-bubble-btn{
+  border:1px solid var(--border2);border-radius:6px;padding:0.3rem 0.65rem;
+  font-size:0.73rem;font-weight:500;cursor:pointer;font-family:var(--font-body);
+  background:transparent;color:var(--muted);transition:all 0.15s;
+}
+.consult-bubble-btn:hover{border-color:var(--accent);color:var(--accent)}
+.consult-bubble-btn.save-btn-sm{border-color:rgba(200,240,76,0.3);color:var(--accent);background:var(--accent-glow)}
+.consult-bubble-btn.save-btn-sm:hover{background:rgba(200,240,76,0.2)}
+
+.consult-typing{display:flex;align-items:center;gap:5px;padding:0.5rem 0 0.5rem 2.4rem}
+.consult-typing span{width:7px;height:7px;border-radius:50%;background:var(--purple);opacity:0.5;animation:dot 1.2s infinite}
+.consult-typing span:nth-child(2){animation-delay:0.2s}
+.consult-typing span:nth-child(3){animation-delay:0.4s}
+
+.consult-chips{display:flex;gap:0.5rem;flex-wrap:wrap;padding:0.6rem 0;flex-shrink:0;border-top:1px solid var(--border)}
+.consult-chip{
+  border:1px solid var(--border2);border-radius:100px;padding:0.35rem 0.85rem;
+  font-size:0.78rem;font-weight:500;cursor:pointer;font-family:var(--font-body);
+  background:transparent;color:var(--mid);transition:all 0.15s;white-space:nowrap;
+}
+.consult-chip:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-glow)}
+
+.consult-input-row{display:flex;gap:0.6rem;align-items:flex-end;padding-top:0.6rem;flex-shrink:0}
+.consult-input{
+  flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:12px;
+  padding:0.75rem 1rem;color:var(--white);font-family:var(--font-body);font-size:0.875rem;
+  outline:none;resize:none;line-height:1.5;min-height:46px;max-height:140px;
+  transition:border-color 0.2s;overflow-y:auto;
+}
+.consult-input:focus{border-color:rgba(167,139,250,0.5)}
+.consult-input::placeholder{color:var(--muted)}
+.consult-send-btn{
+  background:var(--purple);color:var(--white);border:none;border-radius:10px;
+  width:42px;height:42px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all 0.2s;
+}
+.consult-send-btn:hover{background:#8B6EF5;transform:translateY(-1px)}
+.consult-send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.consult-send-btn svg{width:18px;height:18px}
+
+@media(max-width:768px){
+  .consult-wrap{height:auto}
+  .consult-chat-area{min-height:45vh;max-height:55vh}
+  .consult-starters-grid{grid-template-columns:1fr 1fr}
+  .consult-bubble{max-width:85%}
+}
+@media(max-width:390px){
+  .consult-starters-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -625,6 +719,10 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       AI Social Agent
       <span class="nav-badge hidden" id="badge-agent">✓</span>
     </div>
+    <div class="nav-item consultant-nav" onclick="showView('consultant')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/></svg>
+      AI Consultant
+    </div>
     <div class="sidebar-section">Main</div>
     <div class="nav-item active" onclick="showView('dashboard',this)">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
@@ -761,6 +859,60 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
               </div>
             </div>
             <div id="queue-list"><div style="color:var(--muted);font-size:0.875rem">No posts queued yet. Approve posts from the Content Calendar.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONSULTANT VIEW -->
+      <div class="view" id="view-consultant">
+        <div class="consult-wrap">
+          <div class="consult-hero">
+            <div class="consult-hero-label">💬 AI Consultant</div>
+            <div class="consult-hero-title">Your Marketing Consultant</div>
+            <div class="consult-hero-sub">Senior-level strategy, Singapore-market expertise, always in your corner.</div>
+          </div>
+
+          <div class="consult-chat-area" id="consult-chat-area">
+            <div class="consult-starters" id="consult-starters">
+              <div class="consult-starters-label">What would you like to work on?</div>
+              <div class="consult-starters-grid">
+                <button class="consult-starter-btn" onclick="useConsultantStarter('What should I post about this week?')">
+                  <span class="consult-starter-icon">📅</span>What should I post about this week?
+                </button>
+                <button class="consult-starter-btn" onclick="useConsultantStarter('How can I grow my Instagram followers?')">
+                  <span class="consult-starter-icon">📈</span>How can I grow my Instagram followers?
+                </button>
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Help me come up with a campaign idea')">
+                  <span class="consult-starter-icon">💡</span>Help me come up with a campaign idea
+                </button>
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Review my marketing strategy and give me honest feedback')">
+                  <span class="consult-starter-icon">🔍</span>Review my marketing strategy
+                </button>
+                <button class="consult-starter-btn" onclick="useConsultantStarter('What\'s working for businesses like mine in Singapore right now?')">
+                  <span class="consult-starter-icon">🇸🇬</span>What's working in Singapore right now?
+                </button>
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Help me write a compelling post about my product or service')">
+                  <span class="consult-starter-icon">✍️</span>Help me write a compelling post
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="consult-chips">
+            <button class="consult-chip" onclick="useConsultantStarter('Refine this post for me — I\'ll paste it below')">✨ Refine a post</button>
+            <button class="consult-chip" onclick="useConsultantStarter('Give me a fresh campaign idea for my business')">💡 Campaign idea</button>
+            <button class="consult-chip" onclick="useConsultantStarter('Give me 3 specific growth tips for my business right now')">📈 Growth tips</button>
+            <button class="consult-chip" onclick="useConsultantStarter('Build me a content calendar for the next 2 weeks')">📅 Content calendar</button>
+            <button class="consult-chip" onclick="useConsultantStarter('How should I position against my competitors in Singapore?')">⚔️ Competitor strategy</button>
+          </div>
+
+          <div class="consult-input-row">
+            <textarea class="consult-input" id="consult-input" placeholder="Ask your marketing consultant..." rows="1"
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendConsultantMessage()}"
+              oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
+            <button class="consult-send-btn" id="consult-send-btn" onclick="sendConsultantMessage()">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="1" x2="1" y2="9"/><line x1="17" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="9" y2="17"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -977,6 +1129,10 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
       Agent
     </button>
+    <button class="mbn-item" id="mbn-consultant" onclick="showView('consultant')" style="color:var(--purple)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/></svg>
+      Chat
+    </button>
     <button class="mbn-item active" id="mbn-dashboard" onclick="showView('dashboard')">
       <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
       Home
@@ -984,10 +1140,6 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
     <button class="mbn-item" id="mbn-generate" onclick="showView('generate')">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v14M1 8h14"/></svg>
       Generate
-    </button>
-    <button class="mbn-item" id="mbn-history" onclick="showView('history')">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 4v4l3 2"/></svg>
-      History
     </button>
     <button class="mbn-item" id="mbn-settings" onclick="showView('settings')">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg>
@@ -1235,7 +1387,7 @@ function completeOnboarding() {
 }
 
 // ── NAVIGATION ──
-const VIEW_NAV_IDX = {agent:0,dashboard:1,generate:2,history:3,settings:4};
+const VIEW_NAV_IDX = {agent:0,consultant:1,dashboard:2,generate:3,history:4,settings:5};
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1246,7 +1398,7 @@ function showView(name) {
   if (idx !== undefined) document.querySelectorAll('.nav-item')[idx].classList.add('active');
   const mbnEl = document.getElementById('mbn-' + name);
   if (mbnEl) mbnEl.classList.add('active');
-  const titles = {agent:'AI Social Agent',dashboard:'Dashboard',generate:'Generate Content',history:'History',settings:'Settings'};
+  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',dashboard:'Dashboard',generate:'Generate Content',history:'History',settings:'Settings'};
   document.getElementById('topbar-title').textContent = titles[name] || name;
   closeSidebar();
   if (name === 'agent' && !agentState.briefingReady) setTimeout(generateBriefing, 100);
@@ -1626,6 +1778,138 @@ function copyAndPost(i) {
 function copyText(btn) {
   const text = btn.closest('.agent-output').querySelector('.agent-output-text').textContent;
   navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
+}
+
+// ── AI CONSULTANT ──
+const consultantMessages = [];
+let consultantBusy = false;
+
+function consultSystemPrompt() {
+  return `You are a senior marketing consultant and business strategist. You have deep expertise in Singapore's market, consumer behaviour, and digital marketing landscape. You work with SMEs across all industries.
+
+Your client's business profile:
+${bizCtx()}
+
+Your personality:
+- Confident, direct, and opinionated — you give recommendations, not just options
+- You proactively suggest angles and ask follow-up questions to understand them better
+- You give honest, sometimes challenging feedback (diplomatically)
+- You reference their specific business, industry, and audience in every response
+- You are Singapore-market aware: you know local platforms (Carousell, Shopee), local culture, local trends
+- You feel like a $500/hour consultant who genuinely cares about their growth
+- Keep responses focused and actionable — no fluff, no vague advice
+- Use a conversational tone, not corporate speak
+- When refining content, explain what you changed and why`;
+}
+
+function renderConsultantMessages() {
+  const area = document.getElementById('consult-chat-area');
+  const starters = document.getElementById('consult-starters');
+  if (consultantMessages.length === 0) {
+    starters.style.display = '';
+    return;
+  }
+  starters.style.display = 'none';
+
+  const existingMsgs = area.querySelectorAll('.consult-msg, .consult-typing');
+  existingMsgs.forEach(el => el.remove());
+
+  consultantMessages.forEach((msg, i) => {
+    const div = document.createElement('div');
+    div.className = 'consult-msg ' + msg.role;
+    const initials = (state.bizName || 'Me').substring(0, 2).toUpperCase();
+    const avatarContent = msg.role === 'ai' ? 'AI' : initials;
+    const avatarClass = msg.role === 'ai' ? 'ai' : 'user';
+    let actionsHtml = '';
+    if (msg.role === 'ai') {
+      actionsHtml = `<div class="consult-bubble-actions">
+        <button class="consult-bubble-btn" onclick="copyConsultMsg(${i})">📋 Copy</button>
+        <button class="consult-bubble-btn save-btn-sm" onclick="saveConsultToHistory(${i})">💾 Save to history</button>
+      </div>`;
+    }
+    div.innerHTML = `
+      <div class="consult-avatar ${avatarClass}">${avatarContent}</div>
+      <div class="consult-bubble">${msg.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}${actionsHtml}</div>`;
+    area.appendChild(div);
+  });
+  area.scrollTop = area.scrollHeight;
+}
+
+function showConsultTyping() {
+  const area = document.getElementById('consult-chat-area');
+  const t = document.createElement('div');
+  t.className = 'consult-typing';
+  t.id = 'consult-typing';
+  t.innerHTML = '<span></span><span></span><span></span>';
+  area.appendChild(t);
+  area.scrollTop = area.scrollHeight;
+}
+
+function hideConsultTyping() {
+  const t = document.getElementById('consult-typing');
+  if (t) t.remove();
+}
+
+async function sendConsultantMessage(prefill) {
+  const input = document.getElementById('consult-input');
+  const text = (prefill !== undefined ? prefill : input.value).trim();
+  if (!text || consultantBusy) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  consultantBusy = true;
+  document.getElementById('consult-send-btn').disabled = true;
+
+  consultantMessages.push({ role: 'user', text });
+  renderConsultantMessages();
+  showConsultTyping();
+
+  const history = consultantMessages.slice(-10).map(m => ({
+    role: m.role === 'ai' ? 'assistant' : 'user',
+    content: m.text
+  }));
+
+  const systemBlock = consultSystemPrompt();
+  const fullPrompt = `${systemBlock}\n\n---\nConversation so far:\n${history.slice(0,-1).map(m => m.role.toUpperCase()+': '+m.content).join('\n\n')}\n\nUSER: ${text}\n\nASSISTANT:`;
+
+  try {
+    const reply = await callApi(fullPrompt);
+    hideConsultTyping();
+    consultantMessages.push({ role: 'ai', text: reply });
+    renderConsultantMessages();
+  } catch(e) {
+    hideConsultTyping();
+    consultantMessages.push({ role: 'ai', text: 'Sorry, I ran into an issue. Please try again.' });
+    renderConsultantMessages();
+  }
+
+  consultantBusy = false;
+  document.getElementById('consult-send-btn').disabled = false;
+  document.getElementById('consult-input').focus();
+}
+
+function useConsultantStarter(text) {
+  document.getElementById('consult-input').value = text;
+  sendConsultantMessage(text);
+}
+
+function copyConsultMsg(i) {
+  navigator.clipboard.writeText(consultantMessages[i].text).then(() => showToast('Copied to clipboard!'));
+}
+
+function saveConsultToHistory(i) {
+  const text = consultantMessages[i].text;
+  const item = {
+    id: Date.now(),
+    platform: 'Consultant',
+    tone: 'Strategy',
+    text,
+    date: new Date().toLocaleDateString('en-SG', { day:'numeric', month:'short', year:'numeric' })
+  };
+  state.history.unshift(item);
+  state.postsGenerated++;
+  document.getElementById('stat-posts').textContent = state.postsGenerated;
+  showToast('Saved to history!');
 }
 
 // ── PLATFORM / TONE SELECT ──
