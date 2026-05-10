@@ -1,16 +1,14 @@
 {
   "functions": {
-    "api/generate.js": {
+    "api/*.js": {
       "runtime": "nodejs20.x"
     }
   },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
+  "rewrites": [
     {
-      "src": "/(.*)",
+      "source": "/((?!api/).*)",
       "has": [{ "type": "host", "value": "app.mavrix.sg" }],
-      "dest": "/mavrix-app.html"
-    },
-    { "handle": "filesystem" }
+      "destination": "/mavrix-app.html"
+    }
   ]
 }
