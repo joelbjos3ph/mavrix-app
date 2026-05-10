@@ -391,6 +391,97 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   .tone-grid{grid-template-columns:1fr 1fr}
   .output-actions{gap:0.4rem}
   .action-btn{font-size:0.75rem;padding:0.5rem 0.4rem}
+  .agent-tab{font-size:0.68rem;padding:0.45rem 0.5rem}
+  .cal-grid{gap:0.5rem}
+}
+
+/* ── AI SOCIAL AGENT ── */
+.nav-item.agent-nav{color:var(--accent);font-weight:600;font-size:0.875rem}
+.nav-item.agent-nav:hover{background:rgba(200,240,76,0.08)}
+.nav-item.agent-nav.active{background:rgba(200,240,76,0.12);border-left-color:var(--accent)}
+.nav-badge{background:var(--accent);color:var(--black);border-radius:100px;font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;margin-left:auto;flex-shrink:0}
+.nav-badge.hidden{display:none}
+
+.agent-hero{background:linear-gradient(135deg,rgba(200,240,76,0.08),rgba(200,240,76,0.02));border:1px solid rgba(200,240,76,0.18);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.agent-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.agent-hero-label{font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem}
+.agent-hero-title{font-family:var(--font-display);font-size:1.4rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.3rem}
+.agent-hero-sub{font-size:0.875rem;color:var(--mid)}
+
+.agent-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.5rem;flex-wrap:wrap}
+.agent-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--font-body);font-size:0.82rem;font-weight:500;padding:0.65rem 0.9rem;cursor:pointer;margin-bottom:-1px;transition:color 0.15s;white-space:nowrap}
+.agent-tab:hover{color:var(--mid)}
+.agent-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.agent-queue-badge{background:var(--accent);color:var(--black);border-radius:100px;font-size:0.62rem;font-weight:700;padding:0.1rem 0.4rem;margin-left:0.3rem;vertical-align:middle;display:inline-block}
+.agent-queue-badge.hidden{display:none}
+
+.agent-panel{display:none}
+.agent-panel.active{display:block}
+
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.25rem}
+.agent-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.agent-card-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700}
+.agent-card-sub{font-size:0.78rem;color:var(--muted);margin-top:0.2rem}
+.agent-refresh-btn{background:transparent;border:1px solid var(--border2);color:var(--mid);border-radius:6px;padding:0.45rem 0.85rem;font-size:0.8rem;cursor:pointer;font-family:var(--font-body);transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+.agent-refresh-btn:hover{border-color:var(--accent);color:var(--accent)}
+.agent-refresh-btn:disabled{opacity:0.4;cursor:not-allowed}
+.agent-loading{padding:0.5rem 0 1rem}
+.briefing-memo{font-size:0.9rem;line-height:1.85;color:var(--mid);white-space:pre-wrap;border-left:2px solid var(--accent);padding-left:1.25rem}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.65rem;margin-top:0.5rem}
+.cal-day-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.85rem;display:flex;flex-direction:column;gap:0.5rem}
+.cal-day-card.approved{border-color:rgba(200,240,76,0.35);background:rgba(200,240,76,0.04)}
+.cal-day-card.skipped{opacity:0.35}
+.cal-day-label{font-size:0.68rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase}
+.cal-platform{font-size:0.72rem;font-weight:600;color:var(--accent)}
+.cal-time{font-size:0.66rem;color:var(--muted)}
+.cal-caption{font-size:0.77rem;color:var(--mid);line-height:1.5;flex:1}
+.cal-hashtags{font-size:0.66rem;color:var(--blue);line-height:1.4}
+.cal-actions{display:flex;gap:0.3rem;margin-top:0.25rem}
+.cal-btn{flex:1;border:1px solid var(--border);border-radius:4px;padding:0.3rem 0.15rem;font-size:0.65rem;font-weight:600;cursor:pointer;font-family:var(--font-body);background:transparent;color:var(--muted);transition:all 0.15s;text-align:center;white-space:nowrap}
+.cal-btn.approve{border-color:rgba(200,240,76,0.35);color:var(--accent)}
+.cal-btn.approve:hover{background:var(--accent-glow)}
+.cal-btn.skip{border-color:rgba(255,90,90,0.25);color:var(--red)}
+.cal-btn.skip:hover{background:rgba(255,90,90,0.08)}
+.cal-btn.edit:hover{border-color:var(--border2);color:var(--white)}
+
+.growth-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;margin-bottom:0.85rem}
+.growth-card-header{display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:0.65rem}
+.growth-icon{font-size:1.35rem;flex-shrink:0}
+.growth-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700}
+.growth-why{font-size:0.82rem;color:var(--mid);line-height:1.6;margin-bottom:0.6rem}
+.growth-action-line{font-size:0.8rem;color:var(--accent);margin-bottom:0.85rem;font-style:italic}
+.growth-gen-btn{border:1px solid rgba(200,240,76,0.3);background:var(--accent-glow);color:var(--accent);border-radius:6px;padding:0.5rem 1rem;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s}
+.growth-gen-btn:hover{background:rgba(200,240,76,0.2)}
+.growth-gen-btn:disabled{opacity:0.45;cursor:not-allowed}
+
+.trending-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.6rem}
+.trending-topic{font-size:0.875rem;font-weight:600}
+.trending-angle{font-size:0.78rem;color:var(--muted);margin-top:0.2rem;line-height:1.4}
+.trending-gen-btn{border:1px solid var(--border2);border-radius:6px;padding:0.5rem 0.9rem;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:var(--font-body);background:transparent;color:var(--mid);transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+.trending-gen-btn:hover{border-color:var(--accent);color:var(--accent)}
+.trending-gen-btn:disabled{opacity:0.45;cursor:not-allowed}
+
+.queue-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:1rem;margin-bottom:0.6rem}
+.queue-platform-icon{font-size:1.3rem;flex-shrink:0;margin-top:0.1rem}
+.queue-body{flex:1;min-width:0}
+.queue-caption{font-size:0.82rem;color:var(--mid);line-height:1.5;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.queue-meta{font-size:0.72rem;color:var(--muted);margin-top:0.3rem}
+.queue-copy-btn{border:1px solid var(--border2);border-radius:6px;padding:0.5rem 0.85rem;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:var(--font-body);background:transparent;color:var(--mid);transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+.queue-copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+.agent-output{background:rgba(0,0,0,0.25);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:1rem;margin-top:0.85rem;border-left:2px solid var(--accent)}
+.agent-output-text{font-size:0.875rem;color:var(--white);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.agent-output-actions{display:flex;gap:0.5rem;margin-top:0.75rem;flex-wrap:wrap}
+
+@media(max-width:768px){
+  .cal-grid{grid-template-columns:1fr}
+  .agent-tab{font-size:0.76rem;padding:0.5rem 0.65rem}
+  .trending-item{flex-direction:column;align-items:flex-start;gap:0.65rem}
+  .trending-gen-btn{width:100%}
+  .queue-item{flex-wrap:wrap}
+  .agent-hero-title{font-size:1.15rem}
+  .agent-card{padding:1.1rem}
 }
 </style>
 </head>
@@ -529,6 +620,11 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">Mavri<span>x</span></div>
+    <div class="nav-item agent-nav" onclick="showView('agent')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+      AI Social Agent
+      <span class="nav-badge hidden" id="badge-agent">✓</span>
+    </div>
     <div class="sidebar-section">Main</div>
     <div class="nav-item active" onclick="showView('dashboard',this)">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
@@ -570,6 +666,104 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       </div>
     </div>
     <div class="content">
+
+      <!-- AGENT VIEW -->
+      <div class="view" id="view-agent">
+        <div class="agent-hero">
+          <div class="agent-hero-label">⚡ Flagship Feature</div>
+          <h2 class="agent-hero-title">AI Social Agent</h2>
+          <p class="agent-hero-sub">Your AI Chief Marketing Officer — proactive, strategic, built for Singapore businesses.</p>
+        </div>
+
+        <div class="agent-tabs">
+          <button class="agent-tab active" id="agtab-briefing" onclick="showAgentTab('briefing')">📋 Weekly Briefing</button>
+          <button class="agent-tab" id="agtab-calendar" onclick="showAgentTab('calendar')">📅 Content Calendar</button>
+          <button class="agent-tab" id="agtab-growth" onclick="showAgentTab('growth')">📈 Growth Consultant</button>
+          <button class="agent-tab" id="agtab-trending" onclick="showAgentTab('trending')">🔥 Trending Topics</button>
+          <button class="agent-tab" id="agtab-queue" onclick="showAgentTab('queue')">📤 Queue <span class="agent-queue-badge hidden" id="queue-badge">0</span></button>
+        </div>
+
+        <!-- BRIEFING -->
+        <div class="agent-panel active" id="agpanel-briefing">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <div>
+                <div class="agent-card-title">Your weekly marketing briefing</div>
+                <div class="agent-card-sub" id="briefing-date">Loading...</div>
+              </div>
+              <button class="agent-refresh-btn" id="briefing-refresh-btn" onclick="generateBriefing(true)">↻ Refresh</button>
+            </div>
+            <div class="agent-loading" id="briefing-loading" style="display:none">
+              <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Your CMO is thinking...</span></div>
+            </div>
+            <div class="briefing-memo" id="briefing-memo" style="color:var(--muted);font-size:0.875rem">Open this tab to generate your weekly briefing.</div>
+          </div>
+        </div>
+
+        <!-- CALENDAR -->
+        <div class="agent-panel" id="agpanel-calendar">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <div>
+                <div class="agent-card-title">This week's content calendar</div>
+                <div class="agent-card-sub">7 posts across platforms — approve, edit, or skip each one</div>
+              </div>
+              <button class="generate-btn" id="cal-gen-btn" onclick="generateCalendar()" style="width:auto;padding:0.6rem 1.1rem;font-size:0.82rem">⚡ Generate week</button>
+            </div>
+            <div class="agent-loading" id="cal-loading" style="display:none">
+              <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Planning your week...</span></div>
+            </div>
+            <div class="cal-grid" id="cal-grid" style="color:var(--muted);font-size:0.875rem">Click "Generate week" to build your 7-day content plan.</div>
+          </div>
+        </div>
+
+        <!-- GROWTH -->
+        <div class="agent-panel" id="agpanel-growth">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <div>
+                <div class="agent-card-title">Growth opportunities</div>
+                <div class="agent-card-sub">Specific to your business and the Singapore market</div>
+              </div>
+              <button class="agent-refresh-btn" id="growth-refresh-btn" onclick="generateGrowth(true)">↻ Refresh</button>
+            </div>
+            <div class="agent-loading" id="growth-loading" style="display:none">
+              <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Analysing opportunities...</span></div>
+            </div>
+            <div id="growth-cards" style="color:var(--muted);font-size:0.875rem">Open this tab to generate growth insights.</div>
+          </div>
+        </div>
+
+        <!-- TRENDING -->
+        <div class="agent-panel" id="agpanel-trending">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <div>
+                <div class="agent-card-title">Trending topics for your industry</div>
+                <div class="agent-card-sub">Generate a post instantly in your brand voice</div>
+              </div>
+              <button class="agent-refresh-btn" id="trending-refresh-btn" onclick="generateTrending(true)">↻ Refresh</button>
+            </div>
+            <div class="agent-loading" id="trending-loading" style="display:none">
+              <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Finding trends...</span></div>
+            </div>
+            <div id="trending-list" style="color:var(--muted);font-size:0.875rem">Open this tab to see trending topics.</div>
+          </div>
+        </div>
+
+        <!-- QUEUE -->
+        <div class="agent-panel" id="agpanel-queue">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <div>
+                <div class="agent-card-title">Content queue</div>
+                <div class="agent-card-sub">Approved posts ready to copy and publish</div>
+              </div>
+            </div>
+            <div id="queue-list"><div style="color:var(--muted);font-size:0.875rem">No posts queued yet. Approve posts from the Content Calendar.</div></div>
+          </div>
+        </div>
+      </div>
 
       <!-- DASHBOARD VIEW -->
       <div class="view active" id="view-dashboard">
@@ -779,6 +973,10 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 
   <!-- MOBILE BOTTOM NAV -->
   <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+    <button class="mbn-item" id="mbn-agent" onclick="showView('agent')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+      Agent
+    </button>
     <button class="mbn-item active" id="mbn-dashboard" onclick="showView('dashboard')">
       <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
       Home
@@ -1036,7 +1234,7 @@ function completeOnboarding() {
 }
 
 // ── NAVIGATION ──
-const VIEW_NAV_IDX = {dashboard:0,generate:1,history:2,settings:3};
+const VIEW_NAV_IDX = {agent:0,dashboard:1,generate:2,history:3,settings:4};
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1047,9 +1245,388 @@ function showView(name) {
   if (idx !== undefined) document.querySelectorAll('.nav-item')[idx].classList.add('active');
   const mbnEl = document.getElementById('mbn-' + name);
   if (mbnEl) mbnEl.classList.add('active');
-  const titles = {dashboard:'Dashboard',generate:'Generate Content',history:'History',settings:'Settings'};
+  const titles = {agent:'AI Social Agent',dashboard:'Dashboard',generate:'Generate Content',history:'History',settings:'Settings'};
   document.getElementById('topbar-title').textContent = titles[name] || name;
   closeSidebar();
+  if (name === 'agent' && !agentState.briefingReady) setTimeout(generateBriefing, 100);
+}
+
+// ── AGENT STATE ──
+const agentState = {
+  briefingReady: false,
+  calendarData: [],
+  growthReady: false,
+  trendingReady: false,
+  queue: []
+};
+
+// ── AGENT HELPERS ──
+async function callApi(prompt) {
+  if (!authToken) { showToast('Requires the Mavrix server to be running.'); return null; }
+  const res = await fetch('/api/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+    body: JSON.stringify({ prompt })
+  });
+  if (res.status === 401) { doLogout(); return null; }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Generation failed.');
+  return data.text || '';
+}
+
+function bizCtx() {
+  return `Business: ${state.bizName || 'a Singapore SME'}
+Industry: ${state.industry || 'business'}
+Audience: ${state.audience || 'Singapore professionals'}
+Value proposition: ${state.problem || 'helping customers succeed'}
+Brand tone: ${state.brandTone || state.tone || 'Professional'}
+Location: Singapore`;
+}
+
+function parseEntries(text) {
+  return text.split('---').map(e => {
+    const obj = {};
+    e.trim().split('|').forEach(p => {
+      const ci = p.indexOf(':');
+      if (ci > 0) obj[p.slice(0,ci).trim()] = p.slice(ci+1).trim();
+    });
+    return obj;
+  }).filter(o => Object.keys(o).length > 0);
+}
+
+function showAgentTab(tab) {
+  document.querySelectorAll('.agent-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.agent-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('agtab-' + tab).classList.add('active');
+  document.getElementById('agpanel-' + tab).classList.add('active');
+  if (tab === 'growth'   && !agentState.growthReady)   generateGrowth();
+  if (tab === 'trending' && !agentState.trendingReady) generateTrending();
+}
+
+// ── BRIEFING ──
+async function generateBriefing(force = false) {
+  if (agentState.briefingReady && !force) return;
+  const memoEl = document.getElementById('briefing-memo');
+  const loadEl = document.getElementById('briefing-loading');
+  const btn    = document.getElementById('briefing-refresh-btn');
+  document.getElementById('briefing-date').textContent =
+    'Week of ' + new Date().toLocaleDateString('en-SG', {day:'numeric',month:'long',year:'numeric'});
+  loadEl.style.display = 'block';
+  memoEl.style.display = 'none';
+  if (btn) btn.disabled = true;
+  try {
+    const text = await callApi(`You are the AI Chief Marketing Officer for a Singapore business. Write a concise weekly marketing briefing (max 380 words) for:
+
+${bizCtx()}
+
+Format with these exact headers:
+THIS WEEK'S FOCUS:
+(1-2 sentences on priority)
+
+CONTENT OPPORTUNITIES:
+• (specific idea 1)
+• (specific idea 2)
+• (specific idea 3)
+
+GROWTH TIPS:
+• (specific tip 1)
+• (specific tip 2)
+
+COMPETITIVE INSIGHT:
+(1 observation about their Singapore market)
+
+Be specific, not generic. First person. Reference their industry and business directly.`);
+    if (text) {
+      memoEl.textContent = text;
+      memoEl.style.display = '';
+      agentState.briefingReady = true;
+      document.getElementById('badge-agent').classList.remove('hidden');
+    }
+  } catch(e) {
+    memoEl.textContent = 'Could not generate briefing. Please try again.';
+    memoEl.style.display = '';
+  }
+  loadEl.style.display = 'none';
+  if (btn) btn.disabled = false;
+}
+
+// ── CALENDAR ──
+async function generateCalendar() {
+  const gridEl = document.getElementById('cal-grid');
+  const loadEl = document.getElementById('cal-loading');
+  const btn    = document.getElementById('cal-gen-btn');
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  loadEl.style.display = 'block';
+  gridEl.innerHTML = '';
+  agentState.calendarData = [];
+  const days      = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const platforms = ['Facebook','Instagram','LinkedIn','Facebook','Instagram','TikTok','LinkedIn'];
+  const times     = ['9:00 AM','6:00 PM','8:00 AM','12:00 PM','7:00 PM','10:00 AM','5:00 PM'];
+  const pEmoji    = {Facebook:'📘',Instagram:'📸',LinkedIn:'💼',TikTok:'🎵'};
+  try {
+    const text = await callApi(`You are a Singapore social media expert. Create a 7-day content calendar for:
+
+${bizCtx()}
+
+Output EXACTLY 7 entries separated by ---, each on one line:
+DAY:Monday|PLATFORM:Facebook|TYPE:Promotional Post|TIME:9:00 AM|CAPTION:Write 2-3 sentence engaging caption with CTA|HASHTAGS:#tag1 #tag2 #tag3
+---
+(repeat for Tuesday through Sunday, vary platforms: Facebook, Instagram, LinkedIn, TikTok)
+
+Make captions specific to the business. No extra text, just the 7 entries.`);
+    if (!text) throw new Error('No response');
+    const entries = parseEntries(text);
+    gridEl.innerHTML = '';
+    entries.slice(0,7).forEach((p, i) => {
+      const day      = p.DAY      || days[i];
+      const platform = p.PLATFORM || platforms[i];
+      const type     = p.TYPE     || 'Post';
+      const time     = p.TIME     || times[i];
+      const caption  = p.CAPTION  || '';
+      const hashtags = p.HASHTAGS || '';
+      const post = { day, platform, type, time, caption, hashtags, status: 'pending' };
+      agentState.calendarData.push(post);
+      const card = document.createElement('div');
+      card.className = 'cal-day-card'; card.id = 'cal-card-' + i;
+      card.innerHTML = `<div class="cal-day-label">${day}</div>
+        <div class="cal-platform">${pEmoji[platform]||'📱'} ${platform}</div>
+        <div class="cal-time">⏰ ${time}</div>
+        <div class="cal-caption" id="cal-caption-${i}">${caption.replace(/</g,'&lt;')}</div>
+        <div class="cal-hashtags">${hashtags}</div>
+        <div class="cal-actions">
+          <button class="cal-btn approve" onclick="approveCalPost(${i})">✓ Yes</button>
+          <button class="cal-btn edit"    onclick="editCalPost(${i})">✏ Edit</button>
+          <button class="cal-btn skip"    onclick="skipCalPost(${i})">✕ Skip</button>
+        </div>`;
+      gridEl.appendChild(card);
+    });
+    while (gridEl.children.length < 7) {
+      const i = gridEl.children.length;
+      const el = document.createElement('div');
+      el.className = 'cal-day-card';
+      el.innerHTML = `<div class="cal-day-label">${days[i]}</div><div style="color:var(--muted);font-size:0.78rem;margin-top:0.5rem">Rest day</div>`;
+      gridEl.appendChild(el);
+    }
+  } catch(e) {
+    gridEl.innerHTML = '<div style="color:var(--red);font-size:0.875rem">Could not generate calendar. Please try again.</div>';
+  }
+  loadEl.style.display = 'none';
+  btn.disabled = false; btn.textContent = '⚡ Generate week';
+}
+
+function approveCalPost(i) {
+  const post = agentState.calendarData[i];
+  if (!post || post.status === 'approved') return;
+  post.status = 'approved';
+  document.getElementById('cal-card-' + i).classList.add('approved');
+  document.querySelector(`#cal-card-${i} .cal-btn.approve`).textContent = '✓ Done';
+  addToQueue(post);
+}
+function skipCalPost(i) {
+  const post = agentState.calendarData[i];
+  if (post) post.status = 'skipped';
+  document.getElementById('cal-card-' + i).classList.add('skipped');
+}
+function editCalPost(i) {
+  const captionEl = document.getElementById('cal-caption-' + i);
+  const editBtn   = document.querySelector(`#cal-card-${i} .cal-btn.edit`);
+  if (captionEl.contentEditable === 'true') {
+    captionEl.contentEditable = 'false';
+    if (agentState.calendarData[i]) agentState.calendarData[i].caption = captionEl.textContent;
+    editBtn.textContent = '✏ Edit';
+  } else {
+    captionEl.contentEditable = 'true';
+    captionEl.focus();
+    editBtn.textContent = '✓ Done';
+  }
+}
+
+// ── GROWTH ──
+async function generateGrowth(force = false) {
+  if (agentState.growthReady && !force) return;
+  const container = document.getElementById('growth-cards');
+  const loadEl    = document.getElementById('growth-loading');
+  const btn       = document.getElementById('growth-refresh-btn');
+  loadEl.style.display = 'block'; container.innerHTML = '';
+  if (btn) btn.disabled = true;
+  const icons = ['🎯','💡','🚀','📊','⚡'];
+  try {
+    const text = await callApi(`You are a senior marketing consultant for Singapore SMEs. Give 3 specific growth opportunities for:
+
+${bizCtx()}
+
+Output EXACTLY 3 entries separated by ---:
+INSIGHT:Bold specific opportunity title|WHY:2 sentences why this matters for their specific situation|ACTION:One concrete step they can take this week
+---
+
+Be specific to their industry and Singapore market. Reference real platforms, competitor gaps, or market trends.`);
+    if (!text) throw new Error();
+    const entries = parseEntries(text);
+    container.innerHTML = '';
+    entries.slice(0,5).forEach((p, i) => {
+      const insight = p.INSIGHT || 'Growth Opportunity';
+      const why     = p.WHY    || '';
+      const action  = p.ACTION || '';
+      const safeInsight = insight.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+      const card = document.createElement('div');
+      card.className = 'growth-card';
+      card.innerHTML = `<div class="growth-card-header"><div class="growth-icon">${icons[i]||'💡'}</div><div><div class="growth-title">${insight.replace(/</g,'&lt;')}</div></div></div>
+        <div class="growth-why">${why.replace(/</g,'&lt;')}</div>
+        <div class="growth-action-line">→ ${action.replace(/</g,'&lt;')}</div>
+        <button class="growth-gen-btn" onclick="generateForInsight(this,'${safeInsight}')">⚡ Generate content for this</button>
+        <div class="agent-output" style="display:none"></div>`;
+      container.appendChild(card);
+    });
+    agentState.growthReady = true;
+  } catch(e) {
+    container.innerHTML = '<div style="color:var(--red);font-size:0.875rem">Could not generate insights. Please try again.</div>';
+  }
+  loadEl.style.display = 'none';
+  if (btn) btn.disabled = false;
+}
+
+async function generateForInsight(btn, insight) {
+  const outputEl = btn.nextElementSibling;
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  outputEl.style.display = 'none';
+  try {
+    const text = await callApi(`Write a social media post leveraging this growth opportunity for a Singapore business:
+${bizCtx()}
+Opportunity: ${insight}
+Write one punchy post (3-4 sentences + hashtags) in their brand tone. Output only the post.`);
+    if (text) {
+      outputEl.style.display = 'block';
+      outputEl.innerHTML = `<div class="agent-output-text">${text.replace(/</g,'&lt;')}</div>
+        <div class="agent-output-actions">
+          <button class="action-btn" onclick="copyText(this)">📋 Copy</button>
+          <button class="action-btn accent" onclick="queueFromOutput('LinkedIn',this)">💾 Add to queue</button>
+        </div>`;
+    }
+  } catch(e) {
+    outputEl.style.display = 'block';
+    outputEl.innerHTML = '<div style="color:var(--red);font-size:0.8rem">Failed. Try again.</div>';
+  }
+  btn.disabled = false; btn.textContent = '⚡ Generate content for this';
+}
+
+// ── TRENDING ──
+async function generateTrending(force = false) {
+  if (agentState.trendingReady && !force) return;
+  const listEl = document.getElementById('trending-list');
+  const loadEl = document.getElementById('trending-loading');
+  const btn    = document.getElementById('trending-refresh-btn');
+  loadEl.style.display = 'block'; listEl.innerHTML = '';
+  if (btn) btn.disabled = true;
+  try {
+    const text = await callApi(`List 5 trending topics relevant to ${state.industry||'business'} in Singapore that resonate with ${state.audience||'local businesses'}.
+
+Output EXACTLY 5 entries separated by ---:
+TOPIC:Short punchy topic name|ANGLE:One sentence on how ${state.bizName||'this business'} can use this
+---
+
+Be specific to Singapore. Think real current trends in their industry.`);
+    if (!text) throw new Error();
+    const entries = parseEntries(text);
+    listEl.innerHTML = '';
+    entries.slice(0,5).forEach((p, i) => {
+      const topic = p.TOPIC || 'Trending Topic';
+      const angle = p.ANGLE || '';
+      const safeTopic = topic.replace(/'/g,"\\'");
+      const safeAngle = angle.replace(/'/g,"\\'");
+      const item = document.createElement('div');
+      item.className = 'trending-item';
+      item.innerHTML = `<div style="flex:1;min-width:0">
+          <div class="trending-topic">#${i+1} ${topic.replace(/</g,'&lt;')}</div>
+          <div class="trending-angle">${angle.replace(/</g,'&lt;')}</div>
+          <div class="agent-output" style="display:none;margin-top:0.75rem"></div>
+        </div>
+        <button class="trending-gen-btn" onclick="generateForTopic(this,'${safeTopic}','${safeAngle}')">⚡ Generate post</button>`;
+      listEl.appendChild(item);
+    });
+    agentState.trendingReady = true;
+  } catch(e) {
+    listEl.innerHTML = '<div style="color:var(--red);font-size:0.875rem">Could not load topics. Please try again.</div>';
+  }
+  loadEl.style.display = 'none';
+  if (btn) btn.disabled = false;
+}
+
+async function generateForTopic(btn, topic, angle) {
+  const item     = btn.closest('.trending-item');
+  const outputEl = item.querySelector('.agent-output');
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  try {
+    const text = await callApi(`Write a social media post for a Singapore business about this trending topic:
+${bizCtx()}
+Topic: ${topic}
+Angle: ${angle}
+Write one engaging post (3-4 sentences + hashtags) in their brand tone. Output only the post.`);
+    if (text) {
+      outputEl.style.display = 'block';
+      outputEl.innerHTML = `<div class="agent-output-text">${text.replace(/</g,'&lt;')}</div>
+        <div class="agent-output-actions">
+          <button class="action-btn" onclick="copyText(this)">📋 Copy</button>
+          <button class="action-btn accent" onclick="queueFromOutput('Social',this)">💾 Add to queue</button>
+        </div>`;
+    }
+  } catch(e) {
+    outputEl.style.display = 'block';
+    outputEl.innerHTML = '<div style="color:var(--red);font-size:0.8rem">Failed. Try again.</div>';
+  }
+  btn.disabled = false; btn.textContent = '⚡ Generate post';
+}
+
+// ── QUEUE ──
+function addToQueue(post) {
+  const pEmoji = {Facebook:'📘',Instagram:'📸',LinkedIn:'💼',TikTok:'🎵'};
+  agentState.queue.push({
+    platform: post.platform,
+    emoji:    pEmoji[post.platform] || '📱',
+    caption:  post.caption + (post.hashtags ? '\n\n' + post.hashtags : ''),
+    time:     post.time,
+    day:      post.day
+  });
+  renderQueue();
+}
+function queueFromOutput(platform, btn) {
+  const text   = btn.closest('.agent-output').querySelector('.agent-output-text').textContent;
+  const pEmoji = {Facebook:'📘',Instagram:'📸',LinkedIn:'💼',TikTok:'🎵'};
+  agentState.queue.push({ platform, emoji: pEmoji[platform]||'📱', caption: text, time: 'Best time', day: 'Scheduled' });
+  renderQueue();
+  showToast('Added to queue!');
+}
+function renderQueue() {
+  const listEl  = document.getElementById('queue-list');
+  const badgeEl = document.getElementById('queue-badge');
+  const count   = agentState.queue.length;
+  badgeEl.textContent = count;
+  badgeEl.classList.toggle('hidden', count === 0);
+  if (count === 0) {
+    listEl.innerHTML = '<div style="color:var(--muted);font-size:0.875rem">No posts queued. Approve posts from the Content Calendar.</div>';
+    return;
+  }
+  const pUrls = {Facebook:'https://facebook.com',Instagram:'https://instagram.com',LinkedIn:'https://linkedin.com',TikTok:'https://tiktok.com'};
+  listEl.innerHTML = agentState.queue.map((item, i) => `
+    <div class="queue-item">
+      <div class="queue-platform-icon">${item.emoji}</div>
+      <div class="queue-body">
+        <div class="queue-caption">${item.caption.replace(/</g,'&lt;')}</div>
+        <div class="queue-meta">${item.platform} · ${item.day} · ${item.time}</div>
+      </div>
+      <button class="queue-copy-btn" onclick="copyAndPost(${i})">📤 Copy & Post</button>
+    </div>`).join('');
+}
+function copyAndPost(i) {
+  const item = agentState.queue[i];
+  const urls = {Facebook:'https://facebook.com',Instagram:'https://instagram.com',LinkedIn:'https://linkedin.com',TikTok:'https://tiktok.com'};
+  navigator.clipboard.writeText(item.caption).then(() => {
+    showToast('Copied! Opening ' + item.platform + '...');
+    setTimeout(() => window.open(urls[item.platform] || 'https://facebook.com', '_blank'), 700);
+  });
+}
+function copyText(btn) {
+  const text = btn.closest('.agent-output').querySelector('.agent-output-text').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
 }
 
 // ── PLATFORM / TONE SELECT ──
