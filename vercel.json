@@ -1,9 +1,12 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/((?!api/).*)",
+      "src": "/(.*)",
       "has": [{ "type": "host", "value": "app.mavrix.sg" }],
-      "destination": "/mavrix-app.html"
+      "dest": "/mavrix-app.html"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }
