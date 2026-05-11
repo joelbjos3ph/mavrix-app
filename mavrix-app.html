@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mavrix — AI Marketing Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -577,6 +578,66 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 @media(max-width:390px){
   .consult-starters-grid{grid-template-columns:1fr}
 }
+
+/* ── ANALYTICS ── */
+.analytics-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.analytics-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.analytics-kpi-num{font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:-0.04em;color:var(--accent)}
+.analytics-kpi-label{font-size:0.75rem;color:var(--muted);margin-top:0.2rem}
+
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.analytics-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+.analytics-card.full{grid-column:1/-1}
+.analytics-card-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700;margin-bottom:0.25rem}
+.analytics-card-sub{font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem}
+.analytics-chart-wrap{position:relative;width:100%}
+.analytics-chart-wrap canvas{max-width:100%}
+
+.analytics-input-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem}
+.analytics-field label{font-size:0.73rem;font-weight:600;color:var(--muted);letter-spacing:0.04em;display:block;margin-bottom:0.3rem}
+.analytics-field input{
+  width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:0.55rem 0.8rem;color:var(--white);
+  font-family:var(--font-body);font-size:0.875rem;outline:none;transition:border-color 0.2s;
+}
+.analytics-field input:focus{border-color:rgba(200,240,76,0.4)}
+.analytics-save-btn{
+  background:var(--accent);color:var(--black);border:none;padding:0.7rem 1.5rem;
+  border-radius:var(--radius-sm);font-weight:700;font-size:0.875rem;cursor:pointer;
+  font-family:var(--font-body);transition:all 0.2s;
+}
+.analytics-save-btn:hover{background:var(--accent-dim)}
+.analytics-save-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.ba-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-top:0.5rem}
+.ba-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;text-align:center}
+.ba-card-label{font-size:0.7rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.ba-platform{font-size:0.78rem;color:var(--mid);margin-bottom:0.3rem}
+.ba-num{font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--accent);letter-spacing:-0.03em}
+.ba-arrow{text-align:center;font-size:1.5rem;color:var(--accent)}
+.ba-growth{background:rgba(200,240,76,0.08);border:1px solid rgba(200,240,76,0.2);border-radius:var(--radius);padding:1rem 1.5rem;text-align:center;margin-top:1rem}
+.ba-growth-num{font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--accent);letter-spacing:-0.04em}
+.ba-growth-label{font-size:0.82rem;color:var(--mid);margin-top:0.2rem}
+
+.ai-report-card{background:linear-gradient(135deg,rgba(200,240,76,0.08),rgba(200,240,76,0.02));border:1px solid rgba(200,240,76,0.18);border-radius:var(--radius);padding:1.5rem;margin-top:1rem;position:relative;overflow:hidden;display:none}
+.ai-report-card.visible{display:block}
+.ai-report-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.ai-report-text{font-size:0.875rem;line-height:1.85;color:var(--mid);white-space:pre-wrap}
+.ai-report-btn{background:var(--surface);border:1px solid var(--border2);color:var(--mid);border-radius:var(--radius-sm);padding:0.65rem 1.25rem;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.2s}
+.ai-report-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ai-report-btn:disabled{opacity:0.45;cursor:not-allowed}
+
+@media(max-width:768px){
+  .analytics-kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .analytics-grid{grid-template-columns:1fr}
+  .analytics-card.full{grid-column:1}
+  .analytics-input-grid{grid-template-columns:1fr 1fr}
+  .ba-grid{grid-template-columns:1fr auto 1fr}
+}
+@media(max-width:390px){
+  .analytics-kpi-grid{grid-template-columns:1fr 1fr}
+  .analytics-input-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -738,6 +799,10 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
     <div class="nav-item" onclick="showView('chatbot')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="12" cy="10" r="3" fill="var(--surface)" stroke="currentColor"/><path d="M11 10h2M12 9v2"/></svg>
       Lead Chatbot
+    </div>
+    <div class="nav-item" onclick="showView('analytics')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12l4-4 3 3 4-5 3 2"/><path d="M1 15h14"/></svg>
+      Analytics
     </div>
     <div class="sidebar-section">Main</div>
     <div class="nav-item active" onclick="showView('dashboard')">
@@ -1100,6 +1165,109 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- ANALYTICS VIEW -->
+      <div class="view" id="view-analytics">
+
+        <!-- KPI ROW -->
+        <div class="analytics-kpi-grid">
+          <div class="analytics-kpi">
+            <div class="analytics-kpi-num" id="an-total-posts">0</div>
+            <div class="analytics-kpi-label">Total content generated</div>
+          </div>
+          <div class="analytics-kpi">
+            <div class="analytics-kpi-num" id="an-month-posts">0</div>
+            <div class="analytics-kpi-label">Posts this month</div>
+          </div>
+          <div class="analytics-kpi">
+            <div class="analytics-kpi-num" id="an-platforms">4</div>
+            <div class="analytics-kpi-label">Platforms active</div>
+          </div>
+          <div class="analytics-kpi">
+            <div class="analytics-kpi-num" id="an-days">—</div>
+            <div class="analytics-kpi-label">Days active on Mavrix</div>
+          </div>
+        </div>
+
+        <!-- SOCIAL GROWTH TRACKER -->
+        <div class="analytics-card full" style="margin-bottom:1.25rem">
+          <div class="analytics-card-title">📊 Social Media Growth Tracker</div>
+          <div class="analytics-card-sub">Enter this week's numbers — we'll track your growth over time</div>
+          <div class="analytics-input-grid">
+            <div class="analytics-field">
+              <label>FACEBOOK FOLLOWERS</label>
+              <input type="number" id="an-fb" placeholder="e.g. 1200" min="0">
+            </div>
+            <div class="analytics-field">
+              <label>INSTAGRAM FOLLOWERS</label>
+              <input type="number" id="an-ig" placeholder="e.g. 3400" min="0">
+            </div>
+            <div class="analytics-field">
+              <label>LINKEDIN FOLLOWERS</label>
+              <input type="number" id="an-li" placeholder="e.g. 890" min="0">
+            </div>
+            <div class="analytics-field">
+              <label>TIKTOK FOLLOWERS</label>
+              <input type="number" id="an-tt" placeholder="e.g. 5200" min="0">
+            </div>
+            <div class="analytics-field">
+              <label>AVG ENGAGEMENT RATE (%)</label>
+              <input type="number" id="an-eng" placeholder="e.g. 3.2" min="0" max="100" step="0.1">
+            </div>
+          </div>
+          <button class="analytics-save-btn" id="analytics-save-btn">💾 Save this week's numbers</button>
+        </div>
+
+        <!-- CHARTS ROW -->
+        <div class="analytics-grid">
+          <div class="analytics-card full">
+            <div class="analytics-card-title">📈 Follower Growth Over Time</div>
+            <div class="analytics-card-sub">Weekly follower count by platform</div>
+            <div class="analytics-chart-wrap" style="height:260px">
+              <canvas id="chart-growth"></canvas>
+            </div>
+            <p id="chart-growth-empty" style="color:var(--muted);font-size:0.85rem;padding:2rem 0;text-align:center;display:none">Save your first week's numbers above to start tracking growth.</p>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-card-title">📝 Content Generated per Week</div>
+            <div class="analytics-card-sub">Posts generated across all tools</div>
+            <div class="analytics-chart-wrap" style="height:220px">
+              <canvas id="chart-posts"></canvas>
+            </div>
+          </div>
+          <div class="analytics-card">
+            <div class="analytics-card-title">✅ Approved vs Skipped Posts</div>
+            <div class="analytics-card-sub">From your Content Calendar</div>
+            <div class="analytics-chart-wrap" style="height:220px;display:flex;align-items:center;justify-content:center">
+              <canvas id="chart-donut" style="max-width:200px;max-height:200px"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- BEFORE & AFTER -->
+        <div class="analytics-card full" style="margin-bottom:1.25rem" id="an-ba-section">
+          <div class="analytics-card-title">🚀 Before & After</div>
+          <div class="analytics-card-sub">Your follower growth since joining Mavrix</div>
+          <div id="an-ba-content">
+            <p style="color:var(--muted);font-size:0.875rem;padding:1rem 0">Save at least two weeks of numbers to see your growth comparison.</p>
+          </div>
+        </div>
+
+        <!-- AI MONTHLY REPORT -->
+        <div class="analytics-card full">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:0.5rem">
+            <div>
+              <div class="analytics-card-title">🤖 Monthly AI Report</div>
+              <div class="analytics-card-sub">AI analyses your numbers and gives personalised recommendations</div>
+            </div>
+            <button class="ai-report-btn" id="ai-report-btn" onclick="generateAnalyticsReport()">⚡ Generate monthly report</button>
+          </div>
+          <div class="ai-report-card" id="ai-report-card">
+            <div class="ai-report-text" id="ai-report-text"></div>
+          </div>
+        </div>
+
       </div>
 
       <!-- DASHBOARD VIEW -->
@@ -1595,7 +1763,7 @@ function completeOnboarding() {
 }
 
 // ── NAVIGATION ──
-const VIEW_NAV_IDX = {agent:0,consultant:1,generate:2,email:3,ads:4,chatbot:5,dashboard:6,history:7,settings:8};
+const VIEW_NAV_IDX = {agent:0,consultant:1,generate:2,email:3,ads:4,chatbot:5,analytics:6,dashboard:7,history:8,settings:9};
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1606,11 +1774,12 @@ function showView(name) {
   if (idx !== undefined) document.querySelectorAll('.nav-item')[idx].classList.add('active');
   const mbnEl = document.getElementById('mbn-' + name);
   if (mbnEl) mbnEl.classList.add('active');
-  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',generate:'Generate Content',email:'Email Campaigns',ads:'Ad Copy Generator',chatbot:'Lead Chatbot',dashboard:'Dashboard',history:'History',settings:'Settings'};
+  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',generate:'Generate Content',email:'Email Campaigns',ads:'Ad Copy Generator',chatbot:'Lead Chatbot',analytics:'Analytics',dashboard:'Dashboard',history:'History',settings:'Settings'};
   document.getElementById('topbar-title').textContent = titles[name] || name;
   closeSidebar();
   if (name === 'agent' && !agentState.briefingReady) setTimeout(generateBriefing, 100);
   if (name === 'chatbot') setTimeout(initChatbot, 100);
+  if (name === 'analytics') setTimeout(initAnalytics, 100);
 }
 
 // ── AGENT STATE ──
@@ -2125,6 +2294,246 @@ function saveConsultToHistory(i) {
   showToast('Saved to history!');
 }
 
+// ── ANALYTICS ──
+let analyticsData = []; // [{date, fb, ig, li, tt, eng}] loaded from GAS
+let chartGrowth = null;
+let chartPosts = null;
+let chartDonut = null;
+let analyticsInited = false;
+
+async function initAnalytics() {
+  updateAnalyticsKPIs();
+  renderPostsChart();
+  renderDonutChart();
+  await loadAnalyticsData();
+  renderGrowthChart();
+  renderBeforeAfter();
+}
+
+function updateAnalyticsKPIs() {
+  document.getElementById('an-total-posts').textContent = state.postsGenerated || state.history.length;
+  const now = new Date();
+  const monthPosts = state.history.filter(h => {
+    const d = new Date(h.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+  document.getElementById('an-month-posts').textContent = monthPosts;
+  document.getElementById('an-platforms').textContent = '4';
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (userData.joinDate) {
+    const joined = new Date(userData.joinDate);
+    const days = Math.max(1, Math.round((now - joined) / 86400000));
+    document.getElementById('an-days').textContent = days;
+  } else {
+    document.getElementById('an-days').textContent = '—';
+  }
+}
+
+async function loadAnalyticsData() {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email) return;
+  try {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'getAnalytics', email: userData.email })
+    });
+    const data = await res.json();
+    if (data.success && Array.isArray(data.rows)) {
+      analyticsData = data.rows.map(r => ({
+        date: r[0], fb: Number(r[1])||0, ig: Number(r[2])||0,
+        li: Number(r[3])||0, tt: Number(r[4])||0, eng: Number(r[5])||0
+      }));
+    }
+  } catch(e) {
+    console.warn('[analytics] Could not load data:', e.message);
+  }
+}
+
+async function saveAnalyticsWeek() {
+  const btn = document.getElementById('analytics-save-btn');
+  const fb  = Number(document.getElementById('an-fb').value) || 0;
+  const ig  = Number(document.getElementById('an-ig').value) || 0;
+  const li  = Number(document.getElementById('an-li').value) || 0;
+  const tt  = Number(document.getElementById('an-tt').value) || 0;
+  const eng = Number(document.getElementById('an-eng').value) || 0;
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email) { showToast('Sign in to save analytics.'); return; }
+
+  btn.disabled = true; btn.textContent = 'Saving...';
+  const today = new Date().toLocaleDateString('en-SG', {day:'numeric',month:'short',year:'numeric'});
+  try {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'saveAnalytics', email: userData.email, date: today, fb, ig, li, tt, eng })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Save failed');
+    analyticsData.push({ date: today, fb, ig, li, tt, eng });
+    renderGrowthChart();
+    renderBeforeAfter();
+    showToast('This week\'s numbers saved!');
+  } catch(e) {
+    showToast('Could not save. Please try again.');
+    console.error('[analytics] save error:', e.message);
+  }
+  btn.disabled = false; btn.textContent = '💾 Save this week\'s numbers';
+}
+
+function renderGrowthChart() {
+  const emptyEl = document.getElementById('chart-growth-empty');
+  const canvas = document.getElementById('chart-growth');
+  if (!analyticsData.length) {
+    canvas.style.display = 'none'; emptyEl.style.display = 'block'; return;
+  }
+  canvas.style.display = 'block'; emptyEl.style.display = 'none';
+  const labels = analyticsData.map(r => r.date);
+  if (chartGrowth) chartGrowth.destroy();
+  chartGrowth = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'Facebook',  data: analyticsData.map(r=>r.fb), borderColor:'#5A9BFF', backgroundColor:'rgba(90,155,255,0.08)', tension:0.4, pointRadius:4, fill:true },
+        { label:'Instagram', data: analyticsData.map(r=>r.ig), borderColor:'#FF5A9B', backgroundColor:'rgba(255,90,155,0.08)', tension:0.4, pointRadius:4, fill:true },
+        { label:'LinkedIn',  data: analyticsData.map(r=>r.li), borderColor:'#5ABFFF', backgroundColor:'rgba(90,191,255,0.08)', tension:0.4, pointRadius:4, fill:true },
+        { label:'TikTok',    data: analyticsData.map(r=>r.tt), borderColor:'#C8F04C', backgroundColor:'rgba(200,240,76,0.08)',  tension:0.4, pointRadius:4, fill:true },
+      ]
+    },
+    options: chartDefaults()
+  });
+}
+
+function renderPostsChart() {
+  const canvas = document.getElementById('chart-posts');
+  const weeks = {};
+  state.history.forEach(h => {
+    const d = new Date(h.date || Date.now());
+    const key = `W${getISOWeek(d)} ${d.getFullYear()}`;
+    weeks[key] = (weeks[key] || 0) + 1;
+  });
+  const labels = Object.keys(weeks).slice(-8);
+  const data   = labels.map(k => weeks[k]);
+  if (chartPosts) chartPosts.destroy();
+  chartPosts = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels.length ? labels : ['No data yet'],
+      datasets: [{ label:'Posts', data: data.length ? data : [0], backgroundColor:'rgba(200,240,76,0.7)', borderColor:'var(--accent)', borderRadius:4 }]
+    },
+    options: { ...chartDefaults(), plugins:{ legend:{ display:false } } }
+  });
+}
+
+function renderDonutChart() {
+  const canvas = document.getElementById('chart-donut');
+  const approved = agentState.queue.length;
+  const skipped  = agentState.calendarData.filter(d => d.skipped).length;
+  const total = approved + skipped;
+  if (chartDonut) chartDonut.destroy();
+  chartDonut = new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels: ['Approved','Skipped','Pending'],
+      datasets: [{ data: total > 0 ? [approved, skipped, 0] : [0, 0, 1],
+        backgroundColor: ['rgba(200,240,76,0.8)','rgba(255,90,90,0.7)','rgba(255,255,255,0.08)'],
+        borderWidth: 0, hoverOffset: 6 }]
+    },
+    options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{ position:'bottom', labels:{ color:'rgba(245,244,240,0.55)', font:{ size:11 }, padding:12 } } }, cutout:'65%' }
+  });
+}
+
+function renderBeforeAfter() {
+  const el = document.getElementById('an-ba-content');
+  if (analyticsData.length < 2) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:0.875rem;padding:1rem 0">Save at least two weeks of numbers to see your growth comparison.</p>';
+    return;
+  }
+  const first = analyticsData[0];
+  const last  = analyticsData[analyticsData.length - 1];
+  const totalFirst = first.fb + first.ig + first.li + first.tt;
+  const totalLast  = last.fb  + last.ig  + last.li  + last.tt;
+  const gained = totalLast - totalFirst;
+  const platforms = [
+    { name:'Facebook',  key:'fb', emoji:'📘' },
+    { name:'Instagram', key:'ig', emoji:'📸' },
+    { name:'LinkedIn',  key:'li', emoji:'💼' },
+    { name:'TikTok',    key:'tt', emoji:'🎵' },
+  ];
+  const rows = platforms.map(p => `
+    <div class="ba-platform">${p.emoji} ${p.name}</div>
+    <div class="ba-num">${(first[p.key]||0).toLocaleString()}</div>`).join('');
+  const rowsNow = platforms.map(p => `
+    <div class="ba-platform">${p.emoji} ${p.name}</div>
+    <div class="ba-num">${(last[p.key]||0).toLocaleString()}</div>`).join('');
+  el.innerHTML = `
+    <div class="ba-grid">
+      <div class="ba-card"><div class="ba-card-label">When you joined<br><small style="font-weight:400;color:var(--muted)">${first.date}</small></div>${rows}</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-card"><div class="ba-card-label">Today<br><small style="font-weight:400;color:var(--muted)">${last.date}</small></div>${rowsNow}</div>
+    </div>
+    <div class="ba-growth">
+      <div class="ba-growth-num">+${gained.toLocaleString()} followers</div>
+      <div class="ba-growth-label">You've gained ${gained.toLocaleString()} total followers since joining Mavrix 🎉</div>
+    </div>`;
+}
+
+async function generateAnalyticsReport() {
+  const btn = document.getElementById('ai-report-btn');
+  const card = document.getElementById('ai-report-card');
+  const text = document.getElementById('ai-report-text');
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  const latest = analyticsData[analyticsData.length - 1];
+  const prev   = analyticsData.length > 1 ? analyticsData[analyticsData.length - 2] : null;
+  const growth = prev ? {
+    fb: latest ? latest.fb - prev.fb : 0,
+    ig: latest ? latest.ig - prev.ig : 0,
+    li: latest ? latest.li - prev.li : 0,
+    tt: latest ? latest.tt - prev.tt : 0,
+  } : null;
+  const prompt = `You are a senior marketing analyst writing a monthly performance report for a Singapore business.
+${bizCtx()}
+Analytics data:
+${latest ? `Latest followers — Facebook: ${latest.fb}, Instagram: ${latest.ig}, LinkedIn: ${latest.li}, TikTok: ${latest.tt}, Engagement: ${latest.eng}%` : 'No social media data saved yet.'}
+${growth ? `Week-on-week growth — Facebook: ${growth.fb>0?'+':''}${growth.fb}, Instagram: ${growth.ig>0?'+':''}${growth.ig}, LinkedIn: ${growth.li>0?'+':''}${growth.li}, TikTok: ${growth.tt>0?'+':''}${growth.tt}` : ''}
+Content generated this month: ${document.getElementById('an-month-posts').textContent} posts
+Total entries tracked: ${analyticsData.length} weeks
+Write a concise monthly report (max 280 words) with:
+- 3–4 specific insights about their growth with actual numbers
+- The strongest and weakest performing platform
+- 2 concrete recommendations for next month
+- An encouraging but honest overall verdict
+Write in second person ("You grew…", "Your Instagram…"). Be specific, not generic.`;
+  try {
+    const reply = await callApi(prompt);
+    text.textContent = reply;
+    card.classList.add('visible');
+  } catch(e) {
+    text.textContent = 'Could not generate report. Please try again.';
+    card.classList.add('visible');
+  }
+  btn.disabled = false; btn.textContent = '⚡ Generate monthly report';
+}
+
+function chartDefaults() {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode:'index', intersect:false },
+    plugins: { legend:{ position:'bottom', labels:{ color:'rgba(245,244,240,0.55)', font:{ size:11 }, padding:12, boxWidth:12 } } },
+    scales: {
+      x: { grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'rgba(245,244,240,0.45)', font:{ size:11 } } },
+      y: { grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'rgba(245,244,240,0.45)', font:{ size:11 } }, beginAtZero:true }
+    }
+  };
+}
+
+function getISOWeek(d) {
+  const date = new Date(d); date.setHours(0,0,0,0);
+  date.setDate(date.getDate() + 3 - (date.getDay()+6)%7);
+  const week1 = new Date(date.getFullYear(),0,4);
+  return 1 + Math.round(((date-week1)/86400000 - 3 + (week1.getDay()+6)%7)/7);
+}
+
 // ── EMAIL CAMPAIGNS ──
 let emailTone = 'Professional';
 function selectEmailTone(btn, tone) {
@@ -2566,6 +2975,7 @@ function showToast(msg) {
 }
 
 document.getElementById('settings-save-btn').addEventListener('click', saveSettings);
+document.getElementById('analytics-save-btn').addEventListener('click', saveAnalyticsWeek);
 </script>
 </body>
 </html>
