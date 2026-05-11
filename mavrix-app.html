@@ -589,15 +589,14 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
     <p>Sign in to your AI marketing dashboard</p>
     <div class="field">
       <label>EMAIL</label>
-      <input type="email" placeholder="you@company.com" id="login-email" value="demo@mavrix.sg">
+      <input type="email" placeholder="you@company.com" id="login-email" autocomplete="email">
     </div>
     <div class="field">
       <label>PASSWORD</label>
-      <input type="password" placeholder="••••••••" id="login-pass" onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="password" placeholder="••••••••" id="login-pass" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="current-password">
     </div>
     <p id="login-error"></p>
     <button class="btn-primary" onclick="doLogin()">Sign in →</button>
-    <p class="login-note">Demo: demo@mavrix.sg / demo1234</p>
     <p class="auth-switch">New to Mavrix? <a href="#" onclick="showSignup();return false;">Create account</a></p>
   </div>
 </div>
@@ -1448,28 +1447,6 @@ async function doLogin() {
   errEl.textContent = '';
   errEl.style.color = 'var(--red)';
 
-  if (GOOGLE_SCRIPT_URL === 'GOOGLE_SCRIPT_URL') {
-    // GAS not yet configured — fall back to local Express server (demo mode)
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Sign in failed.');
-      authToken = data.token;
-      sessionStorage.setItem('mavrix_token', authToken);
-      launchApp(data);
-    } catch (err) {
-      errEl.textContent = err.message || 'Cannot reach server. Make sure it is running.';
-      btn.disabled = false;
-      btn.textContent = 'Sign in →';
-    }
-    return;
-  }
-
-  // GAS login
   try {
     const passwordHash = await hashPassword(password);
     const res = await fetch(GOOGLE_SCRIPT_URL, {
@@ -1478,7 +1455,16 @@ async function doLogin() {
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Sign in failed.');
-    const userData = { name: data.name, email, plan: data.plan, bizName: data.bizName || '' };
+    const userData = {
+      name:      data.name       || '',
+      email,
+      plan:      data.plan       || 'Starter',
+      bizName:   data.bizName    || '',
+      industry:  data.industry   || '',
+      audience:  data.audience   || '',
+      problem:   data.valueProp  || '',
+      brandTone: data.brandTone  || ''
+    };
     sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
     launchApp(userData);
   } catch (err) {
@@ -1492,13 +1478,33 @@ function launchApp(userData) {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('signup-screen').classList.remove('visible');
   document.getElementById('app').classList.add('visible');
-  const name = userData?.name || 'User';
-  document.getElementById('sidebar-user-name').textContent = name.split(' ')[0];
-  const initials = name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+
+  // Populate state from saved profile
+  if (userData?.bizName)   state.bizName   = userData.bizName;
+  if (userData?.industry)  state.industry  = userData.industry;
+  if (userData?.audience)  state.audience  = userData.audience;
+  if (userData?.problem)   state.problem   = userData.problem;
+  if (userData?.brandTone) { state.brandTone = userData.brandTone; state.tone = userData.brandTone; }
+
+  // Sidebar identity — prefer bizName over personal name
+  const displayName = state.bizName || userData?.name || 'User';
+  document.getElementById('sidebar-user-name').textContent = displayName.split(' ')[0];
+  const initials = displayName.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
   document.getElementById('user-avatar-initials').textContent = initials || 'MV';
-  document.querySelector('.user-plan').textContent = (userData?.plan || 'Pro') + ' Plan';
-  if (userData?.bizName) state.bizName = userData.bizName;
-  document.getElementById('onboarding').style.display = 'flex';
+  document.querySelector('.user-plan').textContent = (userData?.plan || 'Starter') + ' Plan';
+
+  // Pre-fill settings fields with any saved profile data
+  document.getElementById('set-biz-name').value = state.bizName;
+  document.getElementById('set-industry').value  = state.industry;
+  document.getElementById('set-audience').value  = state.audience;
+  document.getElementById('set-problem').value   = state.problem;
+
+  // Only show onboarding if the profile is incomplete
+  const profileComplete = !!(state.bizName && state.industry && state.audience);
+  if (!profileComplete) {
+    if (state.bizName) document.getElementById('ob-biz-name').value = state.bizName;
+    document.getElementById('onboarding').style.display = 'flex';
+  }
 }
 
 // ── LOGOUT ──
@@ -1566,9 +1572,26 @@ function completeOnboarding() {
     const initials = state.bizName.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
     document.getElementById('user-avatar-initials').textContent = initials || 'MV';
     document.getElementById('set-biz-name').value = state.bizName;
-    document.getElementById('set-industry').value = state.industry;
-    document.getElementById('set-audience').value = state.audience;
-    document.getElementById('set-problem').value = state.problem;
+    document.getElementById('set-industry').value  = state.industry;
+    document.getElementById('set-audience').value  = state.audience;
+    document.getElementById('set-problem').value   = state.problem;
+  }
+
+  // Save profile to Google Sheets (fire and forget)
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (userData.email) {
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'updateProfile',
+        email:     userData.email,
+        bizName:   state.bizName,
+        industry:  state.industry,
+        audience:  state.audience,
+        valueProp: state.problem,
+        brandTone: state.brandTone || 'Professional'
+      })
+    }).catch(() => {});
   }
 }
 
