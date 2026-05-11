@@ -384,6 +384,157 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   .mobile-bottom-nav{display:flex}
 }
 
+/* ── GUIDE VIEW ── */
+.guide-hero{background:linear-gradient(135deg,rgba(200,240,76,0.08),rgba(200,240,76,0.02));border:1px solid rgba(200,240,76,0.18);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.guide-hero-label{font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem}
+.guide-hero-title{font-family:var(--font-display);font-size:1.3rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.3rem}
+.guide-hero-sub{font-size:0.875rem;color:var(--mid)}
+.guide-accordion{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:0.75rem;background:var(--surface)}
+.guide-acc-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;cursor:pointer;transition:background 0.15s;gap:1rem}
+.guide-acc-header:hover{background:var(--surface2)}
+.guide-acc-left{display:flex;align-items:center;gap:0.75rem}
+.guide-acc-icon{font-size:1.2rem;flex-shrink:0}
+.guide-acc-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700}
+.guide-acc-arrow{color:var(--muted);transition:transform 0.2s;flex-shrink:0;font-size:0.75rem}
+.guide-accordion.open .guide-acc-arrow{transform:rotate(180deg)}
+.guide-acc-body{display:none;padding:1.25rem 1.5rem;background:var(--surface2);border-top:1px solid var(--border)}
+.guide-accordion.open .guide-acc-body{display:block}
+.guide-acc-row{margin-bottom:0.85rem}
+.guide-acc-row:last-child{margin-bottom:0}
+.guide-acc-label{font-size:0.68rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.2rem}
+.guide-acc-text{font-size:0.85rem;color:var(--mid);line-height:1.65}
+.guide-tip-box{background:rgba(200,240,76,0.05);border:1px solid rgba(200,240,76,0.15);border-radius:var(--radius-sm);padding:0.85rem;margin-top:0.5rem}
+.guide-tip-box p{font-size:0.82rem;color:var(--mid);margin:0;line-height:1.55}
+.guide-try-btn{display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.85rem;background:var(--accent);color:var(--black);border:none;padding:0.55rem 1rem;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:var(--font-body);transition:all 0.2s}
+.guide-try-btn:hover{background:var(--accent-dim)}
+@media(max-width:768px){.guide-acc-header{padding:0.9rem 1.1rem}.guide-acc-body{padding:1rem 1.1rem}}
+
+/* ── LEAD GROWTH ADVISOR ── */
+.nav-item.growth-nav{color:var(--orange);font-weight:600;font-size:0.875rem}
+.nav-item.growth-nav:hover{background:rgba(255,179,90,0.08)}
+.nav-item.growth-nav.active{background:rgba(255,179,90,0.12);border-left-color:var(--orange)}
+.lgrow-wrap{display:flex;flex-direction:column;height:calc(100vh - 120px)}
+.lgrow-hero{background:linear-gradient(135deg,rgba(255,179,90,0.1),rgba(255,179,90,0.02));border:1px solid rgba(255,179,90,0.2);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1rem;position:relative;overflow:hidden;flex-shrink:0}
+.lgrow-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent)}
+.lgrow-hero-label{font-size:0.7rem;font-weight:700;color:var(--orange);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.2rem}
+.lgrow-hero-title{font-family:var(--font-display);font-size:1.25rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.2rem}
+.lgrow-hero-sub{font-size:0.82rem;color:var(--mid)}
+.lgrow-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap;flex-shrink:0}
+.lgrow-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--font-body);font-size:0.8rem;font-weight:500;padding:0.6rem 0.85rem;cursor:pointer;margin-bottom:-1px;transition:color 0.15s;white-space:nowrap}
+.lgrow-tab:hover{color:var(--mid)}
+.lgrow-tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.lgrow-panels{flex:1;overflow-y:auto;min-height:0}
+.lgrow-panel{display:none;flex-direction:column;gap:1.25rem;padding-bottom:1rem}
+.lgrow-panel.active{display:flex}
+.lgrow-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+.lgrow-section-title{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:0.3rem}
+.lgrow-section-sub{font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.55}
+.lgrow-btn{background:rgba(255,179,90,0.15);border:1px solid rgba(255,179,90,0.35);color:var(--orange);border-radius:var(--radius-sm);padding:0.75rem 1.25rem;font-size:0.875rem;font-weight:700;cursor:pointer;font-family:var(--font-body);transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem}
+.lgrow-btn:hover{background:rgba(255,179,90,0.25)}
+.lgrow-btn:disabled{opacity:0.5;cursor:not-allowed}
+.lgrow-output{background:rgba(0,0,0,0.2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:1.25rem;border-left:2px solid var(--orange);margin-top:1.25rem;display:none}
+.lgrow-output.visible{display:block}
+.lgrow-output-text{font-size:0.875rem;line-height:1.8;color:var(--white);white-space:pre-wrap;word-break:break-word}
+.lgrow-output-actions{display:flex;gap:0.5rem;margin-top:0.85rem;flex-wrap:wrap}
+.lgrow-loading{display:none;align-items:center;gap:0.5rem;padding:0.5rem 0;margin-top:0.75rem}
+.lgrow-loading.active{display:flex}
+.lgrow-chat-wrap{display:flex;flex-direction:column;height:100%}
+.lgrow-chat-area{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0;padding-bottom:0.5rem;min-height:280px}
+.lgrow-chat-area::-webkit-scrollbar{width:3px}
+.lgrow-chat-area::-webkit-scrollbar-thumb{background:var(--border2)}
+.lgrow-starters-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;padding:1rem 0}
+.lgrow-starter-btn{background:var(--surface);border:1px solid rgba(255,179,90,0.2);border-radius:var(--radius-sm);padding:0.9rem;cursor:pointer;text-align:left;font-family:var(--font-body);font-size:0.8rem;color:var(--mid);transition:all 0.2s;line-height:1.4}
+.lgrow-starter-btn:hover{border-color:rgba(255,179,90,0.4);color:var(--white);background:rgba(255,179,90,0.06)}
+.lgrow-starter-icon{font-size:1.1rem;display:block;margin-bottom:0.3rem}
+@media(max-width:768px){
+  .lgrow-wrap{height:auto}
+  .lgrow-panels{overflow:visible}
+  .lgrow-tab{font-size:0.74rem;padding:0.5rem 0.6rem}
+  .lgrow-starters-grid{grid-template-columns:1fr}
+  .lgrow-section{padding:1.1rem}
+}
+
+/* ── PLATFORM RECOMMENDATION ── */
+.platform-rec-section{margin-top:1.5rem;display:none}
+.platform-rec-section.visible{display:block}
+.platform-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;flex-wrap:wrap;gap:0.75rem}
+.platform-rec-title{font-family:var(--font-display);font-size:0.9rem;font-weight:700}
+.platform-rec-gen-btn{background:rgba(90,155,255,0.1);border:1px solid rgba(90,155,255,0.3);color:var(--blue);border-radius:6px;padding:0.5rem 1rem;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s;display:flex;align-items:center;gap:0.4rem}
+.platform-rec-gen-btn:hover{background:rgba(90,155,255,0.18)}
+.platform-rec-gen-btn:disabled{opacity:0.45;cursor:not-allowed}
+.platform-rec-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem}
+.platform-rec-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
+.platform-rec-card-name{font-family:var(--font-display);font-size:0.88rem;font-weight:700;margin-bottom:0.85rem;display:flex;align-items:center;gap:0.5rem}
+.platform-rec-row{margin-bottom:0.6rem}
+.platform-rec-row:last-child{margin-bottom:0}
+.platform-rec-row-label{font-size:0.67rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.1rem}
+.platform-rec-row-val{font-size:0.8rem;color:var(--mid);line-height:1.5}
+.platform-rec-loading{display:none;align-items:center;gap:0.5rem;padding:0.5rem 0;color:var(--muted);font-size:0.875rem}
+.platform-rec-loading.active{display:flex}
+@media(max-width:768px){.platform-rec-cards{grid-template-columns:1fr}}
+
+/* ── FIRST-LOGIN WELCOME MODAL ── */
+#welcome-modal{position:fixed;inset:0;background:rgba(8,8,10,0.92);z-index:80;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:1rem}
+#welcome-modal.visible{display:flex}
+.welcome-box{width:580px;max-width:100%;max-height:90vh;overflow-y:auto;background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:2.25rem}
+.welcome-box::-webkit-scrollbar{width:3px}
+.welcome-box::-webkit-scrollbar-thumb{background:var(--border2)}
+.welcome-step-w{display:none}
+.welcome-step-w.active{display:block}
+.welcome-dots{display:flex;gap:0.4rem;margin-bottom:1.25rem}
+.welcome-dot{width:28px;height:3px;border-radius:2px;background:var(--border2);transition:background 0.3s}
+.welcome-dot.active{background:var(--accent)}
+.welcome-num{font-size:0.68rem;font-weight:700;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+.welcome-title{font-family:var(--font-display);font-size:1.35rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.4rem}
+.welcome-sub{font-size:0.875rem;color:var(--mid);margin-bottom:1.5rem;line-height:1.55}
+.welcome-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-bottom:1.25rem}
+.welcome-tool-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.9rem}
+.welcome-tool-icon{font-size:1.25rem;margin-bottom:0.3rem}
+.welcome-tool-name{font-family:var(--font-display);font-size:0.82rem;font-weight:700;margin-bottom:0.15rem}
+.welcome-tool-desc{font-size:0.73rem;color:var(--muted);line-height:1.4}
+.welcome-profile-item{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:0.5rem}
+.welcome-profile-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.welcome-profile-label{font-size:0.86rem}
+.welcome-profile-label.complete{color:var(--white)}
+.welcome-profile-label.missing{color:var(--muted)}
+.welcome-actions-list{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.25rem}
+.welcome-action-item{display:flex;align-items:flex-start;gap:0.85rem;background:var(--surface2);border-radius:var(--radius-sm);padding:0.9rem}
+.welcome-action-num{width:26px;height:26px;border-radius:50%;background:var(--accent-glow);border:1px solid rgba(200,240,76,0.3);color:var(--accent);font-size:0.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.05rem}
+.welcome-action-strong{font-size:0.86rem;font-weight:600;margin-bottom:0.15rem}
+.welcome-action-desc{font-size:0.78rem;color:var(--muted);line-height:1.4}
+.welcome-nav{display:flex;gap:0.75rem;margin-top:1.5rem}
+.welcome-skip-btn{flex:1;background:transparent;border:1px solid var(--border2);color:var(--mid);padding:0.75rem;border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-body);font-size:0.875rem;transition:all 0.2s}
+.welcome-skip-btn:hover{color:var(--white);border-color:var(--border2)}
+.welcome-next-btn{flex:2;background:var(--accent);color:var(--black);border:none;padding:0.75rem;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-family:var(--font-body);font-size:0.875rem;transition:all 0.2s}
+.welcome-next-btn:hover{background:var(--accent-dim)}
+@media(max-width:600px){.welcome-tools-grid{grid-template-columns:1fr}.welcome-box{padding:1.5rem}}
+
+/* ── EMAIL SEND SECTION ── */
+.email-send-section{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:1.5rem;margin-top:1.25rem;display:none}
+.email-send-section.visible{display:block}
+.email-send-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:0.25rem}
+.email-send-sub{font-size:0.8rem;color:var(--muted);margin-bottom:1.1rem}
+.email-send-tabs{display:flex;gap:0.5rem;margin-bottom:1.1rem}
+.email-send-tab{flex:1;border:1px solid var(--border2);background:transparent;color:var(--mid);border-radius:var(--radius-sm);padding:0.55rem;font-size:0.82rem;font-weight:500;cursor:pointer;font-family:var(--font-body);transition:all 0.2s;text-align:center}
+.email-send-tab.active{background:var(--accent-glow);border-color:rgba(200,240,76,0.3);color:var(--accent)}
+.email-send-panel{display:none}
+.email-send-panel.active{display:block}
+.email-send-field{margin-bottom:0.85rem}
+.email-send-field label{display:block;font-size:0.75rem;font-weight:500;color:var(--mid);letter-spacing:0.02em;margin-bottom:0.35rem}
+.email-send-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.65rem 0.9rem;color:var(--white);font-family:var(--font-body);font-size:0.875rem;outline:none;transition:border-color 0.2s}
+.email-send-input:focus{border-color:rgba(200,240,76,0.4)}
+.email-csv-label{display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.04);border:1px dashed var(--border2);border-radius:var(--radius-sm);padding:1rem;cursor:pointer;transition:all 0.2s;margin-bottom:0.85rem}
+.email-csv-label:hover{border-color:rgba(200,240,76,0.3);background:rgba(200,240,76,0.03)}
+.email-csv-label span{font-size:0.85rem;color:var(--mid)}
+.csv-preview{background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.85rem;font-size:0.8rem;color:var(--mid);margin-bottom:0.85rem;display:none;line-height:1.5}
+.csv-preview.visible{display:block}
+.email-send-btn{background:var(--accent);color:var(--black);border:none;padding:0.75rem 1.5rem;border-radius:var(--radius-sm);font-weight:700;font-size:0.875rem;cursor:pointer;font-family:var(--font-body);transition:all 0.2s}
+.email-send-btn:hover{background:var(--accent-dim)}
+.email-send-btn:disabled{opacity:0.5;cursor:not-allowed}
+.email-send-subject-field{margin-bottom:0.85rem}
+.email-send-progress{font-size:0.875rem;color:var(--mid);margin-top:0.85rem;padding:0.75rem;background:rgba(0,0,0,0.2);border-radius:var(--radius-sm);display:none}
+.email-send-progress.visible{display:block}
+
 /* ── VERY SMALL ≤390px ── */
 @media(max-width:390px){
   .stats-grid{grid-template-columns:1fr 1fr;gap:0.6rem}
@@ -844,9 +995,9 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="14" height="10" rx="1"/><path d="M4 14h8M8 11v3"/></svg>
       Ad Copy Generator
     </div>
-    <div class="nav-item" onclick="showView('chatbot')">
-      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="12" cy="10" r="3" fill="var(--surface)" stroke="currentColor"/><path d="M11 10h2M12 9v2"/></svg>
-      Lead Chatbot
+    <div class="nav-item growth-nav" onclick="showView('leadgrowth')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 1.5c-3 0-6 1.5-8 4L4 8l4 4 2.5-2.5c2.5-2 4-5 4-8z"/><circle cx="9" cy="7" r="1.5"/><path d="M1.5 14.5l3-3M4 12.5L2 14"/></svg>
+      Lead Growth Advisor
     </div>
     <div class="nav-item" onclick="showView('analytics')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12l4-4 3 3 4-5 3 2"/><path d="M1 15h14"/></svg>
@@ -865,6 +1016,10 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
     <div class="nav-item" onclick="showView('settings')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg>
       Settings
+    </div>
+    <div class="nav-item" onclick="showView('guide')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="7"/><path d="M8 7v5"/><circle cx="8" cy="4.5" r="0.75" fill="currentColor" stroke="none"/></svg>
+      Guide
     </div>
     <div class="sidebar-bottom">
       <div class="user-pill">
@@ -1134,6 +1289,40 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
                 <button class="action-btn accent" onclick="saveEmailToHistory()">💾 Save</button>
               </div>
             </div>
+
+            <!-- SEND CAMPAIGN -->
+            <div class="email-send-section" id="email-send-section">
+              <div class="email-send-title">📤 Send this campaign</div>
+              <div class="email-send-sub">Send to a single address or upload a CSV contact list</div>
+              <div class="email-send-field">
+                <label>EMAIL SUBJECT</label>
+                <input class="email-send-input" id="send-subject" placeholder="e.g. Exclusive offer just for you">
+              </div>
+              <div class="email-send-tabs">
+                <button class="email-send-tab active" id="stab-single" onclick="selectEmailSendTab('single')">✉️ Single email</button>
+                <button class="email-send-tab" id="stab-list" onclick="selectEmailSendTab('list')">📋 Send to list</button>
+              </div>
+              <div class="email-send-panel active" id="spanel-single">
+                <div class="email-send-field">
+                  <label>RECIPIENT EMAIL</label>
+                  <input class="email-send-input" id="send-single-email" type="email" placeholder="recipient@example.com">
+                </div>
+                <div class="email-send-field">
+                  <label>RECIPIENT NAME (optional)</label>
+                  <input class="email-send-input" id="send-single-name" placeholder="e.g. Sarah">
+                </div>
+              </div>
+              <div class="email-send-panel" id="spanel-list">
+                <label class="email-csv-label">
+                  <span style="font-size:1.3rem">📎</span>
+                  <span id="csv-label-text">Upload CSV file (columns: name, email)</span>
+                  <input type="file" accept=".csv" style="display:none" onchange="loadCSV(this)">
+                </label>
+                <div class="csv-preview" id="csv-preview"></div>
+              </div>
+              <button class="email-send-btn" id="send-campaign-btn" onclick="sendEmailCampaign()">📤 Send campaign</button>
+              <div class="email-send-progress" id="send-progress"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1205,39 +1394,124 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
                 <button class="action-btn accent" onclick="saveAdsToHistory()">💾 Save</button>
               </div>
             </div>
+
+            <!-- PLATFORM RECOMMENDATION -->
+            <div class="platform-rec-section" id="platform-rec-section">
+              <div class="platform-rec-header">
+                <div class="platform-rec-title">📡 Where to run this ad</div>
+                <button class="platform-rec-gen-btn" id="platform-rec-btn" onclick="generateAdPlatformRec()">⚡ Generate recommendation</button>
+              </div>
+              <div class="platform-rec-loading" id="platform-rec-loading">
+                <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Analysing best platforms...</span></div>
+              </div>
+              <div class="platform-rec-cards" id="platform-rec-cards" style="display:none"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- LEAD CHATBOT VIEW -->
-      <div class="view" id="view-chatbot">
-        <div class="consult-wrap">
-          <div class="consult-hero" style="background:linear-gradient(135deg,rgba(90,155,255,0.1),rgba(90,155,255,0.02));border-color:rgba(90,155,255,0.2)">
-            <div class="consult-hero-label" style="color:var(--blue)">🤖 Lead Chatbot</div>
-            <div class="consult-hero-title">Preview Your AI Lead Bot</div>
-            <div class="consult-hero-sub">See how your AI chatbot handles customer enquiries. Type as if you're a customer visiting your website.</div>
+      <!-- LEAD GROWTH ADVISOR VIEW -->
+      <div class="view" id="view-leadgrowth">
+        <div class="lgrow-wrap">
+          <div class="lgrow-hero">
+            <div class="lgrow-hero-label">🚀 Lead Growth Advisor</div>
+            <div class="lgrow-hero-title">Your Personal Growth Specialist</div>
+            <div class="lgrow-hero-sub">Builds your lead gen playbook, tells you what to do with every lead, and answers your toughest growth questions — specific to your business.</div>
           </div>
-          <div class="consult-chat-area" id="chatbot-chat-area">
-            <div id="chatbot-starters" style="padding:1rem 0">
-              <div class="consult-starters-label" style="color:var(--blue)">Simulate customer questions</div>
-              <div class="consult-starters-grid">
-                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('How much does it cost?')"><span class="consult-starter-icon">💰</span>How much does it cost?</button>
-                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('What services do you offer?')"><span class="consult-starter-icon">📋</span>What services do you offer?</button>
-                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('How do I get started?')"><span class="consult-starter-icon">🚀</span>How do I get started?</button>
-                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('Are you available on weekends?')"><span class="consult-starter-icon">🗓️</span>Are you available on weekends?</button>
-                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('Can I speak to someone?')"><span class="consult-starter-icon">📞</span>Can I speak to someone?</button>
-                <button class="consult-starter-btn" style="border-color:rgba(90,155,255,0.2)" onclick="sendChatbotMessage('Do you work with small businesses?')"><span class="consult-starter-icon">🏪</span>Do you work with small businesses?</button>
+
+          <div class="lgrow-tabs">
+            <button class="lgrow-tab active" id="lgtab-playbook" onclick="showLgrowTab('playbook')">📋 Lead Gen Playbook</button>
+            <button class="lgrow-tab" id="lgtab-response" onclick="showLgrowTab('response')">🎯 Lead Response</button>
+            <button class="lgrow-tab" id="lgtab-channels" onclick="showLgrowTab('channels')">📡 Best Channels</button>
+            <button class="lgrow-tab" id="lgtab-advisor" onclick="showLgrowTab('advisor')">💬 Ask Advisor</button>
+          </div>
+
+          <div class="lgrow-panels">
+
+            <!-- SECTION A: Lead Gen Playbook -->
+            <div class="lgrow-panel active" id="lgpanel-playbook">
+              <div class="lgrow-section">
+                <div class="lgrow-section-title">Your Lead Gen Playbook</div>
+                <div class="lgrow-section-sub">A personalised 5-step lead generation strategy built for your business, your industry, and the Singapore market. Covers the best channels, content that attracts leads, how to capture them, what to do when they arrive, and how to nurture them to conversion.</div>
+                <button class="lgrow-btn" id="lg-playbook-btn" onclick="generateLeadPlaybook()">⚡ Generate my lead gen playbook</button>
+                <div class="lgrow-loading" id="lg-playbook-loading">
+                  <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Building your playbook...</span></div>
+                </div>
+                <div class="lgrow-output" id="lg-playbook-output">
+                  <div class="lgrow-output-text" id="lg-playbook-text"></div>
+                  <div class="lgrow-output-actions">
+                    <button class="action-btn" onclick="navigator.clipboard.writeText(document.getElementById('lg-playbook-text').innerText).then(()=>showToast('Copied!'))">📋 Copy</button>
+                    <button class="action-btn" onclick="generateLeadPlaybook()">🔄 Regenerate</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="consult-input-row">
-            <textarea class="consult-input" id="chatbot-input" placeholder="Type as a customer..." rows="1"
-              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatbotMessage()}"
-              oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"
-              style="border-color:rgba(90,155,255,0.3)"></textarea>
-            <button class="consult-send-btn" id="chatbot-send-btn" onclick="sendChatbotMessage()" style="background:var(--blue)">
-              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="1" x2="1" y2="9"/><line x1="17" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="9" y2="17"/></svg>
-            </button>
+
+            <!-- SECTION B: Lead Response Playbook -->
+            <div class="lgrow-panel" id="lgpanel-response">
+              <div class="lgrow-section">
+                <div class="lgrow-section-title">When a lead comes in...</div>
+                <div class="lgrow-section-sub">Exactly what to do when someone enquires about your business — step by step. Includes response templates, follow-up sequences, and nurture strategies, all tailored to your business type and industry.</div>
+                <button class="lgrow-btn" id="lg-response-btn" onclick="generateLeadResponse()">⚡ Generate my lead response playbook</button>
+                <div class="lgrow-loading" id="lg-response-loading">
+                  <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Writing your response playbook...</span></div>
+                </div>
+                <div class="lgrow-output" id="lg-response-output">
+                  <div class="lgrow-output-text" id="lg-response-text"></div>
+                  <div class="lgrow-output-actions">
+                    <button class="action-btn" onclick="navigator.clipboard.writeText(document.getElementById('lg-response-text').innerText).then(()=>showToast('Copied!'))">📋 Copy</button>
+                    <button class="action-btn" onclick="generateLeadResponse()">🔄 Regenerate</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION C: Best Channels -->
+            <div class="lgrow-panel" id="lgpanel-channels">
+              <div class="lgrow-section">
+                <div class="lgrow-section-title">Best channels for my business</div>
+                <div class="lgrow-section-sub">The top 3 lead generation channels for your specific business in Singapore — with why each works for you, how to use it, realistic results to expect, and actionable tips to get started this week.</div>
+                <button class="lgrow-btn" id="lg-channels-btn" onclick="generateBestChannels()">⚡ Find my best channels</button>
+                <div class="lgrow-loading" id="lg-channels-loading">
+                  <div class="typing-dots active"><span></span><span></span><span></span><span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem">Analysing your best channels...</span></div>
+                </div>
+                <div class="lgrow-output" id="lg-channels-output">
+                  <div class="lgrow-output-text" id="lg-channels-text"></div>
+                  <div class="lgrow-output-actions">
+                    <button class="action-btn" onclick="navigator.clipboard.writeText(document.getElementById('lg-channels-text').innerText).then(()=>showToast('Copied!'))">📋 Copy</button>
+                    <button class="action-btn" onclick="generateBestChannels()">🔄 Regenerate</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION D: Ask Growth Advisor -->
+            <div class="lgrow-panel" id="lgpanel-advisor">
+              <div class="lgrow-section" style="flex:1;display:flex;flex-direction:column">
+                <div class="lgrow-section-title">Ask your Growth Advisor</div>
+                <div class="lgrow-section-sub" style="margin-bottom:0.75rem">A specialist AI focused entirely on lead generation and business growth — specific, tactical, Singapore-market aware.</div>
+                <div class="lgrow-chat-area" id="lgrow-chat-area">
+                  <div id="lgrow-starters">
+                    <div class="lgrow-starters-grid">
+                      <button class="lgrow-starter-btn" onclick="sendGrowthAdvisorMessage('How do I get my first 10 clients?')"><span class="lgrow-starter-icon">🎯</span>How do I get my first 10 clients?</button>
+                      <button class="lgrow-starter-btn" onclick="sendGrowthAdvisorMessage('What\'s the best way to follow up with cold leads?')"><span class="lgrow-starter-icon">📬</span>How do I follow up with cold leads?</button>
+                      <button class="lgrow-starter-btn" onclick="sendGrowthAdvisorMessage('How do I turn Instagram followers into paying clients?')"><span class="lgrow-starter-icon">📱</span>Turn followers into paying clients?</button>
+                      <button class="lgrow-starter-btn" onclick="sendGrowthAdvisorMessage('What should my lead gen budget be?')"><span class="lgrow-starter-icon">💰</span>What should my lead gen budget be?</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="consult-input-row" style="margin-top:0.75rem">
+                  <textarea class="consult-input" id="lgrow-input" placeholder="Ask your Growth Advisor anything about lead gen..." rows="1"
+                    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendGrowthAdvisorMessage()}"
+                    oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"
+                    style="border-color:rgba(255,179,90,0.3)"></textarea>
+                  <button class="consult-send-btn" id="lgrow-send-btn" onclick="sendGrowthAdvisorMessage()" style="background:var(--orange)">
+                    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="1" x2="1" y2="9"/><line x1="17" y1="1" x2="9" y2="17"/><line x1="1" y1="9" x2="9" y2="17"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -1548,6 +1822,100 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
         </div>
       </div>
 
+      <!-- GUIDE VIEW -->
+      <div class="view" id="view-guide">
+        <div class="guide-hero">
+          <div class="guide-hero-label">📖 Mavrix Guide</div>
+          <div class="guide-hero-title">How to get the most from Mavrix</div>
+          <div class="guide-hero-sub">Everything you need to know about each tool — when to use it, how it works, and what to try first.</div>
+        </div>
+
+        <div class="guide-accordion" onclick="toggleGuideAccordion(this)">
+          <div class="guide-acc-header">
+            <div class="guide-acc-left"><span class="guide-acc-icon">⚡</span><span class="guide-acc-title">AI Social Agent</span></div>
+            <span class="guide-acc-arrow">▼</span>
+          </div>
+          <div class="guide-acc-body">
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Generates your weekly content calendar, trending topics, growth insights and opportunities — proactively, without being asked. It's your always-on Chief Marketing Officer.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">Every Monday to plan your week's content across all platforms.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Businesses that want consistent social media presence without the daily effort of figuring out what to post.</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> The more detailed your Settings profile, the more personalised your calendar. Fill in your industry, audience, and value proposition for the best results.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('agent')">Try it → Open AI Social Agent</button>
+          </div>
+        </div>
+
+        <div class="guide-accordion" onclick="toggleGuideAccordion(this)">
+          <div class="guide-acc-header">
+            <div class="guide-acc-left"><span class="guide-acc-icon">💬</span><span class="guide-acc-title">AI Consultant</span></div>
+            <span class="guide-acc-arrow">▼</span>
+          </div>
+          <div class="guide-acc-body">
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Your always-on marketing strategist. Remembers your business, learns over time, and gives proactive advice tailored to your goals and challenges.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">When you have a marketing question, want to brainstorm, or need to refine a piece of content. Use it anytime — it gets smarter with every conversation.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Strategy, campaign planning, content ideas, and getting honest feedback on your marketing approach.</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Tell it about your business in detail in your first conversation — it remembers everything and uses it to give better advice over time.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('consultant')">Try it → Ask "What should I focus on this month?"</button>
+          </div>
+        </div>
+
+        <div class="guide-accordion" onclick="toggleGuideAccordion(this)">
+          <div class="guide-acc-header">
+            <div class="guide-acc-left"><span class="guide-acc-icon">🚀</span><span class="guide-acc-title">Lead Growth Advisor</span></div>
+            <span class="guide-acc-arrow">▼</span>
+          </div>
+          <div class="guide-acc-body">
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Builds your personalised lead generation playbook and tells you exactly what to do when leads come in — step by step, specific to your business and the Singapore market.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">When you want more clients, don't know how to convert enquiries, or want a clear system for generating and following up on leads.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Getting new clients, converting leads, and building a repeatable sales pipeline.</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Generate your Lead Gen Playbook first (Section A), then use "Ask your Growth Advisor" for specific questions about your situation.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('leadgrowth')">Try it → Generate your Lead Gen Playbook</button>
+          </div>
+        </div>
+
+        <div class="guide-accordion" onclick="toggleGuideAccordion(this)">
+          <div class="guide-acc-header">
+            <div class="guide-acc-left"><span class="guide-acc-icon">✍️</span><span class="guide-acc-title">Content Generator</span></div>
+            <span class="guide-acc-arrow">▼</span>
+          </div>
+          <div class="guide-acc-body">
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Writes social posts, email campaigns, and ad copy in your exact brand voice — fast, specific, ready to use.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">When you need specific content quickly — a post for a sale, a LinkedIn article, an Instagram caption for a product launch.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Quick content creation for specific occasions, campaigns, or platforms.</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Always add a brief — the more context you give, the more specific and usable the output. A vague brief gets a vague post.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('generate')">Try it → Generate your first post</button>
+          </div>
+        </div>
+
+        <div class="guide-accordion" onclick="toggleGuideAccordion(this)">
+          <div class="guide-acc-header">
+            <div class="guide-acc-left"><span class="guide-acc-icon">📊</span><span class="guide-acc-title">Analytics</span></div>
+            <span class="guide-acc-arrow">▼</span>
+          </div>
+          <div class="guide-acc-body">
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Tracks your social media growth over time and shows your before/after Mavrix results — so you can prove the ROI of every hour you spend on content.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">Every week — input your follower numbers to track progress across platforms.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Seeing your ROI, identifying which platforms are growing fastest, and proving Mavrix is working.</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Enter your follower counts from <em>before</em> you joined Mavrix as your baseline. That way, your before/after comparison will actually show the difference Mavrix made.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('analytics')">Try it → Enter this week's numbers</button>
+          </div>
+        </div>
+
+        <div class="guide-accordion" onclick="toggleGuideAccordion(this)">
+          <div class="guide-acc-header">
+            <div class="guide-acc-left"><span class="guide-acc-icon">📧</span><span class="guide-acc-title">Email Campaigns</span></div>
+            <span class="guide-acc-arrow">▼</span>
+          </div>
+          <div class="guide-acc-body">
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Writes and sends email campaigns to your contact list — from AI-generated copy to hitting send on a full list, all in one place.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">For promotions, newsletters, follow-ups, re-engagement campaigns, and event announcements.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Staying top of mind with your audience and converting warm leads into paying clients.</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Use the "Send to list" option with a CSV of your contacts for bulk campaigns. Upload a CSV with <code>name</code> and <code>email</code> columns to personalise each email automatically.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('email')">Try it → Write your first email campaign</button>
+          </div>
+        </div>
+
+      </div><!-- end view-guide -->
+
     </div>
   </main>
 
@@ -1574,6 +1942,101 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       Settings
     </button>
   </nav>
+</div>
+
+<!-- FIRST-LOGIN WELCOME MODAL -->
+<div id="welcome-modal">
+  <div class="welcome-box">
+    <div class="welcome-dots">
+      <div class="welcome-dot active" id="wdot-1"></div>
+      <div class="welcome-dot" id="wdot-2"></div>
+      <div class="welcome-dot" id="wdot-3"></div>
+    </div>
+
+    <!-- Step 1: Meet your AI team -->
+    <div class="welcome-step-w active" id="wstep-1">
+      <div class="welcome-num">Step 1 of 3</div>
+      <div class="welcome-title">Meet your AI marketing team</div>
+      <div class="welcome-sub">Mavrix gives you 6 specialised AI tools — each one built for a different part of running and growing your business.</div>
+      <div class="welcome-tools-grid">
+        <div class="welcome-tool-card">
+          <div class="welcome-tool-icon">⚡</div>
+          <div class="welcome-tool-name">AI Social Agent</div>
+          <div class="welcome-tool-desc">Your CMO. Generates weekly content calendars and growth insights automatically</div>
+        </div>
+        <div class="welcome-tool-card">
+          <div class="welcome-tool-icon">💬</div>
+          <div class="welcome-tool-name">AI Consultant</div>
+          <div class="welcome-tool-desc">Your strategist. Bounce ideas, get advice, refine content — anytime</div>
+        </div>
+        <div class="welcome-tool-card">
+          <div class="welcome-tool-icon">🚀</div>
+          <div class="welcome-tool-name">Lead Growth Advisor</div>
+          <div class="welcome-tool-desc">Your growth specialist. Builds your lead gen playbook and tells you what to do with every lead</div>
+        </div>
+        <div class="welcome-tool-card">
+          <div class="welcome-tool-icon">✍️</div>
+          <div class="welcome-tool-name">Content Generator</div>
+          <div class="welcome-tool-desc">Creates social posts, emails, and ads in your exact brand voice</div>
+        </div>
+        <div class="welcome-tool-card">
+          <div class="welcome-tool-icon">📊</div>
+          <div class="welcome-tool-name">Analytics</div>
+          <div class="welcome-tool-desc">Tracks your growth and shows your before/after joining Mavrix results</div>
+        </div>
+        <div class="welcome-tool-card">
+          <div class="welcome-tool-icon">📧</div>
+          <div class="welcome-tool-name">Email Campaigns</div>
+          <div class="welcome-tool-desc">Writes and sends email campaigns to your full contact list</div>
+        </div>
+      </div>
+      <div class="welcome-nav">
+        <button class="welcome-skip-btn" onclick="closeWelcomeModal()">Skip</button>
+        <button class="welcome-next-btn" onclick="welcomeNext()">Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Set up your profile -->
+    <div class="welcome-step-w" id="wstep-2">
+      <div class="welcome-num">Step 2 of 3</div>
+      <div class="welcome-title">Set up your profile for best results</div>
+      <div class="welcome-sub">The more Mavrix knows about your business, the smarter every tool gets. Fill in your profile in Settings and every AI response becomes dramatically more specific and useful.</div>
+      <div id="welcome-profile-checklist"></div>
+      <div class="welcome-nav">
+        <button class="welcome-skip-btn" onclick="welcomeNext()">Skip for now</button>
+        <button class="welcome-next-btn" onclick="closeWelcomeModal();showView('settings')">Go to Settings →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Where to start -->
+    <div class="welcome-step-w" id="wstep-3">
+      <div class="welcome-num">Step 3 of 3</div>
+      <div class="welcome-title">Where to start</div>
+      <div class="welcome-sub">Here's the fastest way to get value from Mavrix in your first session.</div>
+      <div class="welcome-actions-list">
+        <div class="welcome-action-item">
+          <div class="welcome-action-num">1</div>
+          <div><div class="welcome-action-strong">Complete your profile in Settings</div><div class="welcome-action-desc">Add your industry, audience, and value proposition — takes 2 minutes, makes everything 10x better</div></div>
+        </div>
+        <div class="welcome-action-item">
+          <div class="welcome-action-num">2</div>
+          <div><div class="welcome-action-strong">Chat with AI Consultant</div><div class="welcome-action-desc">Tell it about your business — it remembers everything and uses it to give you personalised advice</div></div>
+        </div>
+        <div class="welcome-action-item">
+          <div class="welcome-action-num">3</div>
+          <div><div class="welcome-action-strong">Generate your first weekly content calendar</div><div class="welcome-action-desc">Click AI Social Agent → Generate week. Get 7 posts ready to publish in under a minute</div></div>
+        </div>
+        <div class="welcome-action-item">
+          <div class="welcome-action-num">4</div>
+          <div><div class="welcome-action-strong">Set up your Lead Gen Playbook</div><div class="welcome-action-desc">Go to Lead Growth Advisor → Generate my lead gen playbook — your personalised 5-step strategy</div></div>
+        </div>
+      </div>
+      <div class="welcome-nav">
+        <button class="welcome-skip-btn" onclick="closeWelcomeModal()">Maybe later</button>
+        <button class="welcome-next-btn" onclick="closeWelcomeModal();showView('consultant')">Let's go! →</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- TOAST -->
@@ -1753,6 +2216,9 @@ function launchApp(userData) {
   // Load memories and chat history in background
   loadMemories();
   loadChatHistory();
+
+  // Show first-login welcome modal (once per account)
+  setTimeout(() => showWelcomeModal(userData), 1200);
 }
 
 // ── LOGOUT ──
@@ -1845,7 +2311,7 @@ function completeOnboarding() {
 }
 
 // ── NAVIGATION ──
-const VIEW_NAV_IDX = {agent:0,consultant:1,generate:2,email:3,ads:4,chatbot:5,analytics:6,dashboard:7,history:8,settings:9};
+const VIEW_NAV_IDX = {agent:0,consultant:1,generate:2,email:3,ads:4,leadgrowth:5,analytics:6,dashboard:7,history:8,settings:9,guide:10};
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1856,11 +2322,10 @@ function showView(name) {
   if (idx !== undefined) document.querySelectorAll('.nav-item')[idx].classList.add('active');
   const mbnEl = document.getElementById('mbn-' + name);
   if (mbnEl) mbnEl.classList.add('active');
-  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',generate:'Generate Content',email:'Email Campaigns',ads:'Ad Copy Generator',chatbot:'Lead Chatbot',analytics:'Analytics',dashboard:'Dashboard',history:'History',settings:'Settings'};
+  const titles = {agent:'AI Social Agent',consultant:'AI Consultant',generate:'Generate Content',email:'Email Campaigns',ads:'Ad Copy Generator',leadgrowth:'Lead Growth Advisor',analytics:'Analytics',dashboard:'Dashboard',history:'History',settings:'Settings',guide:'Guide'};
   document.getElementById('topbar-title').textContent = titles[name] || name;
   closeSidebar();
   if (name === 'agent' && !agentState.briefingReady) setTimeout(generateBriefing, 100);
-  if (name === 'chatbot') setTimeout(initChatbot, 100);
   if (name === 'analytics') setTimeout(initAnalytics, 100);
 }
 
@@ -2680,6 +3145,9 @@ Keep it concise, human, and persuasive. Write for a Singapore audience.`;
     dots.classList.remove('active'); bar.classList.remove('active');
     output.textContent = text; card.classList.add('visible');
     state.emailOutput = text;
+    document.getElementById('email-send-section').classList.add('visible');
+    document.getElementById('send-progress').classList.remove('visible');
+    document.getElementById('send-progress').textContent = '';
   } catch(e) {
     dots.classList.remove('active'); bar.classList.remove('active');
     output.textContent = 'Something went wrong. Please try again.'; card.classList.add('visible');
@@ -2739,6 +3207,11 @@ Output ONLY the ad copy, clearly labelled if multiple variations.`;
     const text = await callApi(prompt);
     dots.classList.remove('active'); bar.classList.remove('active');
     output.textContent = text; card.classList.add('visible');
+    document.getElementById('platform-rec-section').classList.add('visible');
+    document.getElementById('platform-rec-cards').style.display = 'none';
+    document.getElementById('platform-rec-loading').classList.remove('active');
+    document.getElementById('platform-rec-btn').disabled = false;
+    document.getElementById('platform-rec-btn').textContent = '⚡ Generate recommendation';
   } catch(e) {
     dots.classList.remove('active'); bar.classList.remove('active');
     output.textContent = 'Something went wrong. Please try again.'; card.classList.add('visible');
@@ -3351,6 +3824,389 @@ function showAddMemoryModal() {
   if (!cats.includes(category)) { showToast('Pick a valid category: ' + cats.join(', ')); return; }
   const content = (prompt('What should Mavrix remember?') || '').trim();
   if (content) saveMemoryManual(category, content);
+}
+
+// ── LEAD GROWTH ADVISOR ──
+let growthAdvisorMessages = [];
+let growthAdvisorBusy = false;
+
+function showLgrowTab(tab) {
+  document.querySelectorAll('.lgrow-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.lgrow-panel').forEach(p => p.classList.remove('active'));
+  const tabEl = document.getElementById('lgtab-' + tab);
+  const panelEl = document.getElementById('lgpanel-' + tab);
+  if (tabEl) tabEl.classList.add('active');
+  if (panelEl) panelEl.classList.add('active');
+}
+
+function growthSystemPrompt() {
+  return `You are a Lead Growth Advisor — a confident, specific, results-driven growth consultant specialising in lead generation for Singapore SMEs. You know the Singapore market deeply: local platforms, local buying behaviour, WhatsApp as the dominant communication tool, the importance of trust and referrals in Singapore's close-knit business community, and the effectiveness of LinkedIn for B2B vs Facebook/Instagram for B2C.
+
+${bizCtx()}
+
+You give tactical, specific, actionable advice — never generic tips. You reference the client's exact business, industry and audience. You speak like a $5,000/month consultant: direct, confident, no fluff. You do NOT suggest "contact our team" or "speak to a human" — YOU are the advisor.`;
+}
+
+async function generateLeadPlaybook() {
+  const btn = document.getElementById('lg-playbook-btn');
+  const loading = document.getElementById('lg-playbook-loading');
+  const output = document.getElementById('lg-playbook-output');
+  const text = document.getElementById('lg-playbook-text');
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  loading.classList.add('active'); output.classList.remove('visible');
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST', headers: apiHeaders(),
+      body: JSON.stringify({ messages: [{ role: 'user', content: 'Generate my personalised lead generation playbook.' }], system: growthSystemPrompt() + `
+
+Task: Write a personalised 5-STEP LEAD GENERATION PLAYBOOK for this business. Each step should be specific, actionable, and based on their exact business, industry, target audience and Singapore market.
+
+Cover:
+STEP 1 — Best channels: The 2-3 specific channels that will work best for them and exactly why
+STEP 2 — Content that attracts leads: What types of content and topics pull in their ideal clients
+STEP 3 — Lead capture: How to capture enquiries (WhatsApp, forms, DMs, etc.) and what to say
+STEP 4 — First response: Exactly what to do and say in the first 24 hours when a lead comes in
+STEP 5 — Nurture to conversion: How to follow up and convert leads who don't buy immediately
+
+Make each step feel like a $5,000 consultant deliverable — specific, tactical, Singapore-market aware. Use clear headers for each step. Be direct, no fluff.` })
+    });
+    const data = await res.json();
+    loading.classList.remove('active');
+    text.textContent = data.text || '';
+    output.classList.add('visible');
+  } catch(e) {
+    loading.classList.remove('active');
+    text.textContent = 'Something went wrong. Please try again.';
+    output.classList.add('visible');
+  }
+  btn.disabled = false; btn.textContent = '⚡ Generate my lead gen playbook';
+}
+
+async function generateLeadResponse() {
+  const btn = document.getElementById('lg-response-btn');
+  const loading = document.getElementById('lg-response-loading');
+  const output = document.getElementById('lg-response-output');
+  const text = document.getElementById('lg-response-text');
+  btn.disabled = true; btn.textContent = '⚡ Generating...';
+  loading.classList.add('active'); output.classList.remove('visible');
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST', headers: apiHeaders(),
+      body: JSON.stringify({ messages: [{ role: 'user', content: 'Generate my lead response playbook.' }], system: growthSystemPrompt() + `
+
+Task: Write a LEAD RESPONSE PLAYBOOK — exactly what to do step by step when a lead enquires about this business.
+
+Include:
+1. First response (within 1 hour): The exact message or call script to use when someone enquires
+2. Qualification questions: 3-5 questions to ask to understand if they're a good fit
+3. Follow-up sequence: Day 1, Day 3, Day 7 follow-ups — exact messages to send
+4. WhatsApp vs email: When to use each channel and what to say
+5. Nurture messages: 2-3 value messages to send to leads who go quiet
+6. Closing the sale: How to present pricing and move towards a decision
+
+Write all templates as ready-to-use messages they can copy and personalise. Be specific to their business type and industry. No generic advice.` })
+    });
+    const data = await res.json();
+    loading.classList.remove('active');
+    text.textContent = data.text || '';
+    output.classList.add('visible');
+  } catch(e) {
+    loading.classList.remove('active');
+    text.textContent = 'Something went wrong. Please try again.';
+    output.classList.add('visible');
+  }
+  btn.disabled = false; btn.textContent = '⚡ Generate my lead response playbook';
+}
+
+async function generateBestChannels() {
+  const btn = document.getElementById('lg-channels-btn');
+  const loading = document.getElementById('lg-channels-loading');
+  const output = document.getElementById('lg-channels-output');
+  const text = document.getElementById('lg-channels-text');
+  btn.disabled = true; btn.textContent = '⚡ Analysing...';
+  loading.classList.add('active'); output.classList.remove('visible');
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST', headers: apiHeaders(),
+      body: JSON.stringify({ messages: [{ role: 'user', content: 'What are the best lead generation channels for my business?' }], system: growthSystemPrompt() + `
+
+Task: Recommend the TOP 3 LEAD GENERATION CHANNELS for this specific business in Singapore.
+
+For each channel provide:
+- Channel name and why it specifically works for their business (not generic — reference their industry and audience)
+- How to use it: Specific tactics, content types, frequency
+- Realistic results: What to expect in 30, 60, 90 days
+- Getting started: The first 3 actions to take this week
+- Budget: Rough investment required (time and/or money in SGD)
+
+Reference real Singapore-specific details: groups, communities, platforms popular in Singapore, local buyer behaviour. Be specific and direct.` })
+    });
+    const data = await res.json();
+    loading.classList.remove('active');
+    text.textContent = data.text || '';
+    output.classList.add('visible');
+  } catch(e) {
+    loading.classList.remove('active');
+    text.textContent = 'Something went wrong. Please try again.';
+    output.classList.add('visible');
+  }
+  btn.disabled = false; btn.textContent = '⚡ Find my best channels';
+}
+
+async function sendGrowthAdvisorMessage(prefill) {
+  const input = document.getElementById('lgrow-input');
+  const text = (prefill !== undefined ? prefill : input.value).trim();
+  if (!text || growthAdvisorBusy) return;
+
+  const startersEl = document.getElementById('lgrow-starters');
+  if (startersEl) startersEl.remove();
+
+  input.value = ''; input.style.height = 'auto';
+  growthAdvisorBusy = true;
+  document.getElementById('lgrow-send-btn').disabled = true;
+
+  growthAdvisorMessages.push({ role: 'user', text });
+  renderGrowthAdvisorMessages();
+
+  const typingEl = document.createElement('div');
+  typingEl.className = 'consult-typing'; typingEl.id = 'lgrow-typing';
+  typingEl.innerHTML = '<span></span><span></span><span></span>';
+  const chatArea = document.getElementById('lgrow-chat-area');
+  chatArea.appendChild(typingEl);
+  chatArea.scrollTop = 99999;
+
+  const messages = growthAdvisorMessages.slice(-12).map(m => ({ role: m.role === 'ai' ? 'assistant' : 'user', content: m.text }));
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST', headers: apiHeaders(),
+      body: JSON.stringify({ messages, system: growthSystemPrompt() })
+    });
+    const data = await res.json();
+    document.getElementById('lgrow-typing')?.remove();
+    growthAdvisorMessages.push({ role: 'ai', text: data.text || '' });
+    renderGrowthAdvisorMessages();
+  } catch(e) {
+    document.getElementById('lgrow-typing')?.remove();
+    growthAdvisorMessages.push({ role: 'ai', text: 'Sorry, something went wrong. Please try again.' });
+    renderGrowthAdvisorMessages();
+  }
+  growthAdvisorBusy = false;
+  document.getElementById('lgrow-send-btn').disabled = false;
+}
+
+function renderGrowthAdvisorMessages() {
+  const area = document.getElementById('lgrow-chat-area');
+  const existing = area.querySelectorAll('.consult-msg');
+  existing.forEach(el => el.remove());
+  growthAdvisorMessages.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = 'consult-msg ' + (msg.role === 'ai' ? 'ai' : 'user');
+    const isAi = msg.role === 'ai';
+    div.innerHTML = `
+      <div class="consult-avatar ${isAi ? 'ai' : 'user'}">${isAi ? '🚀' : (state.bizName?.[0]||'U')}</div>
+      <div class="consult-bubble">${msg.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>`;
+    area.appendChild(div);
+  });
+  area.scrollTop = area.scrollHeight;
+}
+
+// ── AD PLATFORM RECOMMENDER ──
+async function generateAdPlatformRec() {
+  const btn = document.getElementById('platform-rec-btn');
+  const loading = document.getElementById('platform-rec-loading');
+  const cards = document.getElementById('platform-rec-cards');
+  const adText = document.getElementById('ads-output-text').textContent;
+  if (!adText) return;
+
+  btn.disabled = true; btn.textContent = '⚡ Analysing...';
+  loading.classList.add('active'); cards.style.display = 'none';
+
+  const adPlatform = document.querySelector('#view-ads .platform-btn.selected')?.textContent?.trim() || '';
+  const adBrief = document.getElementById('ad-brief').value;
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST', headers: apiHeaders(),
+      body: JSON.stringify({ prompt: `You are a paid advertising strategist for Singapore SMEs.
+
+Business context:
+${bizCtx()}
+
+Ad copy written (for ${adPlatform}):
+${adText}
+
+What's being promoted: ${adBrief}
+
+Recommend the TOP 3 platforms to run this ad. For each platform output EXACTLY this JSON structure (output only the JSON array, nothing else):
+[
+  {
+    "name": "Facebook Ads",
+    "icon": "📘",
+    "why": "Why this platform works specifically for this business and ad",
+    "targeting": "Best audience targeting approach for Singapore",
+    "budget": "SGD X–Y/day",
+    "timing": "Best days/times to run",
+    "kpi": "Key success metric to watch"
+  }
+]
+
+Be specific to their business, not generic. Reference Singapore demographics and platform usage where relevant.` })
+    });
+    const data = await res.json();
+    let recs;
+    try {
+      const jsonMatch = (data.text || '').match(/\[[\s\S]*\]/);
+      recs = JSON.parse(jsonMatch ? jsonMatch[0] : data.text);
+    } catch(e) { recs = null; }
+
+    loading.classList.remove('active');
+    if (!recs || !recs.length) { btn.textContent = '⚡ Generate recommendation'; btn.disabled = false; return; }
+
+    cards.innerHTML = recs.slice(0,3).map(r => `
+      <div class="platform-rec-card">
+        <div class="platform-rec-card-name">${r.icon || '📡'} ${r.name}</div>
+        <div class="platform-rec-row"><div class="platform-rec-row-label">Why it works</div><div class="platform-rec-row-val">${r.why}</div></div>
+        <div class="platform-rec-row"><div class="platform-rec-row-label">Targeting</div><div class="platform-rec-row-val">${r.targeting}</div></div>
+        <div class="platform-rec-row"><div class="platform-rec-row-label">Daily budget</div><div class="platform-rec-row-val" style="color:var(--accent);font-weight:600">${r.budget}</div></div>
+        <div class="platform-rec-row"><div class="platform-rec-row-label">Best timing</div><div class="platform-rec-row-val">${r.timing}</div></div>
+        <div class="platform-rec-row"><div class="platform-rec-row-label">Watch for</div><div class="platform-rec-row-val">${r.kpi}</div></div>
+      </div>`).join('');
+    cards.style.display = 'grid';
+  } catch(e) {
+    loading.classList.remove('active');
+  }
+  btn.disabled = false; btn.textContent = '↺ Refresh';
+}
+
+// ── GUIDE ACCORDION ──
+function toggleGuideAccordion(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.guide-accordion').forEach(a => a.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+
+// ── WELCOME MODAL ──
+let welcomeStepNum = 1;
+
+function showWelcomeModal(userData) {
+  const email = userData?.email;
+  if (!email) return;
+  const key = 'mavrix_welcome_seen_' + email;
+  if (localStorage.getItem(key)) return;
+  // Render profile checklist
+  const checklist = document.getElementById('welcome-profile-checklist');
+  if (checklist) {
+    const fields = [
+      { label: 'Business name', val: state.bizName },
+      { label: 'Industry', val: state.industry },
+      { label: 'Target audience', val: state.audience },
+      { label: 'Value proposition', val: state.problem },
+    ];
+    checklist.innerHTML = fields.map(f => `
+      <div class="welcome-profile-item">
+        <span class="welcome-profile-icon">${f.val ? '✅' : '○'}</span>
+        <span class="welcome-profile-label ${f.val ? 'complete' : 'missing'}">${f.label}${f.val ? '' : ' — not set yet'}</span>
+      </div>`).join('');
+  }
+  welcomeStepNum = 1;
+  document.getElementById('welcome-modal').classList.add('visible');
+}
+
+function welcomeNext() {
+  if (welcomeStepNum >= 3) { closeWelcomeModal(); return; }
+  welcomeStepNum++;
+  document.querySelectorAll('.welcome-step-w').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.welcome-dot').forEach((d, i) => d.classList.toggle('active', i < welcomeStepNum));
+  document.getElementById('wstep-' + welcomeStepNum).classList.add('active');
+}
+
+function closeWelcomeModal() {
+  document.getElementById('welcome-modal').classList.remove('visible');
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (userData.email) localStorage.setItem('mavrix_welcome_seen_' + userData.email, '1');
+}
+
+// ── EMAIL SEND ──
+let csvContacts = [];
+let emailSendMode = 'single';
+
+function selectEmailSendTab(tab) {
+  emailSendMode = tab;
+  document.querySelectorAll('.email-send-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.email-send-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('stab-' + tab).classList.add('active');
+  document.getElementById('spanel-' + tab).classList.add('active');
+}
+
+function loadCSV(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const lines = e.target.result.split('\n').map(l => l.trim()).filter(Boolean);
+    if (lines.length < 2) { showToast('CSV must have a header row and at least one contact.'); return; }
+    const headers = lines[0].toLowerCase().split(',').map(h => h.trim());
+    const nameIdx  = headers.indexOf('name');
+    const emailIdx = headers.indexOf('email');
+    if (emailIdx < 0) { showToast('CSV must have an "email" column.'); return; }
+    csvContacts = lines.slice(1).map(line => {
+      const cols = line.split(',').map(c => c.trim().replace(/^"|"$/g,''));
+      return { name: nameIdx >= 0 ? cols[nameIdx] : '', email: cols[emailIdx] };
+    }).filter(c => c.email && c.email.includes('@'));
+    const preview = document.getElementById('csv-preview');
+    preview.innerHTML = `<strong>${csvContacts.length} contacts loaded</strong><br>${csvContacts.slice(0,3).map(c => c.email).join(', ')}${csvContacts.length > 3 ? ` and ${csvContacts.length - 3} more…` : ''}`;
+    preview.classList.add('visible');
+    document.getElementById('csv-label-text').textContent = file.name;
+    showToast(csvContacts.length + ' contacts loaded');
+  };
+  reader.readAsText(file);
+}
+
+async function sendEmailCampaign() {
+  const subject = document.getElementById('send-subject').value.trim();
+  const emailBody = document.getElementById('email-output-text').textContent;
+  const fromName = state.bizName || 'Mavrix';
+
+  if (!subject) { showToast('Please enter an email subject.'); return; }
+  if (!emailBody) { showToast('Please generate an email first.'); return; }
+
+  let contacts = [];
+  if (emailSendMode === 'single') {
+    const email = document.getElementById('send-single-email').value.trim();
+    const name  = document.getElementById('send-single-name').value.trim();
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+    contacts = [{ email, name }];
+  } else {
+    if (!csvContacts.length) { showToast('Please upload a CSV file first.'); return; }
+    contacts = csvContacts;
+  }
+
+  const btn = document.getElementById('send-campaign-btn');
+  const progress = document.getElementById('send-progress');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  progress.textContent = `Sending to ${contacts.length} contact${contacts.length > 1 ? 's' : ''}...`;
+  progress.classList.add('visible');
+
+  const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+    <div style="padding:32px 24px;line-height:1.7;white-space:pre-wrap">${emailBody.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
+    <div style="padding:16px 24px;border-top:1px solid #eee;font-size:12px;color:#999">Sent via Mavrix · hello@mavrix.sg</div>
+  </div>`;
+
+  try {
+    const res = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: apiHeaders(),
+      body: JSON.stringify({ contacts, subject, html, fromName })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Send failed');
+    progress.innerHTML = `<span style="color:var(--accent)">✓ Campaign sent to ${data.sent} of ${data.total} contacts.</span>`;
+    showToast('Campaign sent!');
+  } catch(e) {
+    progress.textContent = 'Error: ' + (e.message || 'Send failed. Please try again.');
+  }
+
+  btn.disabled = false; btn.textContent = '📤 Send campaign';
 }
 </script>
 </body>
