@@ -2503,6 +2503,7 @@ function copyHistoryItem(id) {
 
 // ── SETTINGS ──
 async function saveSettings() {
+  console.log('saveSettings called');
   state.bizName   = document.getElementById('set-biz-name').value || state.bizName;
   state.industry  = document.getElementById('set-industry').value;
   state.audience  = document.getElementById('set-audience').value;
