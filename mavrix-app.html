@@ -1493,7 +1493,6 @@ function launchApp(userData) {
   document.getElementById('user-avatar-initials').textContent = initials || 'MV';
   document.querySelector('.user-plan').textContent = (userData?.plan || 'Starter') + ' Plan';
 
-  // Pre-fill settings fields with any saved profile data
   document.getElementById('set-biz-name').value = state.bizName;
   document.getElementById('set-industry').value  = state.industry;
   document.getElementById('set-audience').value  = state.audience;
