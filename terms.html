@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Mavrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #08080A;
+    --white: #F5F4F0;
+    --accent: #C8F04C;
+    --accent-dim: #a8cc30;
+    --surface: #111113;
+    --surface2: #18181C;
+    --border: rgba(255,255,255,0.07);
+    --text-muted: rgba(245,244,240,0.45);
+    --text-mid: rgba(245,244,240,0.7);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(8,8,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-back {
+    font-size: 0.875rem;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--white); }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 10rem 2rem 6rem;
+  }
+
+  .page-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 2.5rem 0 0.75rem;
+    color: var(--white);
+  }
+
+  p {
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  ul {
+    color: var(--text-mid);
+    font-weight: 300;
+    line-height: 1.75;
+    margin: 0.5rem 0 1rem 1.25rem;
+  }
+
+  ul li { margin-bottom: 0.4rem; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover { text-decoration: underline; }
+
+  .highlight-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .highlight-box p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  footer p { font-size: 0.8rem; color: var(--text-muted); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    main { padding: 8rem 1.25rem 4rem; }
+    footer {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Mavri<span>x</span></a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<main>
+  <div class="page-label">Legal</div>
+  <h1>Terms of Service</h1>
+  <p class="meta">Last updated: 1 January 2026 &nbsp;·&nbsp; Mavrix, Singapore</p>
+
+  <div class="highlight-box">
+    <p>By creating a Mavrix account or using our platform, you agree to these Terms of Service. Please read them carefully. These terms are governed by the laws of Singapore.</p>
+  </div>
+
+  <h2>1. Service Description</h2>
+  <p>Mavrix is an AI-powered marketing platform that provides Singapore SMEs with tools including an AI Social Agent, AI Marketing Consultant, content generation, email campaign writing, ad copy generation, and growth analytics ("the Service").</p>
+  <p>We reserve the right to modify, suspend, or discontinue any part of the Service at any time with reasonable notice.</p>
+
+  <h2>2. Eligibility</h2>
+  <p>You must be at least 18 years old and have the legal authority to enter into a binding agreement on behalf of yourself or your business. By using Mavrix, you confirm that you meet these requirements.</p>
+
+  <h2>3. Account Responsibilities</h2>
+  <p>You are responsible for maintaining the confidentiality of your login credentials and for all activity that occurs under your account. Notify us immediately at <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a> if you suspect unauthorised access.</p>
+  <p>You may not share your account with others or create accounts on behalf of third parties without prior written consent.</p>
+
+  <h2>4. Payment Terms</h2>
+  <p>Mavrix subscriptions are billed monthly in advance. By subscribing, you authorise us to charge the applicable subscription fee to your nominated payment method on a recurring monthly basis.</p>
+  <ul>
+    <li>All prices are listed in Singapore Dollars (SGD) unless stated otherwise</li>
+    <li>Subscription fees are due at the start of each billing cycle</li>
+    <li>Failed payments may result in suspension of your account until payment is resolved</li>
+    <li>We reserve the right to adjust pricing with 30 days' written notice</li>
+  </ul>
+
+  <h2>5. Refund Policy</h2>
+  <p>We offer a <strong>7-day satisfaction window</strong> from the date of your first payment. If you are not satisfied, contact us within 7 days for a full refund.</p>
+  <p><strong>No refunds will be issued after 7 days.</strong> Cancelling your subscription stops future charges but does not entitle you to a refund for the current billing period. You retain access until the end of your paid period.</p>
+
+  <h2>6. AI Output Disclaimer</h2>
+  <p>Mavrix uses artificial intelligence to generate marketing content, strategy recommendations, and insights. You acknowledge and agree that:</p>
+  <ul>
+    <li>AI-generated content may contain inaccuracies, errors, or outputs that require review before use</li>
+    <li>Mavrix does not guarantee that AI outputs are accurate, complete, or fit for any particular purpose</li>
+    <li>You are solely responsible for reviewing, editing, and approving any AI-generated content before publishing or distributing it</li>
+    <li>Mavrix is not liable for any loss or damage arising from your use of AI-generated content without review</li>
+    <li>AI outputs do not constitute professional legal, financial, or regulatory advice</li>
+  </ul>
+
+  <h2>7. Acceptable Use</h2>
+  <p>You agree not to use Mavrix to:</p>
+  <ul>
+    <li>Generate content that is false, defamatory, misleading, or illegal under Singapore law</li>
+    <li>Violate any applicable laws or regulations, including MAS guidelines where relevant</li>
+    <li>Harass, threaten, or harm any individual or group</li>
+    <li>Attempt to reverse-engineer, scrape, or circumvent any part of the platform</li>
+    <li>Use the Service for spam, phishing, or other unsolicited communications</li>
+    <li>Resell, sublicense, or white-label the Service without written permission</li>
+  </ul>
+  <p>We reserve the right to terminate accounts that violate these terms without notice or refund.</p>
+
+  <h2>8. Intellectual Property</h2>
+  <p><strong>Your content:</strong> Any content generated by Mavrix using your business inputs (posts, emails, ad copy, strategy recommendations) belongs to you. You retain full ownership and may use, publish, and modify it freely.</p>
+  <p><strong>Our platform:</strong> The Mavrix platform, software, design, branding, and underlying AI systems are owned by Mavrix and protected by applicable intellectual property laws. You may not copy, reproduce, or distribute any part of the platform without written permission.</p>
+  <p><strong>Your inputs:</strong> You grant Mavrix a limited licence to use the business information you provide (business name, industry, audience, brand tone) solely for the purpose of delivering the Service to you.</p>
+
+  <h2>9. Limitation of Liability</h2>
+  <p>To the maximum extent permitted by Singapore law, Mavrix and its operators shall not be liable for:</p>
+  <ul>
+    <li>Any indirect, incidental, or consequential loss arising from use of the Service</li>
+    <li>Loss of revenue, business, or data resulting from AI outputs or platform errors</li>
+    <li>Outcomes of marketing campaigns created using Mavrix content</li>
+    <li>Third-party platform actions (Meta, Google, LinkedIn) in response to your content</li>
+  </ul>
+  <p>Our total aggregate liability to you for any claim shall not exceed the total subscription fees paid by you in the three months preceding the claim.</p>
+
+  <h2>10. Account Termination</h2>
+  <p><strong>By you:</strong> You may cancel your subscription at any time through your account settings or by emailing <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a>. Cancellation takes effect at the end of the current billing period.</p>
+  <p><strong>By us:</strong> We may suspend or terminate your account immediately if you breach these Terms, fail to pay, or if we determine that continued access poses a risk to the platform or other users. In such cases, no refund will be issued.</p>
+  <p>Upon termination, your access to the Service ends and we may delete your account data after 30 days, subject to legal retention requirements.</p>
+
+  <h2>11. Governing Law & Disputes</h2>
+  <p>These Terms are governed by and construed in accordance with the laws of the <strong>Republic of Singapore</strong>. Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Singapore.</p>
+  <p>We encourage you to contact us first at <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a> — most issues can be resolved quickly without formal proceedings.</p>
+
+  <h2>12. Changes to These Terms</h2>
+  <p>We may update these Terms from time to time. We will notify you of material changes by email at least 14 days before they take effect. Continued use of the Service after that date constitutes your acceptance of the updated Terms.</p>
+
+  <h2>13. Contact</h2>
+  <p>For any questions about these Terms, reach us at:<br>
+  <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a></p>
+</main>
+
+<footer>
+  <a href="/" class="footer-logo">Mavri<span>x</span></a>
+  <p>© 2026 Mavrix. Singapore.</p>
+  <ul class="footer-links">
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="/terms.html">Terms</a></li>
+    <li><a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

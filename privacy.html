@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Mavrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #08080A;
+    --white: #F5F4F0;
+    --accent: #C8F04C;
+    --accent-dim: #a8cc30;
+    --surface: #111113;
+    --surface2: #18181C;
+    --border: rgba(255,255,255,0.07);
+    --text-muted: rgba(245,244,240,0.45);
+    --text-mid: rgba(245,244,240,0.7);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(8,8,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-back {
+    font-size: 0.875rem;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--white); }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 10rem 2rem 6rem;
+  }
+
+  .page-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 2.5rem 0 0.75rem;
+    color: var(--white);
+  }
+
+  p {
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  ul {
+    color: var(--text-mid);
+    font-weight: 300;
+    line-height: 1.75;
+    margin: 0.5rem 0 1rem 1.25rem;
+  }
+
+  ul li { margin-bottom: 0.4rem; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover { text-decoration: underline; }
+
+  .highlight-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .highlight-box p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  footer p { font-size: 0.8rem; color: var(--text-muted); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    main { padding: 8rem 1.25rem 4rem; }
+    footer {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Mavri<span>x</span></a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<main>
+  <div class="page-label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p class="meta">Last updated: 1 January 2026 &nbsp;·&nbsp; Mavrix, Singapore</p>
+
+  <div class="highlight-box">
+    <p>Mavrix is committed to protecting your personal data in accordance with Singapore's <strong>Personal Data Protection Act 2012 (PDPA)</strong>. This policy explains what we collect, why, and how you can exercise your rights.</p>
+  </div>
+
+  <h2>1. Who We Are</h2>
+  <p>Mavrix is an AI marketing platform operated in Singapore. If you have any questions about this policy, contact us at <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a>.</p>
+
+  <h2>2. Data We Collect</h2>
+  <p>We collect the following personal and business data when you sign up or use Mavrix:</p>
+  <ul>
+    <li>Full name and email address</li>
+    <li>Business name, industry, and target audience</li>
+    <li>Brand tone and value proposition (entered during onboarding)</li>
+    <li>Social media growth metrics you enter into the platform</li>
+    <li>Usage data — which features you use and when</li>
+  </ul>
+  <p>We do not collect payment card details directly. Payments are handled by our payment processor and subject to their privacy policy.</p>
+
+  <h2>3. Why We Collect It</h2>
+  <p>Your data is used solely to provide and improve the Mavrix service:</p>
+  <ul>
+    <li>To create and manage your account</li>
+    <li>To personalise AI-generated content to your business and brand voice</li>
+    <li>To deliver weekly AI briefings and growth recommendations</li>
+    <li>To track your analytics and generate monthly reports</li>
+    <li>To respond to your support queries</li>
+    <li>To send product updates (you can opt out at any time)</li>
+  </ul>
+
+  <h2>4. How and Where Data Is Stored</h2>
+  <p>Your account data (name, email, business profile) is stored in <strong>Google Sheets</strong> via Google Apps Script, operating under Google's data protection standards. Data is stored on Google's servers, which may be located outside Singapore. Google LLC is certified under relevant data protection frameworks.</p>
+  <p>Analytics data you submit is also stored in the same Google Sheets environment associated with your account.</p>
+
+  <h2>5. Use of Anthropic API</h2>
+  <p>Mavrix uses the <strong>Anthropic API</strong> to power AI-generated content, the AI Marketing Consultant, and other AI features. When you use these features, your business context (business name, industry, audience, brand tone) and your prompts or chat messages are sent to Anthropic's API for processing.</p>
+  <p>Anthropic processes this data to generate responses and is subject to Anthropic's own privacy policy. We do not send your email address or personal identifiers to Anthropic.</p>
+
+  <h2>6. Data Sharing</h2>
+  <p>We do not sell, rent, or trade your personal data to third parties. We only share data with:</p>
+  <ul>
+    <li><strong>Google</strong> — for data storage via Google Sheets</li>
+    <li><strong>Anthropic</strong> — for AI content generation (business context and prompts only)</li>
+    <li><strong>Legal authorities</strong> — if required by Singapore law or a valid court order</li>
+  </ul>
+
+  <h2>7. Data Retention</h2>
+  <p>We retain your personal data for as long as your account is active. If you request deletion of your account, we will remove your data within 30 days, except where retention is required by law.</p>
+
+  <h2>8. Your Rights Under PDPA</h2>
+  <p>As a data subject under Singapore's PDPA, you have the right to:</p>
+  <ul>
+    <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
+    <li><strong>Correction</strong> — request that inaccurate data be corrected</li>
+    <li><strong>Withdrawal of consent</strong> — withdraw consent for any use of your data at any time (this may affect your ability to use the service)</li>
+    <li><strong>Deletion</strong> — request deletion of your account and associated data</li>
+  </ul>
+  <p>To exercise any of these rights, email us at <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a>. We will respond within 10 business days.</p>
+
+  <h2>9. Cookies</h2>
+  <p>The Mavrix landing page and app use <strong>sessionStorage</strong> (not persistent cookies) to keep you logged in during your browser session. This data is cleared when you close your browser tab. We do not use third-party advertising cookies.</p>
+
+  <h2>10. Security</h2>
+  <p>Passwords are hashed using SHA-256 before storage and are never stored in plain text. Access to your data is restricted to authorised Mavrix systems only. We take reasonable technical and organisational steps to protect your data against unauthorised access, loss, or misuse.</p>
+
+  <h2>11. Changes to This Policy</h2>
+  <p>We may update this privacy policy from time to time. We will notify you of material changes by email or by displaying a notice in the app. Continued use of Mavrix after changes constitutes acceptance of the updated policy.</p>
+
+  <h2>12. Contact Us</h2>
+  <p>For any privacy-related queries, requests, or complaints, contact us at:<br>
+  <a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a></p>
+</main>
+
+<footer>
+  <a href="/" class="footer-logo">Mavri<span>x</span></a>
+  <p>© 2026 Mavrix. Singapore.</p>
+  <ul class="footer-links">
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="/terms.html">Terms</a></li>
+    <li><a href="mailto:hello@mavrix.sg">hello@mavrix.sg</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
