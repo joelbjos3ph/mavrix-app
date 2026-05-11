@@ -579,6 +579,54 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
   .consult-starters-grid{grid-template-columns:1fr}
 }
 
+/* ── CONSULTANT TABS ── */
+.consult-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1rem;flex-shrink:0}
+.consult-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--font-body);font-size:0.82rem;font-weight:500;padding:0.65rem 1rem;cursor:pointer;margin-bottom:-1px;transition:color 0.15s;white-space:nowrap}
+.consult-tab:hover{color:var(--mid)}
+.consult-tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+
+/* ── MEMORY PANEL ── */
+.memory-panel{flex:1;overflow-y:auto;display:none;flex-direction:column;gap:0.75rem;padding-bottom:1rem;min-height:0}
+.memory-panel::-webkit-scrollbar{width:3px}
+.memory-panel::-webkit-scrollbar-thumb{background:var(--border2)}
+.memory-panel-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:0.5rem 0 0.75rem;flex-shrink:0}
+.memory-section{margin-bottom:0.25rem}
+.memory-section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.65rem}
+.memory-chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem}
+.memory-chip{display:flex;align-items:center;gap:0.4rem;background:var(--surface);border:1px solid var(--border2);border-radius:100px;padding:0.35rem 0.75rem 0.35rem 0.9rem;font-size:0.78rem;color:var(--mid);transition:border-color 0.15s}
+.memory-chip:hover{border-color:rgba(167,139,250,0.4)}
+.memory-chip-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:0;transition:color 0.15s;flex-shrink:0}
+.memory-chip-del:hover{color:var(--red)}
+.memory-empty{color:var(--muted);font-size:0.85rem;text-align:center;padding:2.5rem 1rem;line-height:1.7}
+.memory-add-btn{border:1px solid rgba(167,139,250,0.35);background:var(--purple-glow);color:var(--purple);border-radius:var(--radius-sm);padding:0.55rem 1rem;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+.memory-add-btn:hover{background:rgba(167,139,250,0.2)}
+
+/* ── HISTORY PANEL ── */
+.history-panel{flex:1;overflow-y:auto;display:none;flex-direction:column;min-height:0;padding-bottom:0.5rem}
+.history-panel::-webkit-scrollbar{width:3px}
+.history-panel::-webkit-scrollbar-thumb{background:var(--border2)}
+#history-list-panel{flex:1;display:flex;flex-direction:column;gap:0.4rem}
+.history-group-label{font-size:0.68rem;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 0 0.4rem;border-top:1px solid var(--border);margin-top:0.4rem}
+.history-group-label.first{border-top:none;margin-top:0;padding-top:0}
+.history-msg-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem 1rem;cursor:pointer;transition:border-color 0.15s;flex-shrink:0}
+.history-msg-item:hover{border-color:rgba(167,139,250,0.35)}
+.history-msg-role{font-size:0.67rem;font-weight:700;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.25rem}
+.history-msg-role.user{color:var(--accent)}
+.history-msg-role.ai{color:var(--purple)}
+.history-msg-text{font-size:0.8rem;color:var(--mid);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.history-clear-btn{border:1px solid rgba(255,90,90,0.25);background:transparent;color:var(--red);border-radius:var(--radius-sm);padding:0.6rem 1rem;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s;margin-top:0.75rem;flex-shrink:0;align-self:flex-start}
+.history-clear-btn:hover{background:rgba(255,90,90,0.08)}
+
+/* ── SIDEBAR MEMORY COUNTER ── */
+.memory-counter{font-size:0.7rem;color:var(--muted);margin-top:0.5rem;text-align:center;cursor:pointer;transition:color 0.15s;padding:0.25rem;border-radius:4px;display:none}
+.memory-counter:hover{color:var(--purple)}
+.memory-counter span{color:var(--purple);font-weight:600}
+
+@media(max-width:768px){
+  .memory-panel{min-height:42vh;max-height:58vh}
+  .history-panel{min-height:42vh;max-height:58vh}
+}
+
 /* ── ANALYTICS ── */
 .analytics-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
 .analytics-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
@@ -827,6 +875,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
         </div>
       </div>
       <button class="logout-btn" onclick="doLogout()">Sign out</button>
+      <div class="memory-counter" id="memory-counter" onclick="showView('consultant');setTimeout(()=>showConsultTab('memory'),60)">Mavrix remembers <span id="memory-count">0</span> things</div>
     </div>
   </aside>
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
@@ -949,6 +998,14 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             <div class="consult-hero-sub">Senior-level strategy, Singapore-market expertise, always in your corner.</div>
           </div>
 
+          <!-- TABS -->
+          <div class="consult-tabs">
+            <button class="consult-tab active" id="ctab-chat" onclick="showConsultTab('chat')">💬 Chat</button>
+            <button class="consult-tab" id="ctab-memory" onclick="showConsultTab('memory')">🧠 What I Know</button>
+            <button class="consult-tab" id="ctab-history" onclick="showConsultTab('history')">📋 History</button>
+          </div>
+
+          <!-- CHAT PANEL -->
           <div class="consult-chat-area" id="consult-chat-area">
             <div class="consult-starters" id="consult-starters">
               <div class="consult-starters-label">What would you like to work on?</div>
@@ -975,7 +1032,25 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             </div>
           </div>
 
-          <div class="consult-chips">
+          <!-- MEMORY PANEL -->
+          <div class="memory-panel" id="memory-panel" style="display:none">
+            <div class="memory-panel-header">
+              <div>
+                <div style="font-family:var(--font-display);font-size:1rem;font-weight:700">What Mavrix knows about you</div>
+                <div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem">Built automatically from your conversations</div>
+              </div>
+              <button class="memory-add-btn" onclick="showAddMemoryModal()">+ Add note</button>
+            </div>
+            <div id="memory-list"></div>
+          </div>
+
+          <!-- HISTORY PANEL -->
+          <div class="history-panel" id="history-panel" style="display:none">
+            <div id="history-list-panel"></div>
+            <button class="history-clear-btn" onclick="clearChatHistory()">🗑 Clear all history</button>
+          </div>
+
+          <div class="consult-chips" id="consult-chips">
             <button class="consult-chip" onclick="useConsultantStarter('Refine this post for me — I\'ll paste it below')">✨ Refine a post</button>
             <button class="consult-chip" onclick="useConsultantStarter('Give me a fresh campaign idea for my business')">💡 Campaign idea</button>
             <button class="consult-chip" onclick="useConsultantStarter('Give me 3 specific growth tips for my business right now')">📈 Growth tips</button>
@@ -983,7 +1058,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             <button class="consult-chip" onclick="useConsultantStarter('How should I position against my competitors in Singapore?')">⚔️ Competitor strategy</button>
           </div>
 
-          <div class="consult-input-row">
+          <div class="consult-input-row" id="consult-input-row">
             <textarea class="consult-input" id="consult-input" placeholder="Ask your marketing consultant..." rows="1"
               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendConsultantMessage()}"
               oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
@@ -1672,6 +1747,10 @@ function launchApp(userData) {
     if (state.bizName) document.getElementById('ob-biz-name').value = state.bizName;
     document.getElementById('onboarding').style.display = 'flex';
   }
+
+  // Load memories and chat history in background
+  loadMemories();
+  loadChatHistory();
 }
 
 // ── LOGOUT ──
@@ -1804,12 +1883,17 @@ async function callApi(prompt) {
 }
 
 function bizCtx() {
-  return `Business: ${state.bizName || 'a Singapore SME'}
+  let ctx = `Business: ${state.bizName || 'a Singapore SME'}
 Industry: ${state.industry || 'business'}
 Audience: ${state.audience || 'Singapore professionals'}
 Value proposition: ${state.problem || 'helping customers succeed'}
 Brand tone: ${state.brandTone || state.tone || 'Professional'}
 Location: Singapore`;
+  if (memories.length > 0) {
+    ctx += '\n\nWhat Mavrix knows about this business (from memory):\n';
+    memories.slice(0, 30).forEach(m => { ctx += `• [${m.category}] ${m.content}\n`; });
+  }
+  return ctx;
 }
 
 function parseEntries(text) {
@@ -2161,6 +2245,8 @@ function copyText(btn) {
 // ── AI CONSULTANT ──
 const consultantMessages = [];
 let consultantBusy = false;
+let memories = [];
+let messagesSinceExtraction = 0;
 
 function consultSystemPrompt() {
   return `You are a senior marketing consultant and business strategist. You have deep expertise in Singapore's market, consumer behaviour, and digital marketing landscape. You work with SMEs across all industries.
@@ -2177,7 +2263,8 @@ Your personality:
 - You feel like a $500/hour consultant who genuinely cares about their growth
 - Keep responses focused and actionable — no fluff, no vague advice
 - Use a conversational tone, not corporate speak
-- When refining content, explain what you changed and why`;
+- When refining content, explain what you changed and why
+- When you see memories about past decisions, campaigns, or goals, reference and build on them naturally — this shows you remember and are paying attention`;
 }
 
 function renderConsultantMessages() {
@@ -2195,6 +2282,7 @@ function renderConsultantMessages() {
   consultantMessages.forEach((msg, i) => {
     const div = document.createElement('div');
     div.className = 'consult-msg ' + msg.role;
+    div.dataset.idx = i;
     const initials = (state.bizName || 'Me').substring(0, 2).toUpperCase();
     const avatarContent = msg.role === 'ai' ? 'AI' : initials;
     const avatarClass = msg.role === 'ai' ? 'ai' : 'user';
@@ -2238,7 +2326,8 @@ async function sendConsultantMessage(prefill) {
   consultantBusy = true;
   document.getElementById('consult-send-btn').disabled = true;
 
-  consultantMessages.push({ role: 'user', text });
+  const ts = new Date().toISOString();
+  consultantMessages.push({ role: 'user', text, timestamp: ts });
   renderConsultantMessages();
   showConsultTyping();
 
@@ -2257,11 +2346,19 @@ async function sendConsultantMessage(prefill) {
     const data = await res.json();
     const reply = data.text || '';
     hideConsultTyping();
-    consultantMessages.push({ role: 'ai', text: reply });
+    consultantMessages.push({ role: 'ai', text: reply, timestamp: new Date().toISOString() });
     renderConsultantMessages();
+    // Persist exchange to GAS (fire and forget)
+    saveChatExchange(text, reply);
+    // Extract memories every 5 exchanges
+    messagesSinceExtraction++;
+    if (messagesSinceExtraction >= 5) {
+      messagesSinceExtraction = 0;
+      extractMemoriesFromConversation();
+    }
   } catch(e) {
     hideConsultTyping();
-    consultantMessages.push({ role: 'ai', text: 'Sorry, I ran into an issue. Please try again.' });
+    consultantMessages.push({ role: 'ai', text: 'Sorry, I ran into an issue. Please try again.', timestamp: new Date().toISOString() });
     renderConsultantMessages();
   }
 
@@ -2770,18 +2867,10 @@ async function generateContent() {
   outputCard.classList.remove('visible');
   typingDots.classList.add('active');
 
-  const bizContext = `
-Business: ${state.bizName || 'a Singapore SME'}
-Industry: ${state.industry || 'business'}
-Target audience: ${state.audience || 'Singapore professionals'}
-Value proposition: ${state.problem || 'helping customers solve their problems'}
-Brand tone: ${state.tone}
-  `.trim();
-
   const prompt = `You are a professional social media copywriter for Singapore businesses.
 
 Business context:
-${bizContext}
+${bizCtx()}
 
 Task: Write a ${contentType} for ${state.platform}.
 ${brief ? `Brief from client: ${brief}` : ''}
@@ -2911,7 +3000,6 @@ function copyHistoryItem(id) {
 
 // ── SETTINGS ──
 async function saveSettings() {
-  alert('save clicked');
   state.bizName   = document.getElementById('set-biz-name').value || state.bizName;
   state.industry  = document.getElementById('set-industry').value;
   state.audience  = document.getElementById('set-audience').value;
@@ -2976,6 +3064,284 @@ function showToast(msg) {
 
 document.getElementById('settings-save-btn').addEventListener('click', saveSettings);
 document.getElementById('analytics-save-btn').addEventListener('click', saveAnalyticsWeek);
+
+// ── MEMORY SYSTEM ──
+
+function updateMemoryCounter() {
+  const countEl = document.getElementById('memory-count');
+  const counterEl = document.getElementById('memory-counter');
+  if (countEl) countEl.textContent = memories.length;
+  if (counterEl) counterEl.style.display = memories.length > 0 ? '' : 'none';
+}
+
+async function loadMemories() {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email) return;
+  try {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'getMemory', email: userData.email })
+    });
+    const data = await res.json();
+    if (data.success && Array.isArray(data.memories)) {
+      memories = data.memories;
+      updateMemoryCounter();
+    }
+  } catch(e) {
+    console.warn('[memory] load failed:', e.message);
+  }
+}
+
+async function loadChatHistory() {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email) return;
+  try {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'getChat', email: userData.email })
+    });
+    const data = await res.json();
+    if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
+      data.messages.forEach(m => {
+        consultantMessages.push({
+          role: m.role === 'assistant' ? 'ai' : 'user',
+          text: m.content,
+          timestamp: m.timestamp
+        });
+      });
+      renderConsultantMessages();
+    }
+  } catch(e) {
+    console.warn('[chat] load history failed:', e.message);
+  }
+}
+
+function saveChatExchange(userMsg, aiMsg) {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email) return;
+  const ts = new Date().toISOString();
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'saveChat',
+      email: userData.email,
+      messages: [
+        { role: 'user',      content: userMsg, timestamp: ts },
+        { role: 'assistant', content: aiMsg,   timestamp: ts }
+      ]
+    })
+  }).catch(() => {});
+}
+
+async function extractMemoriesFromConversation() {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email || consultantMessages.length < 4) return;
+  const recentText = consultantMessages.slice(-20).map(m =>
+    `${m.role === 'ai' ? 'Consultant' : 'Client'}: ${m.text}`
+  ).join('\n\n');
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: `Analyse this marketing consultation conversation and extract key business insights worth remembering.
+
+${recentText}
+
+Output ONLY genuine insights using this exact format (one per line):
+CATEGORY:preference|CONTENT:Client prefers short-form video over static posts
+CATEGORY:goal|CONTENT:Wants to reach 10k Instagram followers by Q3 2026
+CATEGORY:campaign|CONTENT:Running a CNY sale campaign in February with 20% discount
+CATEGORY:decision|CONTENT:Decided to focus on LinkedIn for B2B lead generation
+CATEGORY:milestone|CONTENT:Crossed 5000 Facebook followers
+
+Categories: preference, goal, campaign, decision, milestone
+Extract only meaningful business decisions, goals, campaigns, or patterns — not small talk.
+Maximum 5 memories per call. If nothing significant was discussed, output exactly: NONE` })
+    });
+    const d = await res.json();
+    const text = (d.text || '').trim();
+    if (!text || text === 'NONE') return;
+    const newMems = [];
+    text.split('\n').forEach(line => {
+      line = line.trim();
+      if (!line || line === 'NONE') return;
+      const m = line.match(/CATEGORY:(\w+)\|CONTENT:(.+)/);
+      if (m) newMems.push({ category: m[1].toLowerCase(), content: m[2].trim() });
+    });
+    if (!newMems.length) return;
+    const ts = new Date().toISOString();
+    await Promise.all(newMems.map(m =>
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'saveMemory', email: userData.email, date: ts, category: m.category, content: m.content })
+      }).catch(() => {})
+    ));
+    await loadMemories();
+    renderMemoryPanel();
+    showToast('🧠 Mavrix learned ' + newMems.length + ' new thing' + (newMems.length > 1 ? 's' : '') + ' about your business');
+  } catch(e) {
+    console.warn('[memory] extraction failed:', e.message);
+  }
+}
+
+async function saveMemoryManual(category, content) {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  if (!userData.email || !content.trim()) return;
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'saveMemory', email: userData.email, date: new Date().toISOString(), category: category.toLowerCase(), content: content.trim() })
+    });
+    await loadMemories();
+    renderMemoryPanel();
+    showToast('Memory saved!');
+  } catch(e) {
+    showToast('Could not save memory. Please try again.');
+  }
+}
+
+async function deleteMemoryItem(id) {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  memories = memories.filter(m => m.id !== id);
+  renderMemoryPanel();
+  updateMemoryCounter();
+  if (userData.email) {
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'deleteMemory', email: userData.email, memoryId: id })
+    }).catch(() => {});
+  }
+}
+
+function renderMemoryPanel() {
+  const container = document.getElementById('memory-list');
+  if (!container) return;
+  updateMemoryCounter();
+  if (!memories.length) {
+    container.innerHTML = '<div class="memory-empty">No memories yet.<br><br>Chat with your consultant and Mavrix will automatically learn about your business — your goals, preferences, campaigns, and decisions.</div>';
+    return;
+  }
+  const catMeta = {
+    preference: { icon: '🎨', label: 'Preferences', color: 'var(--blue)' },
+    decision:   { icon: '✅', label: 'Decisions',   color: 'var(--accent)' },
+    campaign:   { icon: '📢', label: 'Campaigns',   color: 'var(--orange)' },
+    goal:       { icon: '🎯', label: 'Goals',        color: 'var(--purple)' },
+    milestone:  { icon: '🏆', label: 'Milestones',   color: '#b8900a' }
+  };
+  const grouped = {};
+  memories.forEach(m => {
+    const cat = (m.category || 'preference').toLowerCase();
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(m);
+  });
+  let html = '';
+  const order = ['goal','campaign','decision','preference','milestone'];
+  const keys = [...order.filter(k => grouped[k]), ...Object.keys(grouped).filter(k => !order.includes(k))];
+  keys.forEach(cat => {
+    const items = grouped[cat];
+    if (!items || !items.length) return;
+    const meta = catMeta[cat] || { icon: '💡', label: cat.charAt(0).toUpperCase() + cat.slice(1), color: 'var(--mid)' };
+    html += `<div class="memory-section">
+      <div class="memory-section-label" style="color:${meta.color}">${meta.icon} ${meta.label}</div>
+      <div class="memory-chips">`;
+    items.forEach(m => {
+      const safeId = (m.id || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      html += `<div class="memory-chip">
+        <span>${m.content.replace(/</g,'&lt;')}</span>
+        <button class="memory-chip-del" onclick="deleteMemoryItem('${safeId}')" title="Remove">×</button>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  container.innerHTML = html;
+}
+
+function renderHistoryPanel() {
+  const container = document.getElementById('history-list-panel');
+  if (!container) return;
+  if (!consultantMessages.length) {
+    container.innerHTML = '<div class="memory-empty">No conversation history yet.<br><br>Start chatting and your history will appear here, grouped by date.</div>';
+    return;
+  }
+  const now = new Date();
+  const todayStr = now.toDateString();
+  const ystStr   = new Date(now - 86400000).toDateString();
+  const weekAgo  = new Date(now - 7 * 86400000);
+  const groups   = { Today: [], Yesterday: [], 'This week': [], Earlier: [] };
+  consultantMessages.forEach((msg, idx) => {
+    const d  = msg.timestamp ? new Date(msg.timestamp) : now;
+    const ds = d.toDateString();
+    if (ds === todayStr)    groups['Today'].push({ msg, idx });
+    else if (ds === ystStr) groups['Yesterday'].push({ msg, idx });
+    else if (d >= weekAgo)  groups['This week'].push({ msg, idx });
+    else                    groups['Earlier'].push({ msg, idx });
+  });
+  let html = '';
+  let first = true;
+  Object.entries(groups).forEach(([label, items]) => {
+    if (!items.length) return;
+    html += `<div class="history-group-label${first ? ' first' : ''}">${label}</div>`;
+    first = false;
+    [...items].reverse().forEach(({ msg, idx }) => {
+      const preview  = msg.text.substring(0, 90).replace(/</g,'&lt;');
+      const role     = msg.role === 'ai' ? 'ai' : 'user';
+      const roleLbl  = role === 'ai' ? '🤖 AI Consultant' : '👤 You';
+      html += `<div class="history-msg-item" onclick="jumpToMessage(${idx})">
+        <div class="history-msg-role ${role}">${roleLbl}</div>
+        <div class="history-msg-text">${preview}${msg.text.length > 90 ? '…' : ''}</div>
+      </div>`;
+    });
+  });
+  container.innerHTML = html || '<div class="memory-empty">No messages to show.</div>';
+}
+
+function jumpToMessage(idx) {
+  showConsultTab('chat');
+  setTimeout(() => {
+    const msgs = document.querySelectorAll('#consult-chat-area .consult-msg');
+    const target = msgs[idx];
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.style.outline = '1px solid rgba(167,139,250,0.5)';
+    target.style.borderRadius = '12px';
+    setTimeout(() => { target.style.outline = ''; target.style.borderRadius = ''; }, 1800);
+  }, 120);
+}
+
+function showConsultTab(tab) {
+  document.querySelectorAll('.consult-tab').forEach(t => t.classList.remove('active'));
+  const tabEl = document.getElementById('ctab-' + tab);
+  if (tabEl) tabEl.classList.add('active');
+  const chatArea  = document.getElementById('consult-chat-area');
+  const memPanel  = document.getElementById('memory-panel');
+  const histPanel = document.getElementById('history-panel');
+  const chips     = document.getElementById('consult-chips');
+  const inputRow  = document.getElementById('consult-input-row');
+  if (chatArea)  chatArea.style.display  = tab === 'chat'    ? ''     : 'none';
+  if (memPanel)  memPanel.style.display  = tab === 'memory'  ? 'flex' : 'none';
+  if (histPanel) histPanel.style.display = tab === 'history' ? 'flex' : 'none';
+  if (chips)     chips.style.display     = tab === 'chat'    ? ''     : 'none';
+  if (inputRow)  inputRow.style.display  = tab === 'chat'    ? ''     : 'none';
+  if (tab === 'memory')  renderMemoryPanel();
+  if (tab === 'history') renderHistoryPanel();
+}
+
+async function clearChatHistory() {
+  if (!confirm('Clear all chat history? This cannot be undone.')) return;
+  consultantMessages.length = 0;
+  messagesSinceExtraction = 0;
+  renderConsultantMessages();
+  renderHistoryPanel();
+  showToast('Chat history cleared');
+}
+
+function showAddMemoryModal() {
+  const cats = ['preference', 'goal', 'campaign', 'decision', 'milestone'];
+  const category = (prompt('Category (' + cats.join(', ') + '):') || '').toLowerCase().trim();
+  if (!cats.includes(category)) { showToast('Pick a valid category: ' + cats.join(', ')); return; }
+  const content = (prompt('What should Mavrix remember?') || '').trim();
+  if (content) saveMemoryManual(category, content);
+}
 </script>
 </body>
 </html>
