@@ -1692,21 +1692,23 @@ async function doLogin() {
 
   try {
     const passwordHash = await hashPassword(password);
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
+    const res = await fetch('/api/auth', {
       method: 'POST',
-      body: JSON.stringify({ action: 'login', email, passwordHash })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, passwordHash })
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || 'Sign in failed.');
+    if (!res.ok || !data.token) throw new Error(data.error || 'Sign in failed.');
+    sessionStorage.setItem('mavrix_session_token', data.token);
     const userData = {
-      name:      data.name       || '',
+      name:      data.name      || '',
       email,
-      plan:      data.plan       || 'Starter',
-      bizName:   data.bizName    || '',
-      industry:  data.industry   || '',
-      audience:  data.audience   || '',
-      problem:   data.valueProp  || '',
-      brandTone: data.brandTone  || ''
+      plan:      data.plan      || 'Starter',
+      bizName:   data.bizName   || '',
+      industry:  data.industry  || '',
+      audience:  data.audience  || '',
+      problem:   data.valueProp || '',
+      brandTone: data.brandTone || ''
     };
     sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
     launchApp(userData);
@@ -1757,6 +1759,7 @@ function launchApp(userData) {
 function doLogout() {
   authToken = null;
   sessionStorage.removeItem('mavrix_token');
+  sessionStorage.removeItem('mavrix_session_token');
   sessionStorage.removeItem('mavrix_user');
   document.getElementById('app').classList.remove('visible');
   document.getElementById('signup-screen').classList.remove('visible');
@@ -1871,10 +1874,17 @@ const agentState = {
 };
 
 // ── AGENT HELPERS ──
+function apiHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'x-session-token': sessionStorage.getItem('mavrix_session_token') || ''
+  };
+}
+
 async function callApi(prompt) {
   const res = await fetch('/api/generate', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: apiHeaders(),
     body: JSON.stringify({ prompt })
   });
   if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Generation failed.'); }
@@ -2339,7 +2349,7 @@ async function sendConsultantMessage(prefill) {
   try {
     const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: apiHeaders(),
       body: JSON.stringify({ messages, system: consultSystemPrompt() })
     });
     if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Generation failed.'); }
@@ -2810,7 +2820,7 @@ async function sendChatbotMessage(prefill) {
   try {
     const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: apiHeaders(),
       body: JSON.stringify({ messages, system: chatbotSystemPrompt() })
     });
     const data = await res.json();
@@ -2890,7 +2900,7 @@ Output ONLY the post content, nothing else. No labels, no explanation.`;
   try {
     const response = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: apiHeaders(),
       body: JSON.stringify({ prompt })
     });
 
@@ -3142,7 +3152,7 @@ async function extractMemoriesFromConversation() {
   try {
     const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: apiHeaders(),
       body: JSON.stringify({ prompt: `Analyse this marketing consultation conversation and extract key business insights worth remembering.
 
 ${recentText}

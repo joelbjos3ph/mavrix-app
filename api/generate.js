@@ -1,21 +1,53 @@
+import crypto from 'crypto';
+
+function verifyToken(token) {
+  if (!token || typeof token !== 'string') return false;
+  try {
+    const dot = token.lastIndexOf('.');
+    if (dot < 1) return false;
+    const payload   = token.slice(0, dot);
+    const signature = token.slice(dot + 1);
+    const secret    = process.env.JWT_SECRET;
+    if (!secret) return false;
+    const expected  = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+    if (signature.length !== expected.length) return false;
+    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return false;
+    // Decode payload (base64url → "email:timestamp") and check expiry
+    const decoded   = Buffer.from(payload, 'base64url').toString('utf8');
+    const lastColon = decoded.lastIndexOf(':');
+    if (lastColon < 0) return false;
+    const timestamp = parseInt(decoded.slice(lastColon + 1), 10);
+    if (isNaN(timestamp)) return false;
+    return (Date.now() - timestamp) < 24 * 60 * 60 * 1000; // 24 h
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-session-token');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const body = req.body ?? {};
+  // ── AUTH CHECK ──
+  const token = req.headers['x-session-token'];
+  if (!verifyToken(token)) {
+    console.warn('[generate] Rejected request — missing or invalid session token');
+    return res.status(401).json({ error: 'Unauthorized. Please sign in again.' });
+  }
+
+  const body   = req.body ?? {};
   const parsed = typeof body === 'string' ? JSON.parse(body) : body;
 
-  // Support both { prompt } and { messages, system }
   let messages;
   let system;
 
   if (parsed.messages && Array.isArray(parsed.messages)) {
     messages = parsed.messages;
-    system = parsed.system || undefined;
+    system   = parsed.system || undefined;
   } else if (parsed.prompt && typeof parsed.prompt === 'string') {
     messages = [{ role: 'user', content: parsed.prompt }];
   } else {
