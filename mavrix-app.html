@@ -2503,15 +2503,42 @@ function copyHistoryItem(id) {
 
 // ── SETTINGS ──
 function saveSettings() {
-  state.bizName = document.getElementById('set-biz-name').value || state.bizName;
-  state.industry = document.getElementById('set-industry').value;
-  state.audience = document.getElementById('set-audience').value;
-  state.problem = document.getElementById('set-problem').value;
+  state.bizName   = document.getElementById('set-biz-name').value || state.bizName;
+  state.industry  = document.getElementById('set-industry').value;
+  state.audience  = document.getElementById('set-audience').value;
+  state.problem   = document.getElementById('set-problem').value;
+
   if (state.bizName) {
     document.getElementById('sidebar-user-name').textContent = state.bizName.split(' ')[0];
     const initials = state.bizName.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
     document.getElementById('user-avatar-initials').textContent = initials || 'MV';
   }
+
+  // Update sessionStorage
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  userData.bizName   = state.bizName;
+  userData.industry  = state.industry;
+  userData.audience  = state.audience;
+  userData.problem   = state.problem;
+  userData.brandTone = state.brandTone;
+  sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
+
+  // Persist to Google Sheets
+  if (userData.email) {
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action:    'updateProfile',
+        email:     userData.email,
+        bizName:   state.bizName,
+        industry:  state.industry,
+        audience:  state.audience,
+        valueProp: state.problem,
+        brandTone: state.brandTone || 'Professional'
+      })
+    }).catch(() => {});
+  }
+
   showToast('Settings saved!');
 }
 
