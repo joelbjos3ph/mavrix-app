@@ -1301,7 +1301,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             <button class="tone-btn" onclick="selectSettingsTone(this,'Inspirational')">🌟 Inspirational</button>
             <button class="tone-btn" onclick="selectSettingsTone(this,'Conversational')">💬 Conversational</button>
           </div>
-          <button class="save-btn" onclick="saveSettings()">Save settings</button>
+          <button class="save-btn" id="settings-save-btn">Save settings</button>
         </div>
       </div>
 
@@ -2502,7 +2502,7 @@ function copyHistoryItem(id) {
 
 // ── SETTINGS ──
 async function saveSettings() {
-  console.log('saveSettings called');
+  alert('save clicked');
   state.bizName   = document.getElementById('set-biz-name').value || state.bizName;
   state.industry  = document.getElementById('set-industry').value;
   state.audience  = document.getElementById('set-audience').value;
@@ -2564,6 +2564,8 @@ function showToast(msg) {
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
+
+document.getElementById('settings-save-btn').addEventListener('click', saveSettings);
 </script>
 </body>
 </html>
