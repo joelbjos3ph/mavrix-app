@@ -2502,7 +2502,7 @@ function copyHistoryItem(id) {
 }
 
 // ── SETTINGS ──
-function saveSettings() {
+async function saveSettings() {
   state.bizName   = document.getElementById('set-biz-name').value || state.bizName;
   state.industry  = document.getElementById('set-industry').value;
   state.audience  = document.getElementById('set-audience').value;
@@ -2523,20 +2523,35 @@ function saveSettings() {
   userData.brandTone = state.brandTone;
   sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
 
-  // Persist to Google Sheets
-  if (userData.email) {
-    fetch(GOOGLE_SCRIPT_URL, {
+  console.log('[saveSettings] email from sessionStorage:', userData.email);
+
+  if (!userData.email) {
+    console.warn('[saveSettings] No email found in sessionStorage — skipping GAS update');
+    showToast('Settings saved!');
+    return;
+  }
+
+  const payload = {
+    action:    'updateProfile',
+    email:     userData.email,
+    bizName:   state.bizName,
+    industry:  state.industry,
+    audience:  state.audience,
+    valueProp: state.problem,
+    brandTone: state.brandTone || 'Professional'
+  };
+  console.log('[saveSettings] POSTing to GAS:', payload);
+
+  try {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      body: JSON.stringify({
-        action:    'updateProfile',
-        email:     userData.email,
-        bizName:   state.bizName,
-        industry:  state.industry,
-        audience:  state.audience,
-        valueProp: state.problem,
-        brandTone: state.brandTone || 'Professional'
-      })
-    }).catch(() => {});
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    console.log('[saveSettings] GAS response:', res.status, data);
+    if (!data.success) console.error('[saveSettings] GAS returned error:', data.error);
+  } catch (err) {
+    console.error('[saveSettings] Fetch failed:', err.message);
   }
 
   showToast('Settings saved!');
