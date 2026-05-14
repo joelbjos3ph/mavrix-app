@@ -476,6 +476,20 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 /* ── FIRST-LOGIN WELCOME MODAL ── */
 #welcome-modal{position:fixed;inset:0;background:rgba(8,8,10,0.92);z-index:80;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:1rem}
 #welcome-modal.visible{display:flex}
+#delete-modal{position:fixed;inset:0;background:rgba(8,8,10,0.92);z-index:90;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:1rem}
+#delete-modal.visible{display:flex}
+.delete-modal-box{width:440px;max-width:100%;background:var(--surface);border:1px solid rgba(255,90,90,0.3);border-radius:16px;padding:2rem}
+.delete-modal-title{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:0.75rem}
+.delete-modal-msg{font-size:0.875rem;color:var(--muted);line-height:1.6;margin-bottom:1.75rem}
+.delete-modal-actions{display:flex;gap:0.75rem;justify-content:flex-end}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text);border-radius:var(--radius-sm);padding:0.6rem 1.25rem;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s}
+.btn-ghost:hover{border-color:var(--text)}
+.btn-danger{background:#c0392b;border:none;color:#fff;border-radius:var(--radius-sm);padding:0.6rem 1.25rem;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s}
+.btn-danger:hover{background:#a93226}
+.btn-danger:disabled{opacity:0.6;cursor:not-allowed}
+.delete-account-btn{background:transparent;border:1px solid rgba(255,90,90,0.35);color:var(--red);border-radius:var(--radius-sm);padding:0.65rem 1.25rem;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.15s;margin-top:1.25rem}
+.delete-account-btn:hover{background:rgba(255,90,90,0.08);border-color:var(--red)}
+.delete-account-warn{font-size:0.75rem;color:var(--muted);margin-top:0.5rem;line-height:1.5}
 .welcome-box{width:580px;max-width:100%;max-height:90vh;overflow-y:auto;background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:2.25rem}
 .welcome-box::-webkit-scrollbar{width:3px}
 .welcome-box::-webkit-scrollbar-thumb{background:var(--border2)}
@@ -1846,6 +1860,12 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
           </div>
           <button class="save-btn" id="settings-save-btn">Save settings</button>
         </div>
+        <div class="settings-section">
+          <div class="settings-title">Account</div>
+          <div style="font-size:0.875rem;color:var(--muted)">Manage your Mavrix account.</div>
+          <button class="delete-account-btn" onclick="showDeleteModal()">Delete my account</button>
+          <div class="delete-account-warn">This will permanently delete your account, chat history, memories and all data. This cannot be undone.</div>
+        </div>
       </div>
 
       <!-- GUIDE VIEW -->
@@ -1971,6 +1991,17 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
 </div>
 
 <!-- FIRST-LOGIN WELCOME MODAL -->
+<div id="delete-modal">
+  <div class="delete-modal-box">
+    <div class="delete-modal-title">Are you sure?</div>
+    <div class="delete-modal-msg">This will permanently delete your account and all associated data including chat history, memories and analytics. This action cannot be undone.</div>
+    <div class="delete-modal-actions">
+      <button class="btn-ghost" onclick="hideDeleteModal()">Cancel</button>
+      <button class="btn-danger" id="confirm-delete-btn" onclick="confirmDeleteAccount()">Yes, delete my account</button>
+    </div>
+  </div>
+</div>
+
 <div id="welcome-modal">
   <div class="welcome-box">
     <div class="welcome-dots">
@@ -2271,6 +2302,54 @@ function doLogout() {
   const btn = document.querySelector('#login-screen .btn-primary');
   btn.disabled = false;
   btn.textContent = 'Sign in →';
+}
+
+function showDeleteModal() {
+  document.getElementById('delete-modal').classList.add('visible');
+}
+
+function hideDeleteModal() {
+  document.getElementById('delete-modal').classList.remove('visible');
+  const btn = document.getElementById('confirm-delete-btn');
+  btn.disabled = false;
+  btn.textContent = 'Yes, delete my account';
+}
+
+async function confirmDeleteAccount() {
+  const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
+  const email = userData.email || state.email;
+  if (!email) { hideDeleteModal(); return; }
+
+  const btn = document.getElementById('confirm-delete-btn');
+  btn.disabled = true;
+  btn.textContent = 'Deleting…';
+
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'deleteAccount', email })
+    });
+  } catch (err) {
+    console.error('[deleteAccount] GAS fetch failed:', err.message);
+  }
+
+  // Clear all local state regardless of GAS response
+  authToken = null;
+  sessionStorage.clear();
+  localStorage.removeItem('mavrix_welcome_seen_' + email);
+
+  hideDeleteModal();
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('signup-screen').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-pass').value = '';
+  const errEl = document.getElementById('login-error');
+  errEl.style.color = 'var(--muted)';
+  errEl.textContent = 'Your account has been deleted.';
+  const signInBtn = document.querySelector('#login-screen .btn-primary');
+  signInBtn.disabled = false;
+  signInBtn.textContent = 'Sign in →';
 }
 
 // ── SIDEBAR MOBILE ──
