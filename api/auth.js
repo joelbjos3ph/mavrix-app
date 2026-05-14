@@ -48,12 +48,14 @@ export default async function handler(req, res) {
 
   return res.status(200).json({
     token,
-    name:      gasData.name      || '',
-    plan:      gasData.plan      || 'Starter',
-    bizName:   gasData.bizName   || '',
-    industry:  gasData.industry  || '',
-    audience:  gasData.audience  || '',
-    valueProp: gasData.valueProp || '',
-    brandTone: gasData.brandTone || ''
+    name:           gasData.name           || '',
+    plan:           gasData.plan           || 'Starter',
+    bizName:        gasData.bizName        || '',
+    industry:       gasData.industry       || '',
+    audience:       gasData.audience       || '',
+    valueProp:      gasData.valueProp      || '',
+    brandTone:      gasData.brandTone      || '',
+    websiteUrl:     gasData.websiteUrl     || '',
+    bizDescription: gasData.bizDescription || ''
   });
 }

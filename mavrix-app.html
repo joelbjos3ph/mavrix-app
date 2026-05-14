@@ -908,6 +908,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       <div class="step-dot active" id="dot-1"></div>
       <div class="step-dot" id="dot-2"></div>
       <div class="step-dot" id="dot-3"></div>
+      <div class="step-dot" id="dot-4"></div>
     </div>
 
     <div class="onboarding-step active" id="step-1">
@@ -936,6 +937,19 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
     </div>
 
     <div class="onboarding-step" id="step-2">
+      <h2>Help us understand your business</h2>
+      <p>The more detail you give, the smarter Mavrix gets from day one.</p>
+      <div class="form-group" style="margin-bottom:1rem">
+        <label class="form-label">BUSINESS WEBSITE <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+        <input class="form-input" id="ob-website" type="url" placeholder="e.g. https://yourbusiness.com.sg">
+      </div>
+      <div class="form-group">
+        <label class="form-label">DESCRIBE YOUR BUSINESS IN DETAIL</label>
+        <textarea class="form-textarea" id="ob-bizdesc" placeholder="Tell us what your business does, who your customers are, what makes you different, your main products/services, and any challenges you're facing. The more detail the better — treat this like briefing a new marketing hire on day one." style="min-height:120px"></textarea>
+      </div>
+    </div>
+
+    <div class="onboarding-step" id="step-3">
       <h2>Who are your customers?</h2>
       <p>The more specific, the better your content will be.</p>
       <div class="form-group" style="margin-bottom:1rem">
@@ -948,7 +962,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       </div>
     </div>
 
-    <div class="onboarding-step" id="step-3">
+    <div class="onboarding-step" id="step-4">
       <h2>Pick your brand voice</h2>
       <p>How do you want to sound to your audience?</p>
       <div class="tone-grid" id="ob-tone-grid">
@@ -1182,6 +1196,9 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
                 </button>
                 <button class="consult-starter-btn" onclick="useConsultantStarter('Should I follow what my competitors are doing?')">
                   <span class="consult-starter-icon">🇸🇬</span>Should I follow my competitors?
+                </button>
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Study my business and tell me what you know')">
+                  <span class="consult-starter-icon">🧠</span>Study my business and tell me what you know
                 </button>
               </div>
             </div>
@@ -1806,6 +1823,15 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
               <label class="form-label">WHAT PROBLEM DO YOU SOLVE?</label>
               <textarea class="form-textarea" id="set-problem" placeholder="Describe your value proposition"></textarea>
             </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">BUSINESS WEBSITE <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+              <input class="form-input" id="st-web" type="url" placeholder="e.g. https://yourbusiness.com.sg">
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">DETAILED BUSINESS DESCRIPTION</label>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.4rem">Tell Mavrix everything about your business — the more detail, the smarter every AI tool gets</div>
+              <textarea class="form-textarea" id="st-bizdesc" placeholder="What your business does, who your customers are, what makes you different, your main products/services, pricing, any current challenges. Treat this like briefing a new marketing hire on day one." style="min-height:140px"></textarea>
+            </div>
           </div>
         </div>
         <div class="settings-section">
@@ -2069,6 +2095,8 @@ let state = {
   audience: '',
   problem: '',
   brandTone: '',
+  websiteUrl: '',
+  bizDescription: '',
   currentOutput: '',
   currentPlatform: '',
   currentTone: '',
@@ -2164,14 +2192,16 @@ async function doLogin() {
     if (!res.ok || !data.token) throw new Error(data.error || 'Sign in failed.');
     sessionStorage.setItem('mavrix_session_token', data.token);
     const userData = {
-      name:      data.name      || '',
+      name:           data.name           || '',
       email,
-      plan:      data.plan      || 'Starter',
-      bizName:   data.bizName   || '',
-      industry:  data.industry  || '',
-      audience:  data.audience  || '',
-      problem:   data.valueProp || '',
-      brandTone: data.brandTone || ''
+      plan:           data.plan           || 'Starter',
+      bizName:        data.bizName        || '',
+      industry:       data.industry       || '',
+      audience:       data.audience       || '',
+      problem:        data.valueProp      || '',
+      brandTone:      data.brandTone      || '',
+      websiteUrl:     data.websiteUrl     || '',
+      bizDescription: data.bizDescription || ''
     };
     sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
     launchApp(userData);
@@ -2188,10 +2218,12 @@ function launchApp(userData) {
   document.getElementById('app').classList.add('visible');
 
   // Populate state from saved profile
-  if (userData?.bizName)   state.bizName   = userData.bizName;
-  if (userData?.industry)  state.industry  = userData.industry;
-  if (userData?.audience)  state.audience  = userData.audience;
-  if (userData?.problem)   state.problem   = userData.problem;
+  if (userData?.bizName)        state.bizName        = userData.bizName;
+  if (userData?.industry)       state.industry       = userData.industry;
+  if (userData?.audience)       state.audience       = userData.audience;
+  if (userData?.problem)        state.problem        = userData.problem;
+  if (userData?.websiteUrl)     state.websiteUrl     = userData.websiteUrl;
+  if (userData?.bizDescription) state.bizDescription = userData.bizDescription;
   if (userData?.brandTone) { state.brandTone = userData.brandTone; state.tone = userData.brandTone; }
 
   // Sidebar identity — prefer bizName over personal name
@@ -2201,10 +2233,12 @@ function launchApp(userData) {
   document.getElementById('user-avatar-initials').textContent = initials || 'MV';
   document.querySelector('.user-plan').textContent = (userData?.plan || 'Starter') + ' Plan';
 
-  document.getElementById('set-biz-name').value = state.bizName;
-  document.getElementById('set-industry').value  = state.industry;
-  document.getElementById('set-audience').value  = state.audience;
-  document.getElementById('set-problem').value   = state.problem;
+  document.getElementById('set-biz-name').value  = state.bizName;
+  document.getElementById('set-industry').value   = state.industry;
+  document.getElementById('set-audience').value   = state.audience;
+  document.getElementById('set-problem').value    = state.problem;
+  document.getElementById('st-web').value         = state.websiteUrl;
+  document.getElementById('st-bizdesc').value     = state.bizDescription;
 
   // Only show onboarding if the profile is incomplete
   const profileComplete = !!(state.bizName && state.industry && state.audience);
@@ -2252,13 +2286,17 @@ function closeSidebar() {
 // ── ONBOARDING ──
 function obNext() {
   if (obStep === 1) {
-    state.bizName = document.getElementById('ob-biz-name').value || 'Your Business';
+    state.bizName  = document.getElementById('ob-biz-name').value || 'Your Business';
     state.industry = document.getElementById('ob-industry').value || 'Business';
     obStep = 2;
   } else if (obStep === 2) {
-    state.audience = document.getElementById('ob-audience').value;
-    state.problem = document.getElementById('ob-problem').value;
+    state.websiteUrl     = document.getElementById('ob-website').value.trim();
+    state.bizDescription = document.getElementById('ob-bizdesc').value.trim();
     obStep = 3;
+  } else if (obStep === 3) {
+    state.audience = document.getElementById('ob-audience').value;
+    state.problem  = document.getElementById('ob-problem').value;
+    obStep = 4;
     document.getElementById('ob-next-btn').textContent = 'Get started →';
   } else {
     state.brandTone = obTone || 'Professional';
@@ -2286,11 +2324,13 @@ function completeOnboarding() {
     document.getElementById('sidebar-user-name').textContent = state.bizName.split(' ')[0];
     const initials = state.bizName.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
     document.getElementById('user-avatar-initials').textContent = initials || 'MV';
-    document.getElementById('set-biz-name').value = state.bizName;
-    document.getElementById('set-industry').value  = state.industry;
-    document.getElementById('set-audience').value  = state.audience;
-    document.getElementById('set-problem').value   = state.problem;
   }
+  document.getElementById('set-biz-name').value  = state.bizName;
+  document.getElementById('set-industry').value   = state.industry;
+  document.getElementById('set-audience').value   = state.audience;
+  document.getElementById('set-problem').value    = state.problem;
+  document.getElementById('st-web').value         = state.websiteUrl;
+  document.getElementById('st-bizdesc').value     = state.bizDescription;
 
   // Save profile to Google Sheets (fire and forget)
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
@@ -2298,13 +2338,15 @@ function completeOnboarding() {
     fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify({
-        action: 'updateProfile',
-        email:     userData.email,
-        bizName:   state.bizName,
-        industry:  state.industry,
-        audience:  state.audience,
-        valueProp: state.problem,
-        brandTone: state.brandTone || 'Professional'
+        action:         'updateProfile',
+        email:          userData.email,
+        bizName:        state.bizName,
+        industry:       state.industry,
+        audience:       state.audience,
+        valueProp:      state.problem,
+        brandTone:      state.brandTone || 'Professional',
+        websiteUrl:     state.websiteUrl,
+        bizDescription: state.bizDescription
       })
     }).catch(() => {});
   }
@@ -2364,6 +2406,8 @@ Audience: ${state.audience || 'Singapore professionals'}
 Value proposition: ${state.problem || 'helping customers succeed'}
 Brand tone: ${state.brandTone || state.tone || 'Professional'}
 Location: Singapore`;
+  if (state.websiteUrl)     ctx += `\nBusiness website: ${state.websiteUrl}`;
+  if (state.bizDescription) ctx += `\nDetailed business description: ${state.bizDescription}`;
   if (memories.length > 0) {
     ctx += '\n\nWhat Mavrix knows about this business (from memory):\n';
     memories.slice(0, 30).forEach(m => { ctx += `• [${m.category}] ${m.content}\n`; });
@@ -3512,10 +3556,12 @@ function copyHistoryItem(id) {
 
 // ── SETTINGS ──
 async function saveSettings() {
-  state.bizName   = document.getElementById('set-biz-name').value || state.bizName;
-  state.industry  = document.getElementById('set-industry').value;
-  state.audience  = document.getElementById('set-audience').value;
-  state.problem   = document.getElementById('set-problem').value;
+  state.bizName        = document.getElementById('set-biz-name').value || state.bizName;
+  state.industry       = document.getElementById('set-industry').value;
+  state.audience       = document.getElementById('set-audience').value;
+  state.problem        = document.getElementById('set-problem').value;
+  state.websiteUrl     = document.getElementById('st-web').value.trim();
+  state.bizDescription = document.getElementById('st-bizdesc').value.trim();
 
   if (state.bizName) {
     document.getElementById('sidebar-user-name').textContent = state.bizName.split(' ')[0];
@@ -3525,31 +3571,31 @@ async function saveSettings() {
 
   // Update sessionStorage
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
-  userData.bizName   = state.bizName;
-  userData.industry  = state.industry;
-  userData.audience  = state.audience;
-  userData.problem   = state.problem;
-  userData.brandTone = state.brandTone;
+  userData.bizName        = state.bizName;
+  userData.industry       = state.industry;
+  userData.audience       = state.audience;
+  userData.problem        = state.problem;
+  userData.brandTone      = state.brandTone;
+  userData.websiteUrl     = state.websiteUrl;
+  userData.bizDescription = state.bizDescription;
   sessionStorage.setItem('mavrix_user', JSON.stringify(userData));
 
-  console.log('[saveSettings] email from sessionStorage:', userData.email);
-
   if (!userData.email) {
-    console.warn('[saveSettings] No email found in sessionStorage — skipping GAS update');
-    showToast('Settings saved!');
+    showToast('Profile updated — Mavrix is learning your business');
     return;
   }
 
   const payload = {
-    action:    'updateProfile',
-    email:     userData.email,
-    bizName:   state.bizName,
-    industry:  state.industry,
-    audience:  state.audience,
-    valueProp: state.problem,
-    brandTone: state.brandTone || 'Professional'
+    action:         'updateProfile',
+    email:          userData.email,
+    bizName:        state.bizName,
+    industry:       state.industry,
+    audience:       state.audience,
+    valueProp:      state.problem,
+    brandTone:      state.brandTone || 'Professional',
+    websiteUrl:     state.websiteUrl,
+    bizDescription: state.bizDescription
   };
-  console.log('[saveSettings] POSTing to GAS:', payload);
 
   try {
     const res = await fetch(GOOGLE_SCRIPT_URL, {
@@ -3557,13 +3603,12 @@ async function saveSettings() {
       body: JSON.stringify(payload)
     });
     const data = await res.json();
-    console.log('[saveSettings] GAS response:', res.status, data);
     if (!data.success) console.error('[saveSettings] GAS returned error:', data.error);
   } catch (err) {
     console.error('[saveSettings] Fetch failed:', err.message);
   }
 
-  showToast('Settings saved!');
+  showToast('Profile updated — Mavrix is learning your business');
 }
 
 // ── TOAST ──
