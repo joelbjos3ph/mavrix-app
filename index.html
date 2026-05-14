@@ -407,6 +407,61 @@
     font-weight: 300;
   }
 
+  /* MEMORY SECTION */
+  .memory-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .memory-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .memory-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .memory-card:hover { border-color: rgba(200,240,76,0.2); }
+  .memory-card:hover::before { opacity: 1; }
+  .memory-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(200,240,76,0.08);
+    border: 1px solid rgba(200,240,76,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 1.25rem;
+  }
+  .memory-card h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    overflow: visible;
+  }
+  .memory-card p {
+    color: var(--text-mid);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  @media (max-width: 768px) {
+    .memory-cards { grid-template-columns: 1fr; gap: 0.75rem; }
+  }
+
   /* FEATURES */
   .features {
     display: grid;
@@ -950,18 +1005,20 @@
     <a href="#how" class="btn-ghost">See how it works</a>
   </div>
 
+  <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;letter-spacing:0.04em;animation:fadeUp 0.6s 0.35s ease both">Built for SMEs, by an SME</p>
+
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num"><span>80</span>%</div>
-      <div class="stat-label">Cost reduction vs agencies</div>
+      <div class="stat-num"><span>6</span></div>
+      <div class="stat-label">AI tools in one platform</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="font-size:1.4rem">Learns your<span> business</span></div>
+      <div class="stat-label">Gets smarter every session</div>
     </div>
     <div class="stat">
       <div class="stat-num">24<span>/7</span></div>
-      <div class="stat-label">Always-on marketing</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num"><span>3×</span></div>
-      <div class="stat-label">Faster campaign delivery</div>
+      <div class="stat-label">Always on</div>
     </div>
   </div>
 </div>
@@ -1005,6 +1062,10 @@
       <h3><span class="icon">📊</span> No real accountability</h3>
       <p>You get monthly reports with vanity metrics. No clear line between what you spent and the leads or revenue generated.</p>
     </div>
+    <div class="problem-card" style="grid-column:1/-1">
+      <h3><span class="icon">🧠</span> No memory of your business</h3>
+      <p>Every time you brief a new agency or freelancer, you start from zero. They don't remember your last campaign, your audience, or what worked. Your marketing never compounds — it restarts.</p>
+    </div>
   </div>
 </section>
 
@@ -1037,6 +1098,33 @@
 
 <div class="divider"></div>
 
+<!-- MEMORY -->
+<section id="memory" class="fade-in">
+  <div class="section-label">Business memory</div>
+  <h2 class="section-title">The AI that never forgets</h2>
+  <p class="section-sub">Mavrix remembers every conversation, campaign decision, and result. The longer you use it, the smarter it gets — until it knows your business better than anyone.</p>
+
+  <div class="memory-cards">
+    <div class="memory-card">
+      <div class="memory-card-icon">💬</div>
+      <h3>Persistent chat history</h3>
+      <p>Every strategy session, idea, and decision is saved. Pick up any conversation exactly where you left off — days or months later.</p>
+    </div>
+    <div class="memory-card">
+      <div class="memory-card-icon">🧠</div>
+      <h3>Business DNA learning</h3>
+      <p>Mavrix extracts and stores your goals, preferences, campaigns, and milestones. Every AI tool uses this knowledge to give you more specific, relevant advice.</p>
+    </div>
+    <div class="memory-card">
+      <div class="memory-card-icon">⚡</div>
+      <h3>Proactive insights</h3>
+      <p>Because Mavrix knows your history, it spots patterns and surfaces opportunities you'd never think to ask about — before your competitors do.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- FEATURES -->
 <section id="features" class="fade-in">
   <div class="section-label">What Mavrix does</div>
@@ -1052,34 +1140,34 @@
 
   <div class="features" style="margin-top: 2rem;">
     <div class="feature">
-      <div class="feature-icon">🤖</div>
+      <div class="feature-icon">⚡</div>
       <h3>AI Social Agent</h3>
-      <p>Your AI Chief Marketing Officer. Generates a full weekly content calendar, trending topic posts, and growth opportunities — proactively, without being asked.</p>
+      <p>Your always-on Chief Marketing Officer. Generates a full weekly content calendar, trending topic posts, growth insights, and opportunities — proactively, without being asked.</p>
     </div>
     <div class="feature">
       <div class="feature-icon">💬</div>
-      <h3>AI Marketing Consultant</h3>
-      <p>Chat with your AI consultant like a senior marketing expert. Bounce ideas, get strategy advice, refine content, and get proactive recommendations specific to your business.</p>
+      <h3>AI Consultant</h3>
+      <p>Chat with your AI CMO for business health checks, competitor intelligence, market positioning, and strategic recommendations — all specific to your business and history.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🚀</div>
+      <h3>Lead Growth Advisor</h3>
+      <p>Builds your personalised lead generation playbook, tells you exactly what to do with every lead, and recommends the best channels for your industry and audience.</p>
     </div>
     <div class="feature">
       <div class="feature-icon">✍️</div>
-      <h3>Content That Attracts Leads</h3>
-      <p>AI-written social posts, email campaigns, and ad copy in your brand voice — designed to attract and convert your ideal customers across every platform.</p>
+      <h3>Content Generator</h3>
+      <p>AI-written social posts, ad copy for Facebook, Instagram, and Google — multiple angles and formats in your brand voice, ready to publish immediately.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📧</div>
+      <h3>Email Blasting</h3>
+      <p>Write and send email campaigns directly from Mavrix. AI-drafted copy with your brand voice, personalised per contact, sent to your full list via a single click.</p>
     </div>
     <div class="feature">
       <div class="feature-icon">📈</div>
       <h3>Growth Analytics</h3>
-      <p>Track your social media growth over time. See before and after joining Mavrix. Get AI-generated monthly reports showing what's working.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🎯</div>
-      <h3>Ad Copy Generator</h3>
-      <p>Facebook, Instagram, and Google ad variations written by AI — multiple angles, benefit-focused, ready to launch immediately.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📧</div>
-      <h3>Email Campaign Writer</h3>
-      <p>Full email campaigns with subject lines, preview text, and CTAs that convert — for cold outreach, nurture sequences, and re-engagement.</p>
+      <p>Track your social media follower growth over time and visualise your before/after joining Mavrix results — with AI-generated commentary on what's working.</p>
     </div>
   </div>
 </section>
@@ -1189,7 +1277,7 @@
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo">Mavri<span>x</span></a>
-  <p>© 2026 Mavrix. Singapore.</p>
+  <p>© 2025 Mavrix. Singapore.</p>
   <ul class="footer-links">
     <li><a href="/privacy.html">Privacy</a></li>
     <li><a href="/terms.html">Terms</a></li>
