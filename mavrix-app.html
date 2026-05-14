@@ -979,7 +979,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
       AI Social Agent
       <span class="nav-badge hidden" id="badge-agent">✓</span>
     </div>
-    <div class="nav-item consultant-nav" onclick="showView('consultant')">
+    <div class="nav-item consultant-nav" onclick="showView('consultant')" title="Your AI CMO — strategy, competitor intelligence, business health checks, content refinement and growth advice all in one place">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/></svg>
       AI Consultant
     </div>
@@ -1165,23 +1165,23 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             <div class="consult-starters" id="consult-starters">
               <div class="consult-starters-label">What would you like to work on?</div>
               <div class="consult-starters-grid">
-                <button class="consult-starter-btn" onclick="useConsultantStarter('What should I post about this week?')">
-                  <span class="consult-starter-icon">📅</span>What should I post about this week?
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Do a full health check on my business')">
+                  <span class="consult-starter-icon">🩺</span>Do a full health check on my business
                 </button>
-                <button class="consult-starter-btn" onclick="useConsultantStarter('How can I grow my Instagram followers?')">
-                  <span class="consult-starter-icon">📈</span>How can I grow my Instagram followers?
+                <button class="consult-starter-btn" onclick="useConsultantStarter('What are my competitors doing in Singapore?')">
+                  <span class="consult-starter-icon">🔭</span>What are my competitors doing in Singapore?
                 </button>
-                <button class="consult-starter-btn" onclick="useConsultantStarter('Help me come up with a campaign idea')">
-                  <span class="consult-starter-icon">💡</span>Help me come up with a campaign idea
+                <button class="consult-starter-btn" onclick="useConsultantStarter('How should I position myself in the market?')">
+                  <span class="consult-starter-icon">🎯</span>How should I position myself in the market?
                 </button>
-                <button class="consult-starter-btn" onclick="useConsultantStarter('Review my marketing strategy and give me honest feedback')">
-                  <span class="consult-starter-icon">🔍</span>Review my marketing strategy
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Rate my marketing strategy out of 10')">
+                  <span class="consult-starter-icon">⭐</span>Rate my marketing strategy out of 10
                 </button>
-                <button class="consult-starter-btn" onclick="useConsultantStarter('What\'s working for businesses like mine in Singapore right now?')">
-                  <span class="consult-starter-icon">🇸🇬</span>What's working in Singapore right now?
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Find gaps in my market I can exploit')">
+                  <span class="consult-starter-icon">💡</span>Find gaps in my market I can exploit
                 </button>
-                <button class="consult-starter-btn" onclick="useConsultantStarter('Help me write a compelling post about my product or service')">
-                  <span class="consult-starter-icon">✍️</span>Help me write a compelling post
+                <button class="consult-starter-btn" onclick="useConsultantStarter('Should I follow what my competitors are doing?')">
+                  <span class="consult-starter-icon">🇸🇬</span>Should I follow my competitors?
                 </button>
               </div>
             </div>
@@ -1850,11 +1850,11 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
             <span class="guide-acc-arrow">▼</span>
           </div>
           <div class="guide-acc-body">
-            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Your always-on marketing strategist. Remembers your business, learns over time, and gives proactive advice tailored to your goals and challenges.</div></div>
-            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">When you have a marketing question, want to brainstorm, or need to refine a piece of content. Use it anytime — it gets smarter with every conversation.</div></div>
-            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Strategy, campaign planning, content ideas, and getting honest feedback on your marketing approach.</div></div>
-            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Tell it about your business in detail in your first conversation — it remembers everything and uses it to give better advice over time.</p></div>
-            <button class="guide-try-btn" onclick="event.stopPropagation();showView('consultant')">Try it → Ask "What should I focus on this month?"</button>
+            <div class="guide-acc-row"><div class="guide-acc-label">What it does</div><div class="guide-acc-text">Your always-on Chief Marketing Officer. Gives strategy advice, runs business health checks, analyses what competitors are doing in Singapore, defines your market positioning, identifies gaps you can exploit, and refines content — all in one conversation.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">When to use it</div><div class="guide-acc-text">When you have a marketing question, want a health check on your business, need to understand your competitive landscape, or want to define your unique position in the market. Use it anytime — it gets smarter with every conversation.</div></div>
+            <div class="guide-acc-row"><div class="guide-acc-label">Best for</div><div class="guide-acc-text">Business health checks · Competitor intelligence · Market positioning · Strategic recommendations · Campaign planning · Content refinement</div></div>
+            <div class="guide-tip-box"><p>💡 <strong>Pro tip:</strong> Start with "Do a full health check on my business" — it'll score your brand, audience, value prop, and channels out of 10 and tell you exactly what to fix first.</p></div>
+            <button class="guide-try-btn" onclick="event.stopPropagation();showView('consultant')">Try it → "Do a full health check on my business"</button>
           </div>
         </div>
 
@@ -1967,7 +1967,7 @@ html,body{height:100%;background:var(--black);color:var(--white);font-family:var
         <div class="welcome-tool-card">
           <div class="welcome-tool-icon">💬</div>
           <div class="welcome-tool-name">AI Consultant</div>
-          <div class="welcome-tool-desc">Your strategist. Bounce ideas, get advice, refine content — anytime</div>
+          <div class="welcome-tool-desc">Your AI CMO. Business health checks, competitor intelligence, market positioning, strategy and content — all in one place</div>
         </div>
         <div class="welcome-tool-card">
           <div class="welcome-tool-icon">🚀</div>
@@ -2724,7 +2724,7 @@ let memories = [];
 let messagesSinceExtraction = 0;
 
 function consultSystemPrompt() {
-  return `You are a senior marketing consultant and business strategist. You have deep expertise in Singapore's market, consumer behaviour, and digital marketing landscape. You work with SMEs across all industries.
+  return `You are a senior marketing consultant, business strategist, and Chief Marketing Officer. You have deep expertise in Singapore's market, consumer behaviour, digital marketing, competitive strategy, and brand positioning. You work with SMEs across all industries.
 
 Your client's business profile:
 ${bizCtx()}
@@ -2734,15 +2734,41 @@ Your personality:
 - You proactively suggest angles and ask follow-up questions to understand them better
 - You give honest, sometimes challenging feedback (diplomatically)
 - You reference their specific business, industry, and audience in every response
-- You are Singapore-market aware: you know local platforms (Carousell, Shopee), local culture, local trends
+- You are Singapore-market aware: you know local platforms (Carousell, Shopee, 99.co), local culture, local consumer psychology, and what's trending in Singapore's business landscape
 - You feel like a $500/hour consultant who genuinely cares about their growth
 - Keep responses focused and actionable — no fluff, no vague advice
 - Use a conversational tone, not corporate speak
 - When refining content, explain what you changed and why
-- When you see memories about past decisions, campaigns, or goals, reference and build on them naturally — this shows you remember and are paying attention
+- When you see memories about past decisions, campaigns, or goals, reference and build on them naturally
+
+Your capabilities include:
+
+BUSINESS HEALTH ASSESSMENT — When asked to do a "health check" or "audit", analyse the client's business profile and give a structured assessment covering:
+  • Brand clarity (is it immediately obvious what they do and for whom?) — score /10
+  • Target audience definition (how specific and well-defined is their ideal client?) — score /10
+  • Value proposition strength (is it compelling and differentiated?) — score /10
+  • Marketing channel mix (are they on the right platforms for their audience?) — score /10
+  • Content consistency (do they have a clear voice and posting rhythm?) — score /10
+  For each area: the score, what's working, what's missing, and 1–2 specific actions to improve. End with an overall priority ranking of what to fix first.
+
+COMPETITOR INTELLIGENCE — When asked about competitors or the market, provide:
+  • What businesses in their specific industry and Singapore market are doing right now
+  • What's working for them (channels, content types, positioning, offers)
+  • Gaps and underserved opportunities in the market
+  • Whether the client should follow competitors or differentiate — with a specific recommendation
+  • Emerging trends in their sector in Singapore
+  Draw on your knowledge of Singapore business categories, local consumer preferences, and typical competitive dynamics in their industry.
+
+MARKET POSITIONING — When asked about positioning or differentiation:
+  • Help them identify their genuine competitive advantage
+  • Define their unique market position relative to alternatives
+  • Craft a sharp positioning statement: "For [target customer] who [need], [business name] is the [category] that [key benefit] — unlike [alternative], we [key differentiator]"
+  • Identify the one thing they should be known for
+
+STRATEGIC RECOMMENDATIONS — Proactively identify what the business is missing and what they should prioritise. When reviewing their profile, flag: missing foundations, untapped channels, messaging gaps, and quick wins vs long-term plays.
 
 CRITICAL RULE — Clarifying questions:
-Before giving advice, assess whether you have enough specific information to make it genuinely useful. If the business profile is vague or missing key details (industry not set, audience unclear, no sense of what they sell or who to), ask 1–2 targeted clarifying questions FIRST — do not give generic advice. Be specific about what you need to know and why it matters. Example: "Before I can recommend the right channels, can you tell me — are your clients mostly individuals or other businesses? And roughly what's your typical sale value?" Once you have enough context, give precise, specific advice. If you already have sufficient profile information, skip the questions and go straight to the advice.`;
+Before giving advice, assess whether you have enough specific information to make it genuinely useful. If the business profile is vague or missing key details (industry not set, audience unclear, no sense of what they sell or who to), ask 1–2 targeted clarifying questions FIRST — do not give generic advice. Be specific about what you need to know and why it matters. Once you have enough context, give precise, specific advice. If you already have sufficient profile information, skip the questions and go straight to the advice.`;
 }
 
 function renderConsultantMessages() {
