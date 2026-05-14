@@ -2325,13 +2325,13 @@ async function confirmDeleteAccount() {
   btn.textContent = 'Deleting…';
 
   try {
-    await fetch(GOOGLE_SCRIPT_URL, {
+    await fetch('/api/account', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'deleteAccount', email })
     });
   } catch (err) {
-    console.error('[deleteAccount] GAS fetch failed:', err.message);
+    console.error('[deleteAccount] fetch failed:', err.message);
   }
 
   // Clear all local state regardless of GAS response
@@ -2414,8 +2414,9 @@ function completeOnboarding() {
   // Save profile to Google Sheets (fire and forget)
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
   if (userData.email) {
-    fetch(GOOGLE_SCRIPT_URL, {
+    fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({
         action:         'updateProfile',
         email:          userData.email,
@@ -3057,8 +3058,9 @@ async function loadAnalyticsData() {
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
   if (!userData.email) return;
   try {
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
+    const res = await fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'getAnalytics', email: userData.email })
     });
     const data = await res.json();
@@ -3086,8 +3088,9 @@ async function saveAnalyticsWeek() {
   btn.disabled = true; btn.textContent = 'Saving...';
   const today = new Date().toLocaleDateString('en-SG', {day:'numeric',month:'short',year:'numeric'});
   try {
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
+    const res = await fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'saveAnalytics', email: userData.email, date: today, fb, ig, li, tt, eng })
     });
     const data = await res.json();
@@ -3677,8 +3680,9 @@ async function saveSettings() {
   };
 
   try {
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
+    const res = await fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify(payload)
     });
     const data = await res.json();
@@ -3714,8 +3718,9 @@ async function loadMemories() {
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
   if (!userData.email) return;
   try {
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
+    const res = await fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'getMemory', email: userData.email })
     });
     const data = await res.json();
@@ -3732,8 +3737,9 @@ async function loadChatHistory() {
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
   if (!userData.email) return;
   try {
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
+    const res = await fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'getChat', email: userData.email })
     });
     const data = await res.json();
@@ -3756,8 +3762,9 @@ function saveChatExchange(userMsg, aiMsg) {
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
   if (!userData.email) return;
   const ts = new Date().toISOString();
-  fetch(GOOGLE_SCRIPT_URL, {
+  fetch('/api/account', {
     method: 'POST',
+    headers: apiHeaders(),
     body: JSON.stringify({
       action: 'saveChat',
       email: userData.email,
@@ -3807,8 +3814,9 @@ Maximum 5 memories per call. If nothing significant was discussed, output exactl
     if (!newMems.length) return;
     const ts = new Date().toISOString();
     await Promise.all(newMems.map(m =>
-      fetch(GOOGLE_SCRIPT_URL, {
+      fetch('/api/account', {
         method: 'POST',
+        headers: apiHeaders(),
         body: JSON.stringify({ action: 'saveMemory', email: userData.email, date: ts, category: m.category, content: m.content })
       }).catch(() => {})
     ));
@@ -3824,8 +3832,9 @@ async function saveMemoryManual(category, content) {
   const userData = JSON.parse(sessionStorage.getItem('mavrix_user') || '{}');
   if (!userData.email || !content.trim()) return;
   try {
-    await fetch(GOOGLE_SCRIPT_URL, {
+    await fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'saveMemory', email: userData.email, date: new Date().toISOString(), category: category.toLowerCase(), content: content.trim() })
     });
     await loadMemories();
@@ -3842,8 +3851,9 @@ async function deleteMemoryItem(id) {
   renderMemoryPanel();
   updateMemoryCounter();
   if (userData.email) {
-    fetch(GOOGLE_SCRIPT_URL, {
+    fetch('/api/account', {
       method: 'POST',
+      headers: apiHeaders(),
       body: JSON.stringify({ action: 'deleteMemory', email: userData.email, memoryId: id })
     }).catch(() => {});
   }
